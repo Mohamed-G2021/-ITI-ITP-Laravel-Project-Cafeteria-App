@@ -33,7 +33,6 @@
     </a>
     <div class="list-group list-group-flush border-bottom ">
     
-      <a href="#" class="list-group-item list-group-item-action ">
 <table class="table table-dark text-center ">
   <thead>
     <th>Product</th>
@@ -99,7 +98,6 @@
 
 <p class="fs-3 ">55 EGP</p> 
 <button class="btn btn-danger float-end">Confirm</button></div> 
-</a>
     </div>
   </div>
   </div>

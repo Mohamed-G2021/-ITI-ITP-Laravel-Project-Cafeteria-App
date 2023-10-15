@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\OrderProduct;
 
-class OrderController extends Controller
+
+class OrderProductController extends Controller
 {
+    function increaseQuantity($rowId){
+        $product = OrderProduct::get($rowId);
+        $quantity = $product->quantity + 1;
+        OrderProduct::update($rowId, $quantity);
+
+    }
+    function decreaseQuantity($rowId){
+        $product = OrderProduct::get($rowId);
+        $quantity = $product->quantity - 1;
+        OrderProduct::update($rowId, $quantity);
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $orders = Order::all();
-    
+        $orderProducts = OrderProduct::all();
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts] );
 
     }
 
