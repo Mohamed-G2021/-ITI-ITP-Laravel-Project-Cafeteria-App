@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OrderProduct;
+use App\Models\Product;
 
 
 class OrderProductController extends Controller
@@ -27,7 +28,9 @@ class OrderProductController extends Controller
     {
         //
         $orderProducts = OrderProduct::all();
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts] );
+        $Products = Product::all();
+
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
 
     }
 
@@ -42,9 +45,31 @@ class OrderProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public  function store(Request $request)
     {
         //
+
+
+        // $request_data = $request->all();
+        // return $request_data;
+
+        $productId = $request->input('productId');
+        $quantity = 1;
+        $orderId = 1;
+        // $productPrice = $request->input('productPrice');
+
+    OrderProduct::create([
+        'order_id'=>$orderId,
+    'product_id'=>$productId,
+    'quantity'=>$quantity,
+   ]);
+
+    // Process the data and return a response
+    return response()->json(['message' => $request->all()]);
+       
+
+        // OrderProduct::create($request_data);
+        // return to_route('OrderProducts.index');
     }
 
     /**

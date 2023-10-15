@@ -23,3 +23,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('orders', OrderProductController::class);
+Route::post('/process-data', [OrderProductController::class, 'store'])->name('process-data');

@@ -1,3 +1,7 @@
+@php
+    use  \App\Http\Controllers\OrderProductController;
+
+@endphp
 @extends('layouts.app')
 @section('content')
 
@@ -41,8 +45,9 @@
       <th></th> 
     </thead>
   <tbody>
-    <tr>
-      <th scope="row">Coffee</th>
+  @foreach ($orderProducts as $orderProduct)
+  <tr>
+      <th scope="row">{{$orderProduct->product->name}}</th>
       <td  class="table-active d-flex justify-content-center">
         <div class="border-5 bg-danger w-100  rounded text-center">
             <button class="btn btn-warning-outline border-0 fs-5 fw-bold">-</button>
@@ -50,28 +55,18 @@
             <button class="btn btn-warning-outline border-0 fs-5 fw-bold">+</button>
         </div>
       </td>
-      <td>25 EGP</td>
+      <td>{{$orderProduct->product->price}} EGP</td>
       <td>            
         <button class="btn  text-danger">X</button>
     </td>
 
-    </tr>
-    <tr>
-      <th scope="row">Coffee</th>
-      <td  class="table-active d-flex justify-content-center">
-      <div class="border-5 bg-danger w-100  rounded text-center">
-            <button class="btn btn-warning-outline border-0 fs-5 fw-bold">-</button>
-            <button class="btn btn-warning-outline border-0 disabled fs-5">1</button>
-            <button class="btn btn-warning-outline border-0 fs-5 fw-bold">+</button>
-        </div>
-      </td>
-      <td>25 EGP</td>
-      <td>
-      <button class="btn  text-danger">X</button>
+    </tr>      
 
-      </td>
 
-    </tr>
+
+
+  @endforeach
+   
   </tbody>
 </table>
 
@@ -107,15 +102,12 @@
  <h4 class="mt-5">Latest Order</h4>
    <div class="container text-center mt-3 ">
   <div class="row row-cols-2">
+    
     <div class="col">
         <img src="https://placehold.co/200x150" alt="">
         <p>Tea</p>
     </div>
-    <div class="col">
-    <img src="https://placehold.co/200x150" alt="">
-    <p>Tea</p>
-
-    </div>
+  
     
     <div class="col">Column</div>
     <div class="col">Column</div>
@@ -125,11 +117,43 @@
 <hr>
 
 <div class="container text-center mt-3 ">
-  <div class="row row-cols-2">
-    <div class="col">Column</div>
-    <div class="col">Column</div>
-    <div class="col">Column</div>
-    <div class="col">Column</div>
+  <div class="row row-cols-4">
+  @foreach ($products as $prd)
+    <div class="col">
+        <a class="" onclick="executeFunction({{ $prd->id }}, {{$prd->price}});">
+            <img src="{{ asset('images/Product_image/'.$prd->image) }}" class="w-50" alt="">
+        </a>
+     
+        <p>{{ $prd->name }}</p> 
+        <p>{{ $prd->price }} EGP</p> 
+    </div>
+@endforeach
+
+<script>
+    function executeFunction(productId, productPrice) {
+        // Make an AJAX request to the defined route
+        fetch("{{ route('process-data') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                productId: productId,
+                productPrice: productPrice
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the controller method
+            console.log(data);
+        })
+        .catch(error => {
+            // Handle any errors
+            // console.log(error);
+        });
+    }
+</script>
   </div>
 
 
