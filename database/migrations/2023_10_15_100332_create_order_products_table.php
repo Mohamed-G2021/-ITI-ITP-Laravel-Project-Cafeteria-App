@@ -10,7 +10,9 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    {           
+         if(Schema::hasTable('order_products')) return;      
+
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('order_id');
