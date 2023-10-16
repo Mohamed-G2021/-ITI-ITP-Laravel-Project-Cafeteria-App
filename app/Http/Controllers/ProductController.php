@@ -24,10 +24,11 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function  create(){
-    
-        $category=Category::all();
-        return view('products.create',["category" =>$category]);
+    public function  create()
+    {
+
+        $category = Category::all();
+        return view('products.create', ["category" => $category]);
     }
 
     /**
@@ -80,7 +81,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        Storage::disk('uploads')->delete($product->image);
         return to_route('products.index');
     }
 }
