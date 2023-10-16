@@ -1,13 +1,13 @@
 <?php
 
 namespace Database\Factories;
-use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class OrderFactory extends Factory
+class OrderProductsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'amount'=>fake()->randomFloat(2, 1, 1000),
-            'user_id' => User::inRandomOrder()->first()->id
+            //
         ];
-
     }
 }

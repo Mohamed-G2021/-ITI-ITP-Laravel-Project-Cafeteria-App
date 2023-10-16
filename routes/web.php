@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use  App\Http\Controllers\AdminOrderController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/process-data', [OrderProductController::class, 'store'])->name('process-data');
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
