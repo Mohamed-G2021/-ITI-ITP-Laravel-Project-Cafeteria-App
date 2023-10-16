@@ -38,27 +38,23 @@ class OrderProductController extends Controller
     {
         //
 
-
-        // $request_data = $request->all();
-        // return $request_data;
-
         $productId = $request->input('productId');
         $quantity = 1;
         $orderId = 1;
-        // $productPrice = $request->input('productPrice');
 
-    OrderProduct::create([
-        'order_id'=>$orderId,
-        'product_id'=>$productId,
-        'quantity'=>$quantity,
-   ]);
-
-    // Process the data and return a response
-    return response()->json(['message' => $request->all()]);
-       
-
-        // OrderProduct::create($request_data);
-        // return to_route('OrderProducts.index');
+        $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
+        if($orderProduct){
+            $orderProduct->quantity +=1;
+            $orderProduct->save();
+        }
+        else{
+            OrderProduct::firstOrCreate([
+                'order_id'=>$orderId,
+                'product_id'=>$productId,
+                'quantity'=>$quantity,
+           ]);
+        }
+  
     }
 
     /**

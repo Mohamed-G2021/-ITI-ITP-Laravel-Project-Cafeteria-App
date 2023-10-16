@@ -117,16 +117,17 @@
 
  <h4 class="mt-5">Latest Order</h4>
    <div class="container text-center mt-3 ">
-  <div class="row row-cols-2">
-    
-    <div class="col">
-        <img src="https://placehold.co/200x150" alt="">
-        <p>Tea</p>
+  <div class="row row-cols-3">
+  @foreach ($orderProducts as $orderProduct)
+<div class="col">
+  <img src="{{ asset('images/Product_image/'.$orderProduct->product->image) }}" class="w-50" alt="">
+        <p>{{$orderProduct->product->name}}</p>
     </div>
+  @endforeach
+    
   
     
-    <div class="col">Column</div>
-    <div class="col">Column</div>
+   
   </div>
 </div>
 
@@ -147,6 +148,7 @@
 
 <script>
     function executeFunction(productId, productPrice) {
+      
         // Make an AJAX request to the defined route
         fetch("{{ route('process-data') }}", {
             method: "POST",
