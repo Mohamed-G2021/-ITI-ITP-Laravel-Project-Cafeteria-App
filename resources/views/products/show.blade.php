@@ -3,10 +3,9 @@
 @section('content')
 <div class="container">
         <h1>{{$product->name}} product details</h1>
-
         <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                        <img src="" class="card-img-top" height="200" style="object-fit: contain;">
+                        <img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain;">
                         <h5 class="card-title">Name: {{$product->name}}</h5>
                         <h5 class="card-title">Price: {{$product->price}} egp</h5>
                         <h5 class="card-title">Category: <a href="">$category</a></h5>

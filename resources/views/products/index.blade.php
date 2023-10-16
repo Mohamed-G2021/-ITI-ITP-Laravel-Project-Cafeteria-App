@@ -21,11 +21,10 @@
 
                 <tbody>
                         @foreach($products as $product)
-
                         <tr>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->price}} egp</td>
-                                <td><img src="" class="card-img-top" height="200" style="object-fit: contain;"> </td>
+                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain;"> </td>
                                 <td>
                                         @if($product->availability == 'available')
                                         <a href="" class="btn btn-warning"> Unavailable</a>
