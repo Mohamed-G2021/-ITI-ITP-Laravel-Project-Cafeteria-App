@@ -27,7 +27,11 @@
                                 <td>{{$product->price}} egp</td>
                                 <td><img src="" class="card-img-top" height="200" style="object-fit: contain;"> </td>
                                 <td>
-                                        <a href="" class="btn btn-primary">available</a>
+                                        @if($product->availability == 'available')
+                                        <a href="" class="btn btn-warning"> Unavailable</a>
+                                        @else
+                                        <a href="" class="btn btn-info">Available</a>
+                                        @endif
                                         <a href="{{route('products.show',$product->id)}}" class="btn btn-primary">show</a>
                                         <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning">edit</a>
                                         <form action="{{route('products.destroy',$product->id)}}" method="post">

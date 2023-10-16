@@ -21,6 +21,16 @@
                         </div>
 
                         <div class="mb-3">
+                                <label for="" class="form-label">Category</label>
+                                <select class="form-select col-4" aria-label="Default select example">
+                                        <option selected disabled value="">select category</option>
+                                        <option value="">category</option>
+
+                                </select>
+
+                        </div>
+
+                        <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Image</label>
                                 <input type="file" class="form-control" name="image" id="exampleFormControlTextarea1" rows="3"></input>
 

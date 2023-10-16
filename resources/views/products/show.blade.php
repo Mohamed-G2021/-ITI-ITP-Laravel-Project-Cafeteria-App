@@ -9,6 +9,7 @@
                         <img src="" class="card-img-top" height="200" style="object-fit: contain;">
                         <h5 class="card-title">Name: {{$product->name}}</h5>
                         <h5 class="card-title">Price: {{$product->price}} egp</h5>
+                        <h5 class="card-title">Category: <a href="">$category</a></h5>
                         <h5 class="card-title">Created at: {{$product->created_at}}</h5>
                         <h5 class="card-title">Updated at: {{$product->updated_at}}</h5>
                         <a href="{{route('products.edit',$product->id)}}" class="btn btn-primary">Edit</a>
