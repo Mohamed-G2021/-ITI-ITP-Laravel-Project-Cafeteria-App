@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image');
+            $table->string('name')->unique();
+            $table->string('image')->nullable();
             $table->unsignedDecimal('price', $precision = 5, $scale = 2);
             $table->timestamps();
         });

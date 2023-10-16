@@ -20,7 +20,7 @@ class ProductFactory extends Factory
             //
             'name' => fake()->name(),
             'price' => $this->faker->randomFloat(2, 0, 1000),
-             'image' => $this->faker->image(public_path('images/Product_image'),400,300, null, false) ,
+             'image' => $this->faker->image(public_path('images/Product_image'),400,300, null, false) 
         ];
     }
 }
