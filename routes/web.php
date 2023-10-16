@@ -5,6 +5,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\checksController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("layouts.app");
 });
+
 
 Auth::routes();
 
@@ -29,3 +32,6 @@ Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
+
+
+Route::get('/checks', [checksController::class,'index']);
