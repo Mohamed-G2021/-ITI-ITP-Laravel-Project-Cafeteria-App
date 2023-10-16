@@ -43,7 +43,7 @@
                                                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                                                 @endforeach
                                                         </select>
-                                                        <a href="{{ route('categories.create', $category->id) }}" class="btn btn-info mx-1">Add New Category</a>
+                                                        <a href="{{ route('categories.create') }}" class="btn btn-info mx-1">Add New Category</a>
                                                 </div>
                                         </div>
                                 </div>
