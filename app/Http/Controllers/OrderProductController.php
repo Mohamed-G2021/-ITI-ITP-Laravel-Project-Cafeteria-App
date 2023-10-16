@@ -9,7 +9,7 @@ use App\Models\Product;
 
 class OrderProductController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -54,13 +54,14 @@ class OrderProductController extends Controller
                 'quantity'=>$quantity,
            ]);
         }
-  
+
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
+
     {
         //
     }
@@ -69,6 +70,7 @@ class OrderProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
     {
         //
     }
@@ -111,5 +113,6 @@ class OrderProductController extends Controller
         $Products = Product::all();
         
         return to_route('orders.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+
     }
 }
