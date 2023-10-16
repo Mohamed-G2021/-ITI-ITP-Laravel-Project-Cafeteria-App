@@ -13,12 +13,12 @@ class OrderController extends Controller
      * Display a listing of the resource.
      */
     function __construct(){
-       $this->middleware('auth')->only(['index','store', 'update', 'destroy']);
+     //  $this->middleware('auth')->only(['index','store', 'update', 'destroy']);
     }
     public function index()
     {
-         $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-        // $orders=Order::all();
+        // $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
+         $orders=Order::paginate(3);
         return view('orders.index',['orders'=>$orders]);
     }
      
