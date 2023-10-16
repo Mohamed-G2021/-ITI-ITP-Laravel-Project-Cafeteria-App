@@ -17,13 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('product_id');      
-            // $table->primary(['order_id', 'product_id']);
-
             $table->integer('quantity');
-            // $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-
             $table->timestamps();
             
         });

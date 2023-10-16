@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
+use  App\Http\Controllers\AdminOrderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,3 +32,6 @@ Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
+Route::get('/select',  [OrderController::class, 'filter'])->name('select.filter');
+Route::resource('/admins', AdminOrderController::class);
+

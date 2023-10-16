@@ -13,14 +13,13 @@ class OrderProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+  
     public function index()
     {
-        //
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
 
         return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
-
     }
 
     /**
