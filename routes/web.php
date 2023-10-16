@@ -31,5 +31,5 @@ Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
 Route::get('/select',  [OrderController::class, 'filter'])->name('select.filter');
-Route::resource('/admin/order', AdminOrderController::class);
+Route::resource('/admins', AdminOrderController::class);
 
