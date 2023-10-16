@@ -28,9 +28,9 @@
 
 
 <div class="row">
-    <div class="col ms-5">
+    <div class="col ms-5 me-5">
 <main>
-  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white w-50" style="">
+  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white " style="">
     <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
       <!-- <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg> -->
       <span class="fs-2 fw-semibold">Shopping Cart</span>
@@ -53,7 +53,7 @@
         <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
               @csrf
               @method('PUT')
-              <input type="submit" value="-" name="remove" class="btn btn-danger">
+              <input type="submit" value="-" name="remove" class="btn btn-danger border-0">
             </form> 
 
 
@@ -62,7 +62,7 @@
             <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
               @csrf
               @method('PUT')
-              <input type="submit" value="+" name="add" class="btn btn-danger">
+              <input type="submit" value="+" name="add" class="btn btn-danger border-0">
             </form> 
 
           </div>
@@ -179,6 +179,7 @@
  </div>
 
 </main>
+  </div>
 <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="">
     /* global bootstrap: false */
