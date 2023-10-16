@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -27,10 +30,15 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        Product::create($request->all());
-        return  to_route('products.index');
+        $request_data = $request->all();
+        if ($request->file('image') != []) {
+            $image_path = $request->file('image')->store('products_images', 'uploads');
+            $request_data['image'] = $image_path;
+        }
+        Product::create($request_data);
+        return to_route('products.index');
     }
 
     /**
@@ -52,9 +60,14 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $request_data = $request->all();
+        if ($request->file('image') != []) {
+            $image_path = $request->file('image')->store('products_images', 'uploads');
+            $request_data['image'] = $image_path;
+        }
+        $product->update($request_data);
         return to_route('products.show', $product->id);
     }
 
@@ -64,6 +77,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+        Storage::disk('uploads')->delete($product->image);
         return to_route('products.index');
     }
 }
