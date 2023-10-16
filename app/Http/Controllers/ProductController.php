@@ -67,6 +67,7 @@ class ProductController extends Controller
             $image_path = $request->file('image')->store('products_images', 'uploads');
             $request_data['image'] = $image_path;
         }
+        $product->update($request_data);
         return to_route('products.show', $product->id);
     }
 
