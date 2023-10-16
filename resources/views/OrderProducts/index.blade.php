@@ -51,14 +51,18 @@
       <td  class="table-active d-flex justify-content-center">
         <div class="border-5 bg-danger w-100  rounded text-center">
             <button class="btn btn-warning-outline border-0 fs-5 fw-bold">-</button>
-            <button class="btn btn-warning-outline border-0 disabled fs-5">1</button>
-            <button class="btn btn-warning-outline border-0 fs-5 fw-bold">+</button>
+            <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
+            <button class="btn btn-warning-outline border-0 fs-5 fw-bold" onclick="increaseQuantity($orderProduct->id)">+</button>
         </div>
       </td>
       <td>{{$orderProduct->product->price}} EGP</td>
       <td>            
-        <button class="btn  text-danger">X</button>
-    </td>
+        <form action="{{route('orders.destroy', $orderProduct->id)}}" method="post">
+          @csrf
+          @method('delete')
+          <input type="submit" value="X" class="btn btn-danger">
+        </form> 
+      </td>
 
     </tr>      
 

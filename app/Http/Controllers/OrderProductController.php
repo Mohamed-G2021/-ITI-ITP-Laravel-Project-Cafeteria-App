@@ -60,8 +60,8 @@ class OrderProductController extends Controller
 
     OrderProduct::create([
         'order_id'=>$orderId,
-    'product_id'=>$productId,
-    'quantity'=>$quantity,
+        'product_id'=>$productId,
+        'quantity'=>$quantity,
    ]);
 
     // Process the data and return a response
@@ -102,5 +102,11 @@ class OrderProductController extends Controller
     public function destroy(string $id)
     {
         //
+        OrderProduct::findorfail($id)->delete();
+        
+        $orderProducts = OrderProduct::all();
+        $Products = Product::all();
+        
+        return to_route('orders.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
     }
 }
