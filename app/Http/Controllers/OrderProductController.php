@@ -9,18 +9,7 @@ use App\Models\Product;
 
 class OrderProductController extends Controller
 {
-    function increaseQuantity($rowId){
-        $product = OrderProduct::get($rowId);
-        $quantity = $product->quantity + 1;
-        OrderProduct::update($rowId, $quantity);
-
-    }
-    function decreaseQuantity($rowId){
-        $product = OrderProduct::get($rowId);
-        $quantity = $product->quantity - 1;
-        OrderProduct::update($rowId, $quantity);
-
-    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -94,6 +83,24 @@ class OrderProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $product=  OrderProduct::findorfail($id);
+
+        if( $request->get("add")){
+        $product->quantity = $product->quantity  + 1;
+
+        }
+        else{
+            $product->quantity = $product->quantity  - 1;
+
+        }
+        // OrderProduct::update($id, $quantity);
+        $product->update($request->all());
+        $orderProducts = OrderProduct::all();
+        $Products = Product::all();
+
+        return to_route('orders.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+
+
     }
 
     /**

@@ -50,10 +50,22 @@
       <th scope="row">{{$orderProduct->product->name}}</th>
       <td  class="table-active d-flex justify-content-center">
         <div class="border-5 bg-danger w-100  rounded text-center">
-            <button class="btn btn-warning-outline border-0 fs-5 fw-bold">-</button>
-            <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
-            <button class="btn btn-warning-outline border-0 fs-5 fw-bold" onclick="increaseQuantity($orderProduct->id)">+</button>
-        </div>
+        <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+              @csrf
+              @method('PUT')
+              <input type="submit" value="-" name="remove" class="btn btn-danger">
+            </form> 
+
+
+        <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
+
+            <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+              @csrf
+              @method('PUT')
+              <input type="submit" value="+" name="add" class="btn btn-danger">
+            </form> 
+
+          </div>
       </td>
       <td>{{$orderProduct->product->price}} EGP</td>
       <td>            
