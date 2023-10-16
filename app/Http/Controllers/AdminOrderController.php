@@ -2,33 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-class OrderController extends Controller
+use App\Models\Order;
+use App\Models\User;
+class AdminOrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    function __construct(){
-       $this->middleware('auth')->only(['index','store', 'update', 'destroy']);
-    }
+    
     public function index()
     {
-         $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-        // $orders=Order::all();
-        return view('orders.index',['orders'=>$orders]);
+       $orders = Order::orderBy('created_at', 'desc')->paginate(3);
+          return view('admin.orders.index', compact('orders'));
     }
-     
     public function filter(Request $request)
 {
-    $user = auth()->user();
     $start_date = $request->input('start_date');
     $end_date = $request->input('end_date');
-    $orders = Order::where('user_id', $user->id)
-    ->whereBetween('created_at', [$start_date, $end_date])
-    ->get();
-    return view('orders.index', compact('orders'));
+    $orders = Order::whereBetween('created_at', [$start_date, $end_date])->get();
+    return view('admin.orders.index', compact('orders'));
 }
     /**
      * Show the form for creating a new resource.
@@ -44,16 +35,15 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
-    {
-        return view('orders.show', ['order'=>$order]);
-    }
+    // public function show(Order $order)
+    // {
+    //     // return view('admin.orders.show ', ['order'=>$order]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -76,7 +66,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-         $order->delete();
-         return to_route('orders.index');
+        //
     }
 }

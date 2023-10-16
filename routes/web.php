@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Models\Order;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\OrderProductController;
+use App\Http\Controllers\ProductController;
+use  App\Http\Controllers\AdminOrderController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +25,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource("orders",OrderController::class);
-Route::resource("items",OrderItemController::class);
+
+Route::resource('products', ProductController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('order-products', OrderProductController::class);
+Route::get('/select',  [OrderController::class, 'filter'])->name('select.filter');
+Route::resource('/admin/order', AdminOrderController::class);
+
