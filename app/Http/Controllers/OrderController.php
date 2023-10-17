@@ -19,12 +19,12 @@ class OrderController extends Controller
     }
     public function index()
     {
-        // $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-         $orders=Order::paginate(3);
+        //  $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
+          $orders=Order::paginate(6);
         return view('orders.index',['orders'=>$orders]);
     }
      
-    public function filter(Request $request)
+public function filter(Request $request)
 {
     $user = auth()->user();
     $start_date = $request->input('start_date');
@@ -39,8 +39,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
-   
+        $orders=Order::all();
+        return view('orders.create',['orders'=>$orders]);
     }
 
     /**
@@ -82,9 +82,13 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request,Order $order)
     {
-        return view('orders.show', ['order'=>$order]);
+        if ($request->ajax()) {
+            return view('orders.show', ['order'=>$order]);
+        }
+    
+        return redirect()->back();
     }
 
     /**
@@ -98,16 +102,17 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
 
     {
-        //
+      
+       
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
 
     {
          $order->delete();
