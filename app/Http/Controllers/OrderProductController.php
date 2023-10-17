@@ -49,7 +49,7 @@ class OrderProductController extends Controller
              $order = new Order();
         $order->status = 'processing';
         $order->amount = 0;
-        $order->user_id =1;                    
+        $order->user_id =1;  
         $order->save();
 
         session(['order_id' => $order->id]);
@@ -150,19 +150,27 @@ class OrderProductController extends Controller
         //
         OrderProduct::findorfail($id)->delete();
         
-        $orderProducts = OrderProduct::all();
-        $Products = Product::all();
+       
         $amount=0 ;
         foreach ($orderProducts as $orderProduct) {
             $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
 
       }
-        
+         $orderProducts = OrderProduct::all();
+        $Products = Product::all();
         return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
 
     }
     public function confirm_order(){
         $orderId = session('order_id');
+        $amount=0 ;
+        $orderProducts = OrderProduct::all();
+
+        foreach ($orderProducts as $orderProduct) {
+            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
+
+      }
+        Order::where('order_id', $orderId)->amount = $amount;
         OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
         return to_route('order-products.index');
