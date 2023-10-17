@@ -10,9 +10,7 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-         if(Schema::hasTable('order_products')) return;
-
+     {
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('order_id');
@@ -21,7 +19,6 @@ return new class extends Migration
             $table->foreign('order_id')->constrained()->onDelete('cascade')->references('id')->on('orders');
             $table->foreign('product_id')->constrained()->onDelete('cascade')->references('id')->on('products');
             $table->timestamps();
-
         });
     }
 

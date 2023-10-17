@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
 
 
 class OrderController extends Controller
@@ -17,12 +19,12 @@ class OrderController extends Controller
     }
     public function index()
     {
-        // $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-         $orders=Order::paginate(3);
+        //  $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
+          $orders=Order::paginate(6);
         return view('orders.index',['orders'=>$orders]);
     }
      
-    public function filter(Request $request)
+public function filter(Request $request)
 {
     $user = auth()->user();
     $start_date = $request->input('start_date');
@@ -37,7 +39,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $orders=Order::all();
+        return view('orders.create',['orders'=>$orders]);
     }
 
     /**
@@ -46,15 +49,46 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+    //     // Create a new order
+    // $order = new Order();
+    // // $order->user_id = auth()->user()->id; // Assuming you have authentication and want to associate the order with the authenticated user
 
+    // // Get the product IDs from the session
+    // $productIds = session('order_products', []);
+    // // dd($productIds);
+    // $amount = [];
+    // // Loop through the product IDs and create order products
+    // foreach ($productIds as $productId) {
+    //     $orderProduct = new OrderProduct();
+    //     $orderProduct->order_id = $order->id;
+    //     $orderProduct->product_id = $productId;
+
+    //     // $amount->push($orderProduct->products->price);
+
+    //     $orderProduct->quantity = 1; // Set the initial quantity to 1
+    //     $orderProduct->save();
+    // }
+    // // dd($orderProduct->products->price);
+    // $order->save();
+
+    // // Clear the order products from the session
+    // session()->forget('order_products');
+    // $orderProducts = OrderProduct::all();
+    // $Products = Product::all();
+
+    // return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request,Order $order)
     {
-        return view('orders.show', ['order'=>$order]);
+        if ($request->ajax()) {
+            return view('orders.show', ['order'=>$order]);
+        }
+    
+        return redirect()->back();
     }
 
     /**
@@ -68,16 +102,17 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
 
     {
-        //
+      
+       
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
 
     {
          $order->delete();
