@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<section class="order_details  container my-5">
+ <section class="order_details  container my-5">
 <div class="row border gap-5 justify-content-center py-4">
 @foreach($order->products as $product)
   <div class="col-md-3 border rounded text-center p-3" style="width:150px">
