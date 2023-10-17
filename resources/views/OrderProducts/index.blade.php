@@ -52,7 +52,7 @@ use \App\Http\Controllers\OrderProductController;
                 <th scope="row">{{$orderProduct->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
                   <div class="border-5 bg-danger w-100  rounded text-center">
-                    <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="-" name="remove" class="btn btn-danger border-0">
@@ -61,7 +61,7 @@ use \App\Http\Controllers\OrderProductController;
 
                     <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
 
-                    <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="+" name="add" class="btn btn-danger border-0">
@@ -71,7 +71,7 @@ use \App\Http\Controllers\OrderProductController;
                 </td>
                 <td>{{$orderProduct->product->price}} EGP</td>
                 <td>
-                  <form action="{{route('orders.destroy', $orderProduct->id)}}" method="post">
+                  <form action="{{route('order-products.destroy', $orderProduct->id)}}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="X" class="btn btn-danger">
@@ -110,7 +110,11 @@ use \App\Http\Controllers\OrderProductController;
 
 
             <p class="fs-3 ">55 EGP</p>
-            <button class="btn btn-danger float-end">Confirm</button>
+            <form action="" method="post" enctype="multipart/form-data">
+                    @csrf
+                                <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>
+
+          </form>
           </div>
         </div>
       </div>
@@ -135,46 +139,26 @@ use \App\Http\Controllers\OrderProductController;
     </div>
 
     <hr>
-
-    <div class="container text-center mt-3 ">
+   
+          </form>    <div class="container text-center mt-3 ">
       <div class="row row-cols-4">
         @foreach ($products as $prd)
         <div class="col">
-          <a class="" onclick="executeFunction({{ $prd->id }}, {{$prd->price}});">
-            <img src="{{asset("/images/$prd->image")}}" class="w-50" alt="">
-          </a>
 
-          <p>{{ $prd->name }}</p>
-          <p>{{ $prd->price }} EGP</p>
+        <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input name="productId" type="hidden" value="{{$prd->id}}">
+                    <button type="submit">
+                            <img  src="{{asset("/images/products_images/$prd->image")}}" class="w-50" alt="">   
+                    </button>
+          </form>
+
+          <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
+          <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
         </div>
         @endforeach
 
-        <script>
-          function executeFunction(productId, productPrice) {
-
-            // Make an AJAX request to the defined route
-            fetch("{{ route('process-data') }}", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                  productId: productId,
-                  productPrice: productPrice
-                })
-              })
-              .then(response => response.json())
-              .then(data => {
-                // Handle the response from the controller method
-                console.log(data);
-              })
-              .catch(error => {
-                // Handle any errors
-                // console.log(error);
-              });
-          }
-        </script>
+      
       </div>
 
 

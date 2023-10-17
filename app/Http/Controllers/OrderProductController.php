@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\Order;
 
 
 class OrderProductController extends Controller
 {
 
+    protected $confirm = false;
     /**
      * Display a listing of the resource.
      */
@@ -36,12 +38,28 @@ class OrderProductController extends Controller
     public  function store(Request $request)
     {
         //
+     
+        $productIds = session('order_products', []);
+        // if(empty($productIds))
+        {
+             $order = new Order();
+        $order->status = 'processing';
+        $order->amount = 0;
+        $order->user_id =1;
+        $order->save();
+        session(['order_id' => $order->id]);
+        }
 
-        $productId = $request->input('productId');
+
+        $productId = $request->input('productId');       
+        $orderId = session('order_id');
         $quantity = 1;
-        $orderId = 1;
 
-        $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
+
+        // $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
+        $orderProduct = OrderProduct::where('product_id', $productId)->first();
+
+        // dd($orderId);
         if($orderProduct){
             $orderProduct->quantity +=1;
             $orderProduct->save();
@@ -53,7 +71,12 @@ class OrderProductController extends Controller
                 'quantity'=>$quantity,
            ]);
         }
-
+        session()->push('order_products', $productId);
+        $orderProducts = OrderProduct::all();
+        $Products = Product::all();
+      
+    
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
     }
 
     /**
@@ -90,12 +113,13 @@ class OrderProductController extends Controller
             $product->quantity = $product->quantity  - 1;
 
         }
-        // OrderProduct::update($id, $quantity);
-        $product->update($request->all());
+        // $product->update($request->all());
+        $product->save();
+
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
 
-        return to_route('orders.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
 
 
     }
@@ -111,7 +135,13 @@ class OrderProductController extends Controller
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         
-        return to_route('orders.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
 
+    }
+    public function confirm_order(){
+        $orderId = session('order_id');
+        OrderProduct::where('order_id', $orderId)->delete();
+        session()->forget('order_products');
+        return to_route('OrderProducts.index');
     }
 }
