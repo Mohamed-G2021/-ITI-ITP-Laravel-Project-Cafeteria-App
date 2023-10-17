@@ -33,7 +33,7 @@ Route::resource('order-products', OrderProductController::class);
 
 Route::resource('orders', OrderController::class);
 
-Route::post('/process-data', [OrderProductController::class, 'store'])->name('process-data');
+Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 
 Route::get('/select',  [OrderController::class, 'filter'])->name('select.filter');
 Route::resource('/admins', AdminOrderController::class);

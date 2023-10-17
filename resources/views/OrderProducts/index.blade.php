@@ -43,7 +43,7 @@ use \App\Http\Controllers\OrderProductController;
             <thead>
               <th>Product</th>
               <th>Quantity</th>
-              <th>Total Price</th>
+              <th>Price</th>
               <th></th>
             </thead>
             <tbody>
@@ -51,7 +51,7 @@ use \App\Http\Controllers\OrderProductController;
               <tr>
                 <th scope="row">{{$orderProduct->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
-                  <div class="border-5 bg-danger w-100  rounded text-center">
+                  <div class="border-5 d-flex bg-danger rounded text-center">
                     <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
                       @method('PUT')
@@ -109,10 +109,10 @@ use \App\Http\Controllers\OrderProductController;
           <div class="d-flex flex-column align-items-end">
 
 
-            <p class="fs-3 ">55 EGP</p>
-            <form action="" method="post" enctype="multipart/form-data">
+            <p class="fs-3 ">{{$amount}} EGP</p>
+            <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                                <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>
+                    <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>
 
           </form>
           </div>
@@ -148,8 +148,8 @@ use \App\Http\Controllers\OrderProductController;
         <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input name="productId" type="hidden" value="{{$prd->id}}">
-                    <button type="submit">
-                            <img  src="{{asset("/images/products_images/$prd->image")}}" class="w-50" alt="">   
+                    <button type="submit" class="border-0" >
+                            <img  src="{{asset("/images/products_images/$prd->image")}}" class="w-100" alt="">   
                     </button>
           </form>
 

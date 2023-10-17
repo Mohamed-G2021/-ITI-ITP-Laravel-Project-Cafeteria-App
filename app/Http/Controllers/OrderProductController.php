@@ -12,6 +12,10 @@ class OrderProductController extends Controller
 {
 
     protected $confirm = false;
+    protected    $amount=0 ;
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +25,7 @@ class OrderProductController extends Controller
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
 
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$this->amount] );
     }
 
     /**
@@ -40,13 +44,14 @@ class OrderProductController extends Controller
         //
      
         $productIds = session('order_products', []);
-        // if(empty($productIds))
+        if(empty($productIds))
         {
              $order = new Order();
         $order->status = 'processing';
         $order->amount = 0;
-        $order->user_id =1;
+        $order->user_id =1;                    
         $order->save();
+
         session(['order_id' => $order->id]);
         }
 
@@ -56,27 +61,33 @@ class OrderProductController extends Controller
         $quantity = 1;
 
 
-        // $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
-        $orderProduct = OrderProduct::where('product_id', $productId)->first();
-
+       $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
+        $x=$orderProduct;
         // dd($orderId);
         if($orderProduct){
             $orderProduct->quantity +=1;
             $orderProduct->save();
+
         }
         else{
-            OrderProduct::firstOrCreate([
+          $x =   OrderProduct::firstOrCreate([
                 'order_id'=>$orderId,
                 'product_id'=>$productId,
                 'quantity'=>$quantity,
-           ]);
+           ]);   
+
         }
+   
         session()->push('order_products', $productId);
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-      
-    
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        // $this->amount = $order->amount;
+        $amount=0 ;
+      foreach ($orderProducts as $orderProduct) {
+        $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
+
+      }
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
     }
 
     /**
@@ -103,23 +114,30 @@ class OrderProductController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $product=  OrderProduct::findorfail($id);
+        $ord_product=  OrderProduct::findorfail($id);
 
         if( $request->get("add")){
-        $product->quantity = $product->quantity  + 1;
+        $ord_product->quantity = $ord_product->quantity  + 1;
+
 
         }
         else{
-            $product->quantity = $product->quantity  - 1;
+            $ord_product->quantity = $ord_product->quantity  - 1;
+
 
         }
         // $product->update($request->all());
-        $product->save();
+        $ord_product->save();
 
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
+        $amount=0 ;
+        foreach ($orderProducts as $orderProduct) {
+            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
 
-        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+      }
+
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
 
 
     }
@@ -134,14 +152,19 @@ class OrderProductController extends Controller
         
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
+        $amount=0 ;
+        foreach ($orderProducts as $orderProduct) {
+            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
+
+      }
         
-        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
 
     }
     public function confirm_order(){
         $orderId = session('order_id');
         OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
-        return to_route('OrderProducts.index');
+        return to_route('order-products.index');
     }
 }
