@@ -9,10 +9,22 @@ use App\Models\Order;
 
 
 class OrderProductController extends Controller
-{
+{    
 
     protected $confirm = false;
-    protected    $amount=0 ;
+    protected $amount = 3;
+
+    protected function clac_amount(){
+        $amount = 0;
+        $orderProducts = OrderProduct::all();
+
+        foreach ($orderProducts as $orderProduct) {
+            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
+
+      }
+      return $amount;
+    }
+    // protected    $amount=0 ;
 
 
 
@@ -24,8 +36,8 @@ class OrderProductController extends Controller
     {
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$this->amount] );
+        $amount  =$this->clac_amount($orderProducts);
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$amount] );
     }
 
     /**
@@ -47,16 +59,18 @@ class OrderProductController extends Controller
         if(empty($productIds))
         {
              $order = new Order();
-        $order->status = 'processing';
-        $order->amount = 0;
-        $order->user_id =1;  
-        $order->save();
+            $order->status = 'processing';
+            $order->amount = 0;
+            $order->user_id =1;  
+            $order->save();
 
         session(['order_id' => $order->id]);
         }
 
 
-        $productId = $request->input('productId');       
+        $productId = $request->input('productId');    
+        $notes = $request->input('notes');       
+   
         $orderId = session('order_id');
         $quantity = 1;
 
@@ -74,6 +88,7 @@ class OrderProductController extends Controller
                 'order_id'=>$orderId,
                 'product_id'=>$productId,
                 'quantity'=>$quantity,
+
            ]);   
 
         }
@@ -152,27 +167,18 @@ class OrderProductController extends Controller
         
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-        $amount=0 ;
-        foreach ($orderProducts as $orderProduct) {
-            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }
-        
+        $amount  =$this->clac_amount();
+      
         return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
 
     }
     public function confirm_order(){
         $orderId = session('order_id');
-        $amount=0 ;
-        $orderProducts = OrderProduct::all();
-
-        foreach ($orderProducts as $orderProduct) {
-            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }
+        $amount = clac_amount();
         Order::where('order_id', $orderId)->amount = $amount;
         OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
         return to_route('order-products.index');
     }
+   
 }
