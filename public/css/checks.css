@@ -3,7 +3,9 @@
     cursor:pointer;
 }
 
-
+.orderbody{
+    background-color:blue !important;
+}
 
 .productprice{
     position: relative;
