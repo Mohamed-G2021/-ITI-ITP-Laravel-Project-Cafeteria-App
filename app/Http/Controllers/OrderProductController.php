@@ -174,7 +174,7 @@ class OrderProductController extends Controller
     }
     public function confirm_order(){
         $orderId = session('order_id');
-        $amount = clac_amount();
+        $amount = $this->clac_amount();
         Order::where('order_id', $orderId)->amount = $amount;
         OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
