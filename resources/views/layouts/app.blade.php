@@ -13,8 +13,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/checks.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="frontend/css/owl.carousel.min.css">
     <link rel="stylesheet" href="frontend/js/owl.theme.default.min.css">
+    
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -88,8 +90,10 @@
             @yield('body')
 </div>
     </div>
+
+    <script src="{{ asset('js/checks.js')}}"></script>
     <script src="frontend/js/jquery-3.7.1.min.js"></script>
-     <script src="frontend/js/owl.carousel.min.js"></script>
+    <script src="frontend/js/owl.carousel.min.js"></script>
 </body>
 
 </html>
