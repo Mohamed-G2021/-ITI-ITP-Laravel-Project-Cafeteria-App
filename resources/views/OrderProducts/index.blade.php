@@ -31,50 +31,50 @@ use \App\Http\Controllers\OrderProductController;
 
 <div class="row">
 
-<div class="col">
+  <div class="col">
 
-  <h4 class="mt-5">Latest Order</h4>
-  <div class="container text-center mt-3 ">
-    <div class="row row-cols-3">
-      @foreach ($orderProducts as $orderProduct)
-      <div class="col">
-        <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" class="w-50" alt="">
-        <p>{{$orderProduct->product->name}}</p>
+    <h4 class="mt-5">Latest Order</h4>
+    <div class="container text-center mt-3 ">
+      <div class="row row-cols-3">
+        @foreach ($orderProducts as $orderProduct)
+        <div class="col">
+          <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" class="w-50" alt="">
+          <p>{{$orderProduct->product->name}}</p>
+        </div>
+        @endforeach
+
+
+
+
       </div>
-      @endforeach
+    </div>
+
+    <hr>
+
+    </form>
+    <div class="container text-center mt-3 ">
+      <div class="row row-cols-4">
+        @foreach ($products as $prd)
+        <div class="col">
+
+          <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input name="productId" type="hidden" value="{{$prd->id}}">
+            <button type="submit" class="border-0" onclick="">
+              <img src="{{asset("/images/$prd->image")}}" class="w-100" alt="">
+            </button>
+          </form>
+
+          <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
+          <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
+        </div>
+        @endforeach
 
 
+      </div>
 
 
     </div>
-  </div>
-
-  <hr>
-
-        </form>    
-        <div class="container text-center mt-3 ">
-    <div class="row row-cols-4">
-      @foreach ($products as $prd)
-      <div class="col">
-
-      <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
-                  @csrf
-                  <input name="productId" type="hidden" value="{{$prd->id}}">
-                  <button type="submit" class="border-0" onclick="">
-                          <img  src="{{asset("/images/products_images/$prd->image")}}" class="w-100" alt="">   
-                  </button>
-        </form>
-
-        <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
-        <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
-      </div>
-      @endforeach
-
-    
-    </div>
-
-
-  </div>
   </div>
 
   <div class="col ms-5 me-5">
@@ -154,10 +154,10 @@ use \App\Http\Controllers\OrderProductController;
 
             <p class="fs-3 ">{{$amount}} EGP</p>
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <button class="btn btn-danger float-end" type="submit"  value="done">Confirm</button>
+              @csrf
+              <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>
 
-          </form>
+            </form>
           </div>
         </div>
       </div>
