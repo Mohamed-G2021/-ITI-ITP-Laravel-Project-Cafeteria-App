@@ -30,6 +30,53 @@ use \App\Http\Controllers\OrderProductController;
 
 
 <div class="row">
+
+<div class="col">
+
+  <h4 class="mt-5">Latest Order</h4>
+  <div class="container text-center mt-3 ">
+    <div class="row row-cols-3">
+      @foreach ($orderProducts as $orderProduct)
+      <div class="col">
+        <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" class="w-50" alt="">
+        <p>{{$orderProduct->product->name}}</p>
+      </div>
+      @endforeach
+
+
+
+
+    </div>
+  </div>
+
+  <hr>
+
+        </form>    
+        <div class="container text-center mt-3 ">
+    <div class="row row-cols-4">
+      @foreach ($products as $prd)
+      <div class="col">
+
+      <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+                  @csrf
+                  <input name="productId" type="hidden" value="{{$prd->id}}">
+                  <button type="submit" class="border-0" onclick="">
+                          <img  src="{{asset("/images/products_images/$prd->image")}}" class="w-100" alt="">   
+                  </button>
+        </form>
+
+        <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
+        <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
+      </div>
+      @endforeach
+
+    
+    </div>
+
+
+  </div>
+  </div>
+
   <div class="col ms-5 me-5">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
@@ -43,7 +90,7 @@ use \App\Http\Controllers\OrderProductController;
             <thead>
               <th>Product</th>
               <th>Quantity</th>
-              <th>Total Price</th>
+              <th>Price</th>
               <th></th>
             </thead>
             <tbody>
@@ -51,8 +98,8 @@ use \App\Http\Controllers\OrderProductController;
               <tr>
                 <th scope="row">{{$orderProduct->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
-                  <div class="border-5 bg-danger w-100  rounded text-center">
-                    <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+                  <div class="border-5 d-flex bg-danger rounded text-center">
+                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="-" name="remove" class="btn btn-danger border-0">
@@ -61,7 +108,7 @@ use \App\Http\Controllers\OrderProductController;
 
                     <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
 
-                    <form action="{{ route('orders.update', $orderProduct->id) }}" method="post">
+                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="+" name="add" class="btn btn-danger border-0">
@@ -71,7 +118,7 @@ use \App\Http\Controllers\OrderProductController;
                 </td>
                 <td>{{$orderProduct->product->price}} EGP</td>
                 <td>
-                  <form action="{{route('orders.destroy', $orderProduct->id)}}" method="post">
+                  <form action="{{route('order-products.destroy', $orderProduct->id)}}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="X" class="btn btn-danger">
@@ -90,96 +137,32 @@ use \App\Http\Controllers\OrderProductController;
 
           <h3>Notes</h3>
           <textarea name="notes" id="" cols="79" rows="5" class="w-100"></textarea>
-          <div class="d-flex align-items-center">
+          <div class=" align-items-center ">
 
-            <h3>Address</h3>
-            <div class="btn-group">
-              <button class="btn btn-secondary btn-lg dropdown-toggle ms-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Branch
-              </button>
-              <ul class="dropdown-menu">
-                <li>Zayed</li>
-                <li>New Cairo</li>
-                <li>Nasr City</li>
-              </ul>
-            </div>
+            <h3>Branch</h3>
+            <select class="form-select mb-4">
+              <option selected>Choose Branch</option>
+              <option value="">Zayed</option>
+              <option value="">Nasr City</option>
+              <option value="">New Cairo</option>
+            </select>
           </div>
-
+          <br>
           <hr>
           <div class="d-flex flex-column align-items-end">
 
 
-            <p class="fs-3 ">55 EGP</p>
-            <button class="btn btn-danger float-end">Confirm</button>
+            <p class="fs-3 ">{{$amount}} EGP</p>
+            <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <button class="btn btn-danger float-end" type="submit"  value="done">Confirm</button>
+
+          </form>
           </div>
         </div>
       </div>
   </div>
 
-  <div class="col">
-
-    <h4 class="mt-5">Latest Order</h4>
-    <div class="container text-center mt-3 ">
-      <div class="row row-cols-3">
-        @foreach ($orderProducts as $orderProduct)
-        <div class="col">
-          <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" class="w-50" alt="">
-          <p>{{$orderProduct->product->name}}</p>
-        </div>
-        @endforeach
-
-
-
-
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="container text-center mt-3 ">
-      <div class="row row-cols-4">
-        @foreach ($products as $prd)
-        <div class="col">
-          <a class="" onclick="executeFunction({{ $prd->id }}, {{$prd->price}});">
-            <img src="{{asset("/images/$prd->image")}}" class="w-50" alt="">
-          </a>
-
-          <p>{{ $prd->name }}</p>
-          <p>{{ $prd->price }} EGP</p>
-        </div>
-        @endforeach
-
-        <script>
-          function executeFunction(productId, productPrice) {
-
-            // Make an AJAX request to the defined route
-            fetch("{{ route('process-data') }}", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                  productId: productId,
-                  productPrice: productPrice
-                })
-              })
-              .then(response => response.json())
-              .then(data => {
-                // Handle the response from the controller method
-                console.log(data);
-              })
-              .catch(error => {
-                // Handle any errors
-                // console.log(error);
-              });
-          }
-        </script>
-      </div>
-
-
-    </div>
-  </div>
 
   </main>
 </div>
