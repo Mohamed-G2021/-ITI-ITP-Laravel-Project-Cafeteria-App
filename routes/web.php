@@ -28,7 +28,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/process-data', [OrderProductController::class, 'store'])->name('process-data');
 
-Route::resource('admins', AdminController::class)->middleware('can:admin-access');
+Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
