@@ -90,21 +90,17 @@ use \App\Http\Controllers\OrderProductController;
 
           <h3>Notes</h3>
           <textarea name="notes" id="" cols="79" rows="5" class="w-100"></textarea>
-          <div class="d-flex align-items-center">
+          <div class=" align-items-center ">
 
-            <h3>Address</h3>
-            <div class="btn-group">
-              <button class="btn btn-secondary btn-lg dropdown-toggle ms-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Branch
-              </button>
-              <ul class="dropdown-menu">
-                <li>Zayed</li>
-                <li>New Cairo</li>
-                <li>Nasr City</li>
-              </ul>
-            </div>
+            <h3>Branch</h3>
+            <select class="form-select mb-4">
+              <option selected>Choose Branch</option>
+              <option >Zayed</option>
+              <option >Nasr City</option>
+              <option >New Cairo</option>
+            </select>
           </div>
-
+          <br>
           <hr>
           <div class="d-flex flex-column align-items-end">
 

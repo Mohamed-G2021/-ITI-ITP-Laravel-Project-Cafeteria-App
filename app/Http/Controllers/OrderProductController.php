@@ -150,14 +150,14 @@ class OrderProductController extends Controller
         //
         OrderProduct::findorfail($id)->delete();
         
-       
+        $orderProducts = OrderProduct::all();
+        $Products = Product::all();
         $amount=0 ;
         foreach ($orderProducts as $orderProduct) {
             $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
 
       }
-         $orderProducts = OrderProduct::all();
-        $Products = Product::all();
+        
         return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
 
     }
