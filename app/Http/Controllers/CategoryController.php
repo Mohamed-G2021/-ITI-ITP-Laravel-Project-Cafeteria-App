@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
+use App\Http\Controllers\ProductCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories=Category::all();
+            return view('categories.index',['categories'=>$categories]);
+        
     }
 
     /**
@@ -20,24 +23,30 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+    {       
+  
 
-    /**
-     * Display the specified resource.
-     */
+     $request_data = $request->all();
+   
+    Category::create($request_data);
+
+    return to_route("categories.index");
+    
+    }
+  
+        //
     public function show(Category $category)
     {
-        //
+        return view('categories.show', ['category'=>$category]);
     }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -45,6 +54,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+        return view('categories.edit', ['category'=>$category]);
     }
 
     /**
@@ -52,7 +62,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        //   
+        $category->update($request->all());
+        return to_route('categories.show', $category->id);
     }
 
     /**
@@ -60,6 +72,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return to_route('categories.index');
     }
 }
