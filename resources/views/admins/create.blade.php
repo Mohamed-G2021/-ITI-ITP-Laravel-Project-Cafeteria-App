@@ -8,7 +8,7 @@
 
         <div class="card-body m-3 p-4 mt-4">
 
-            <form method="POST" action="{{ route('admins.index') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin-users.index') }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group">

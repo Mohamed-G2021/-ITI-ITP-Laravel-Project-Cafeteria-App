@@ -7,7 +7,7 @@
     <div class="card" style="width: 400px; height: 500px;">
 
         <div class="card-body m-3 p-4 mt-4">
-            <form method="POST" action="{{ route('admins.update', $user) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin-users.update', $user) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">

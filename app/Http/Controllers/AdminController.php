@@ -36,7 +36,7 @@ class AdminController extends Controller
 
         User::create($request_data);
 
-        return to_route('admins.index');
+        return to_route('admin-users.index');
 
     }
       
@@ -79,7 +79,7 @@ public function update(Request $request, string $id)
      $user=User::findorfail($id);
     $user->update($request_data);
 
-    return redirect()->route('admins.index');
+    return redirect()->route('admin-users.index');
 }
 
   
@@ -92,7 +92,7 @@ public function update(Request $request, string $id)
 
         
 
-        return to_route('admins.index');
+        return to_route('admin-users.index');
 
     }
 

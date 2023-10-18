@@ -3,7 +3,7 @@
 
     <div class="container d-flex align-items-center justify-content-center " >
         <div class="m-3 p-3 mt-5">
-            <a href="{{ route('admins.create') }}" class="btn btn-success mx-2">Add New User</a>
+            <a href="{{ route('admin-users.create') }}" class="btn btn-success mx-2">Add New User</a>
       
             <table class="table table-light table-striped text-center  table-bordered my-4" style="width: 600px">
     <thead>
@@ -16,9 +16,9 @@
                     <td> {{$user->name}}</td>
                      <td> {{$user->email}}</td> 
 
-                    <td> <a href="{{ route('admins.edit', $user->id) }}" class="btn btn-warning"> Edit </a></td>
+                    <td> <a href="{{ route('admin-users.edit', $user->id) }}" class="btn btn-warning"> Edit </a></td>
                     <td>
-                        <form action="{{ route('admins.destroy', $user->id) }}" method="post">
+                        <form action="{{ route('admin-users.destroy', $user->id) }}" method="post">
                             @csrf
                             @method('delete')
                             <input type="submit"   class="btn btn-danger" value="Delete">

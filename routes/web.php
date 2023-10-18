@@ -6,6 +6,10 @@ use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PasswordResetController;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 
 /*
@@ -33,3 +37,41 @@ Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
+
+// Route::get('/password/reset-form/{token}/{email}', [PasswordResetController::class, 'showResetForm'])->name('password.reset.form');
+// Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
+//login with geogle
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+
+//  dd($googleUser);
+    $user = User::where('email', $googleUser->email)->first();
+
+    if (!$user) {
+     
+   
+        $user = User::updateOrCreate([
+            'google_id' => $googleUser->id,
+        ], [
+            'name' =>$googleUser->name,
+            'email' => $googleUser->email,
+            'password'=> null,
+             'google_token' =>$googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+        ]);
+      }
+
+    Auth::login($user);
+
+    return redirect('/order-products');
+});
+
+
+
+
