@@ -28,8 +28,8 @@
             <input type="date" id="end" name="to_date">
             <label for="name">Username</label>
             <select name="user_id" class="form-select my-5 w-50" aria-label="Default select example">
-                <option value="-1" selected >Select User</option>
-                <option value="0"  >All User</option>
+                <option value="-1">Select User </option>
+                <option value="0" >All User</option>
                 @foreach($allusers as $user)
                     <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach
