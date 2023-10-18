@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-
-@section('content')
-<div class="container">
-        <h1>All Products</h1>
+<div class="container fw-bolder">
+        <h2 class="fw-bolder fs-1">All Products</h2>
         <br>
-        <a href="{{route('products.create')}}" class="btn btn-primary">Add new product</a>
+        <a href="{{route('products.create')}}" class="btn btn-success">Add new product</a>
         <br><br>
-        <table class="table">
+        <table class="table text-capitalize">
                 <thead>
-                        <tr>
+                        <tr class="table-secondary">
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Image</th>
@@ -24,15 +22,15 @@
                         <tr>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->price}} egp</td>
-                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain; width:100px;height:100px"> </td>
+                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" style="object-fit:contain; width:50px;height:60px"> </td>
                                 <td>
                                         @if($product->availability == 'available')
-                                        <a href="" class="btn btn-warning"> Available</a>
+                                        <a href="" class="btn btn-success mr-1"> Available</a>
                                         @else
-                                        <a href="" class="btn btn-info">Unavailable</a>
+                                        <a href="" class="btn btn-secondary mr-1">Unavailable</a>
                                         @endif
-                                        <a href="{{route('products.show',$product->id)}}" class="btn btn-primary">show</a>
-                                        <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning">edit</a>
+                                        <a href="{{route('products.show',$product->id)}}" class="btn btn-info mr-1">show</a>
+                                        <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning mr-1">edit</a>
                                         <form action="{{route('products.destroy',$product->id)}}" method="post">
                                                 @csrf
                                                 @method('delete')
@@ -48,5 +46,4 @@
  {!! $products->links() !!}
  </div>
 </div>
-@endsection('content')
 @endsection
