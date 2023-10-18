@@ -14,8 +14,6 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/checks.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="frontend/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="frontend/js/owl.theme.default.min.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -23,25 +21,37 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fw-bolder fs-5">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                <a class="navbar-brand text-warning fw-bolder fs-2" href="{{ url('/') }}">
+                    <!-- {{ config('app.name', 'Laravel') }} -->
+                     <!-- <img src="{{asset("/images/logo.png")}}" alt="order_image" style="width:100px;height:70px;"> -->
+                     Cafeteria 
+                    </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                   
                     <ul class="navbar-nav me-auto">
-
+                    @if(Auth::user())
+                     @if(Auth::user()->role == "user")
+                        <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
+                        <a class="nav-link" href="{{route('orders.index')}}">My Orders</a>
+                        @endif
+                        @endif
+                        @if(Auth::user())
+                        @if(Auth::user()->role == "admin")
                         <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('products.index')}}">Products</a>
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
-                        <a class="nav-link" href="{{route('orders.index')}}">Orders</a>
+                         <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
+                        @endif
+                        @endif
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -62,7 +72,9 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                            <img src="{{ asset('images/user.png') }}" alt="" style="width:50px;height:50px;">   
+                            {{ Auth::user()->name }}
+                               
                             </a>
 
 
@@ -93,8 +105,6 @@
     </div>
 
     <script src="{{ asset('js/checks.js')}}"></script>
-    <script src="frontend/js/jquery-3.7.1.min.js"></script>
-    <script src="frontend/js/owl.carousel.min.js"></script>
 </body>
 
 </html>

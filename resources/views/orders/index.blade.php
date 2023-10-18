@@ -9,7 +9,8 @@
   }
 </style>
 <section class="container">
-    <h2>My Orders</h2>
+  @if($orders->count())
+    <h2 class="fw-bolder fs-1">My Orders</h2>
   <form action="{{ route('select.filter') }}" method="GET">
   <div class="row my-4">
   <div class="input-group mb-3 col">
@@ -24,9 +25,9 @@
 </div>
   </form>
 <div class="orders">
-<table class="table  table-striped table-bordered">
+<table class="table fw-bolder">
   <thead>
-    <tr>
+    <tr class="table-secondary">
       <th scope="col">Order Date </th>
       <th scope="col">Status</th>
       <th scope="col">Amount</th>
@@ -38,13 +39,6 @@
     <tr>
       <td scope="row" class="d-flex justify-content-between">
         <p>{{$order->created_at}}</p>
-        <!-- <span class=" icon"> 
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-          <path id="plus-icon" d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-           <path id="plus-icon" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-           <path id="minus-icon" d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-           <path  id="minus-icon" d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-          </svg></span> -->
         <svg class="icon" data-order-id="{{ $order->id }}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path id="plus-icon" d="M12 7V12H7V14H12V19H14V14H19V12H14V7H12Z"/>
                     <path id="minus-icon" d="M7 12H19V14H7V12Z"/>
@@ -83,6 +77,13 @@
 <div class="d-flex pagination">
  {!! $orders->links() !!}
  </div>
+ @else
+ <div>
+  <h1 class="text-center fw-bolder fs-1 mt-5">Your Cart Is Currently Empty</h1>
+ </div>
+ @endif
+ 
+ 
 </section>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -2,19 +2,18 @@
 
 @section('content')
 <div class="container ">
-    <div class="row justify-content-center">
-        <div class="card" style="width: 400px; height: 500px;">
+    <div class="row justify-content-center mt-3">
+        <div class="card shadow col-lg-6 fw-bolder p-3">
 
-            <div class="card-body m-3 p-4 mt-4">
-    
+            <div class="card-body">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
     
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="name">Name</label>
                         <input
                             type="text"
-                            class="form-control"
+                            class="form-control py-2"
                             id="name"
                             name="name"
                             placeholder="Name"
@@ -25,11 +24,11 @@
                         @enderror
                     </div>
     
-                    <div class="form-group">
+                    <div class="form-group  mb-3">
                         <label for="email">Email address</label>
                         <input
                             type="email"
-                            class="form-control"
+                            class="form-control py-2"
                             id="email"
                             name="email"
                             placeholder="Email address"
@@ -40,11 +39,11 @@
                         @enderror
                     </div>
     
-                    <div class="form-group">
+                    <div class="form-group  mb-3">
                         <label for="password">Password</label>
                         <input
                             type="password"
-                            class="form-control"
+                            class="form-control py-2"
                             id="password"
                             name="password"
                             placeholder="Password"
@@ -54,11 +53,11 @@
                         @enderror
                     </div>
     
-                    <div class="form-group">
+                    <div class="form-group  mb-3">
                         <label for="password_confirmation">Confirm Password</label>
                         <input
                             type="password"
-                            class="form-control"
+                            class="form-control py-2"
                             id="password_confirmation"
                             name="password_confirmation"
                             placeholder="Password Confirmation"
@@ -68,20 +67,16 @@
                         @enderror
                     </div>
     
-                    <div class="form-group">
+                    <div class="form-group  mb-3">
                         <label class="form-label">Image</label>
-                        <input type="file" name="image" class="form-control" value="{{ old('image') }}" />
+                        <input type="file" name="image" class="form-control py-2" value="{{ old('image') }}" />
                         @error('name')
                             <div style="color: red; font-weight: bold">{{ $message }}</div>
                         @enderror
                     </div>
     
-                    <button class="d-flex align-items-center justify-content-center  text-center mt-4"
-                        type="submit"
-                        class="btn btn-primary btn-block mt-3"
-                        style="background-color: #17a2b8; border-color: #17a2b8"
-                    >
-                        Add
+                    <button class="btn btn-primary" type="submit">
+                        Register
                     </button>
                 </form>
             </div>

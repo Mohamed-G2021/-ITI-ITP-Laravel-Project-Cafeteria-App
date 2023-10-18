@@ -17,7 +17,6 @@ class AdminOrderController extends Controller
     public function index()
     {
          $user=Auth::user();
-         
         if($user->role =='admin'){
             $orders = Order::orderBy('created_at', 'desc')->paginate(6);
             return view('admin.orders.index', compact('orders'));

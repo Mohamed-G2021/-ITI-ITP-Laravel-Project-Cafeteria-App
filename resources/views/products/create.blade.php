@@ -1,14 +1,12 @@
 @extends('layouts.app')
-
 @section('content')
-
 <div class="container">
-        <h1> Add new product</h1>
-
+        <div class="row  justify-content-center mt-4 fw-bolder fs-5">
+          <div class="col-lg-6 fw-bolder shadow p-5 rounded">
+          <h1 class="fw-bolder"> Add new product</h1>
         <form method="post" action="{{route('products.store')}}" enctype="multipart/form-data">
                 @csrf
-                <div class="mb-3">
-
+                <div class="">
                         <div class="mb-3">
                                 <label class="form-label">Name</label>
                                 <input type="text" name="name" class="form-control">
@@ -34,7 +32,7 @@
 
                         <div class="mb-3">
                                 <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group">
                                                 <label class="form-label">Category</label>
                                                 <div class="input-group">
                                                         <select class="form-select" name='category_id' aria-label="Default select example">
@@ -49,9 +47,13 @@
                                 </div>
                         </div>
                         <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
                         </div>
         </form>
+          </div>
+      
+        </div>
+      
 </div>
 
 @endsection

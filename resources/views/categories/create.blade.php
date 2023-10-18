@@ -1,13 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
 
 <div class="container d-flex align-items-center justify-content-center mt-5" >
-
-
-    <div class="card p-4 m-5" style="width: 500px;">
+    <div class="card p-4 m-5 shadow" style="width: 500px;">
         <div class="card-body">
-            <h1 class="card-title text center">Create New Category</h1>
+            <h1 class="card-title text center fw-bolder">Create New Category</h1>
   
 
     <form method="post" action="{{route('categories.store')}}" enctype="multipart/form-data">
@@ -15,7 +12,7 @@
   
     </div>
         <div class="mb-3">
-            <label  class="form-label">Name</label>
+            <label  class="form-label fw-bolder">Name</label>
             <input type="text" class="form-control" name="name"  value="{{ old('name') }}" >
         </div>
        <div>

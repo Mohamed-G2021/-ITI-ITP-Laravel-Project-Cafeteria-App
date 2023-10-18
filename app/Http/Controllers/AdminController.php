@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     {
         // Retrieve users with the 'user' role
-        $users = User::where('role', 'user')->get();
+        $users = User::where('role', 'user')->paginate();
         return view('admins.index', ['users' => $users]);
     }
 

@@ -4,7 +4,7 @@
 
 <!--start container-->
 <div class="container">
-    <h2>Checks</h2>
+    <h2 class="fs-1 fw-bolder">Checks</h2>
 
     <p>
         {{--$orders->first()->user--}}
@@ -15,25 +15,32 @@
         @endforeach--}}
 
     </p>
-
     <!--start inputsinfo-->
     <div class="inputsinfo">
 
         <form id="filtration-form" method="GET" action="{{ url('/checks') }}">
             <!-- Add your filtration form elements here -->
-            <label for="start">Date From</label>
-            <input type="date" id="start" name="from_date">
-
-            <label for="end">Date To</label>
-            <input type="date" id="end" name="to_date">
-            <label for="name">Username</label>
-            <select name="user_id" class="form-select my-5 w-50" aria-label="Default select example">
+        <div class="row my-4 fw-bolder">
+            <div class=" mb-3 col-md-6">
+            <label for="start" class="form-label">Date From</label>
+            <input type="date" id="start" name="from_date" class="form-control">
+            </div> 
+            <div class="mb-3 col-md-6">
+            <label for="end" class="form-label">Date To</label>
+            <input type="date" id="end" name="to_date" class="form-control">
+            </div> 
+            <div class="col-md-6">
+            <label for="name" class="form-label">User name</label>
+            <select name="user_id" class="form-select" aria-label="Default select example">
                 <option value="-1" selected >Select User</option>
                 <option value="0"  >All User</option>
                 @foreach($allusers as $user)
                     <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach
             </select>
+            </div>
+        </div>
+            
 
             <!--<button type="submit">Filter</button>-->
         </form>
@@ -45,9 +52,9 @@
     <!--start data-->
     <div class="data">
 
-    <table class="table table-bordered border-primary">
+    <table class="table text-capitalize fw-bolder">
             <thead>
-                <tr>
+                <tr class="table-secondary">
 
                 <th scope="col">Name</th>
                 <th scope="col">Total Amount</th>
@@ -55,9 +62,9 @@
             </thead>
 
                 @foreach($users as $user)
-                    <tbody>
+                    <tbody class="py-2">
                         <tr>
-                            <td>
+                            <td >
                                 <span id="showorderbody" class="h4">+</span> {{$user->name }}
                             </td>
 
