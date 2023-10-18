@@ -77,6 +77,20 @@ class ProductController extends Controller
         return to_route('products.show', $product->id);
     }
 
+    public function changeAvailability(Request $request, Product $product)
+    {
+        if ($request->input('update-button') == 'available') {
+            $product->availability = $request->input('update-button');
+            $product->save();
+        } else if ($request->input('update-button') == 'unavailable') {
+            $product->availability = $request->input('update-button');
+            $product->save();
+        }
+
+        return to_route('products.index');
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
