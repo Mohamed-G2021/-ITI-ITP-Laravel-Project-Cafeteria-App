@@ -28,17 +28,20 @@
 <div class="row">
 
   <div class="col">
-  @if(Auth::id())
+  @if(Auth::check() && Auth::user()->role === 'admin')
     
   <h1>Add to user</h1>
-  <select class="form-select mb-4">
-      <option selected>Choose Branch</option>
-      <option value="">Zayed</option>
-      <option value="">Nasr City</option>
-      <option value="">New Cairo</option>
+  <form action="{{route('cust')}}" method="post" enctype="multipart/form-data">
+    @csrf
+  <select class="form-select mb-4" name="user" >
+    @foreach ($users as $user )
+        <option value="{{$user->id}}">{{$user->name}}</option>
+    @endforeach
+    
   </select>
-  
-    @else
+  <button class="btn btn-danger float-end" type="submit">Go</button>
+</form>
+  @else
    
 
     <h4 class="mt-5">Latest Order</h4>
@@ -151,7 +154,7 @@
           <div class=" align-items-center ">
 
             <h3>Branch</h3>
-            <select class="form-select mb-4" name="branch">
+            <select class="form-select mb-4" name="branch" >
               <option selected>Choose Branch</option>
               <option value="1">Zayed</option>
               <option value="2">Nasr City</option>

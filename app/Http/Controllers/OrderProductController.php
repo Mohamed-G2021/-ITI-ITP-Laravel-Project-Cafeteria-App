@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Order;
-
+use App\Models\User;
+use Auth;
 
 
 class OrderProductController extends Controller
@@ -14,6 +15,7 @@ class OrderProductController extends Controller
 
     protected $confirm = false;
     protected $amount = 3;
+    protected $id ;
 
     protected function calculate_amount(){
         $amount = 0;
@@ -25,7 +27,12 @@ class OrderProductController extends Controller
       }
       return $amount;
     }
-  
+  protected function cust(Request $request){
+        $id = (int) $request->get('user');
+        session(['user_id' => $id]);
+
+        return to_route('order-products.index',['user_id'=>$id ] );
+  }
 
 
     /**
@@ -47,8 +54,10 @@ class OrderProductController extends Controller
         }
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
+        $users = User::all();
         $amount  =$this->calculate_amount($orderProducts);
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$amount] );
+        
+        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$amount , 'users'=>$users] );
     }
 
     /**
@@ -65,14 +74,21 @@ class OrderProductController extends Controller
     public  function store(Request $request)
     {
         //
-     
+     $user_orders ;
         $productIds = session('order_products', []);
         if(empty($productIds))
         {
              $order = new Order();
             $order->status = 'processing';
-            $order->amount = $this->calculate_amount();
-            $order->user_id =1;  
+            $order->amount = $this->calculate_amount();     
+            if(Auth::user()->role =="admin" ){
+                $order->user_id = session('user_id');
+
+            }
+            else{
+                $order->user_id =$request->user()->id; 
+                $user_orders = $order; 
+            }
             $order->save();
 
         session(['order_id' => $order->id]);
