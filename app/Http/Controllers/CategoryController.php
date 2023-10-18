@@ -31,10 +31,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request_data = $request->all();
+
         if ($request->input('submit-button') == 'back-to-product') {
+            Category::create($request_data);
             return to_route('products.create');
         }
-        $request_data = $request->all();
 
         Category::create($request_data);
 
