@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->foreign('order_id')->constrained('orders')->onDelete('cascade')->references('id')->on('orders');
             $table->foreign('product_id')->constrained('products')->onDelete('cascade')->references('id')->on('products');
+
             $table->timestamps();
         });
     }

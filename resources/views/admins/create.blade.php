@@ -7,9 +7,8 @@
         <div class="card" style="width: 400px; height: 500px;">
 
             <div class="card-body m-3 p-4 mt-4">
-
-                <form method="POST" action="{{ route('admin-users.index') }}" enctype="multipart/form-data">
-                    @csrf
+            <form method="POST" action="{{ route('admin-users.index') }}" enctype="multipart/form-data">
+                @csrf
 
                     <div class="form-group">
                         <label for="name">Name</label>
