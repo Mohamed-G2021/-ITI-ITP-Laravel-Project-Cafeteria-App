@@ -37,11 +37,10 @@ Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
-
-// Route::get('/password/reset-form/{token}/{email}', [PasswordResetController::class, 'showResetForm'])->name('password.reset.form');
-// Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
-//login with geogle
-
+Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter');
+Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
+Route::resource('/admins-orders', AdminOrderController::class);
+Route::resource('checks', CheckController::class);
 
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
