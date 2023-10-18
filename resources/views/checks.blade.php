@@ -34,6 +34,7 @@
             <select name="user_id" class="form-select" aria-label="Default select example">
                 <option value="-1" selected >Select User</option>
                 <option value="0"  >All User</option>
+
                 @foreach($allusers as $user)
                     <option value="{{$user->id}}">{{$user->name}}</option>
                 @endforeach

@@ -10,6 +10,7 @@
                 <form method="POST" action="{{ route('admin-users.index') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-3">
+
                         <label for="name">Name</label>
                         <input type="text" class="form-control py-2" id="name" name="name" placeholder="Name" value="{{ old('name') }}" />
                         @error('name')

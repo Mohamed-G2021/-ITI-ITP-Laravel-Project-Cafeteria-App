@@ -52,6 +52,7 @@
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
                         @endif
                         @endif
+
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -75,8 +76,8 @@
                             <img src="{{ asset('images/user.png') }}" alt="" style="width:50px;height:50px;">   
                             {{ Auth::user()->name }}
                                
-                            </a>
 
+                            </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
