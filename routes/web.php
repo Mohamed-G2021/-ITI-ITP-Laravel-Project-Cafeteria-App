@@ -42,8 +42,7 @@ Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
-
-
+Route::put('products/{product}', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
@@ -72,3 +71,4 @@ Route::get('/auth/callback', function () {
     return redirect('/order-products');
 });
 
+ 
