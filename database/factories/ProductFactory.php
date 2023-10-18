@@ -4,12 +4,6 @@ namespace Database\Factories;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
-
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model
- */
 class ProductFactory extends Factory
 {
     /**
@@ -19,13 +13,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-       
-        return [
-            //
-            'name' => fake()->name(),
-            'price' => $this->faker->randomFloat(2, 0, 1000),
-             'image' => $this->faker->image(public_path('images/products_images'),400,300, null, false),
- 
+        $imagePath = 'public/images';
+        $imageFilename = fake()->image($imagePath, 200, 200, 'category', false);
+         return [
+        'name' => fake()->name,
+        'price'=> fake()->randomFloat(2, 1, 100),
+        'image' => $imageFilename,
+        'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

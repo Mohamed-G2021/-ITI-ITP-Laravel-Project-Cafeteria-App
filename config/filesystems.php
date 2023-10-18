@@ -63,6 +63,14 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        
+        'usersimg_uploads' => [
+            'driver' => 'local',
+            'root' => public_path('images/users_images'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
     ],
 

@@ -26,11 +26,20 @@
                         </div>
 
                         <div class="mb-3">
-                                <label for="" class="form-label">Category</label>
-                                <select class="form-select col-4" aria-label="Default select example">
-                                        <option selected disabled value="">select category</option>
-                                        <option value="">category</option>
-                                </select>
+                                <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                                <label class="form-label">Category</label>
+                                                <div class="input-group">
+                                                        <select class="form-select" name='category_id' aria-label="Default select example">
+                                                                <option selected disabled value="">Open this select menu</option>
+                                                                @foreach($categories as $category)
+                                                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                                                @endforeach
+                                                        </select>
+                                                        <a href="{{ route('categories.create') }}" class="btn btn-info mx-1">Add New Category</a>
+                                                </div>
+                                        </div>
+                                </div>
                         </div>
 
                         <div class="mb-3">
