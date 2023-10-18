@@ -39,7 +39,7 @@
                                                 <div class="input-group">
                                                         <select class="form-select" name='category_id' aria-label="Default select example">
                                                                 <option selected disabled value="">Open this select menu</option>
-                                                                @foreach($category as $category)
+                                                                @foreach($categories as $category)
                                                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                                                 @endforeach
                                                         </select>

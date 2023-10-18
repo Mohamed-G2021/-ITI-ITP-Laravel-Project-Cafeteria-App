@@ -27,8 +27,8 @@ class ProductController extends Controller
     public function  create()
     {
 
-        $category = Category::all();
-        return view('products.create', ["category" => $category]);
+        $categories = Category::all();
+        return view('products.create', ["categories" => $categories]);
     }
 
     /**
@@ -50,8 +50,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-         $products = Product::all();
-        return view('products.show', ['product' => $product,'products' => $products]);
+        $products = Product::all();
+        return view('products.show', ['product' => $product, 'products' => $products]);
     }
 
     /**
@@ -59,7 +59,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', ['product' => $product]);
+        $categories = Category::all();
+        return view('products.edit', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
