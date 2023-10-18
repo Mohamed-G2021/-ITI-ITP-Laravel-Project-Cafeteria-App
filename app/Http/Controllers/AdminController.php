@@ -79,7 +79,7 @@ class AdminController extends Controller
         $user = User::findorfail($id);
         $user->update($request_data);
 
-        return redirect()->route('admins.index');
+        return redirect()->route('admin-users.index');
     }
 
 
@@ -92,6 +92,6 @@ class AdminController extends Controller
 
 
 
-        return to_route('admins.index');
+        return to_route('admin-users.index');
     }
 }

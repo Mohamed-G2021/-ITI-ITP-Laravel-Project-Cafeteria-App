@@ -18,7 +18,7 @@
             <tbody>
                 @foreach($users as $user)
                 <tr>
-                    <td> <img src="{{asset('images/users_images/'.$user->image)}}" width="70" height="70"></td>
+                    <td> <img src="{{asset('images/users_images/users_images/'.$user->image)}}" width="70" height="70"></td>
                     <td> {{$user->name}}</td>
                     <td> {{$user->email}}</td>
 

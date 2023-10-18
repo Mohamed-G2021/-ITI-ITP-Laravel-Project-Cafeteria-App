@@ -7,7 +7,7 @@ use \App\Http\Controllers\OrderProductController;
 
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
-    <h1>Welcome NameOfCust</h1>
+    <h1>Welcome {{ Auth::user()->name }}</h1>
   </div>
   <span>
     <div class="input-group d-flex " role="search">
