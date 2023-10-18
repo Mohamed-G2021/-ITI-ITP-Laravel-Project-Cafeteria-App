@@ -1,7 +1,4 @@
-@php
-use \App\Http\Controllers\OrderProductController;
 
-@endphp
 @extends('layouts.app')
 @section('content')
 
@@ -86,14 +83,14 @@ use \App\Http\Controllers\OrderProductController;
         </a>
         <div class="list-group list-group-flush border-bottom ">
 
-          <table class="table table-dark text-center ">
+          <table class="table table-dark text-center " >
             <thead>
               <th>Product</th>
               <th>Quantity</th>
               <th>Price</th>
               <th></th>
             </thead>
-            <tbody>
+            <tbody id="table_body">
               @foreach ($orderProducts as $orderProduct)
               <tr>
                 <th scope="row">{{$orderProduct->product->name}}</th>
@@ -152,10 +149,10 @@ use \App\Http\Controllers\OrderProductController;
           <div class="d-flex flex-column align-items-end">
 
 
-            <p class="fs-3 ">{{$amount}} EGP</p>
+            <p class="fs-3 " id="amount">{{$amount}} EGP</p>
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <button class="btn btn-danger float-end" type="submit"  value="done">Confirm</button>
+                    <button class="btn btn-danger float-end" type="submit" onclick="del(event)" id="confirm" value="done">Confirm</button>
 
           </form>
           </div>
@@ -166,6 +163,18 @@ use \App\Http\Controllers\OrderProductController;
 
   </main>
 </div>
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+    </script>
+
+<script>
+        function del(event) {
+            $('#table_body').detach();
+            $('#amount').text('0 EGP')
+           
+        }
+    </script>
+
 <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="">
   /* global bootstrap: false */

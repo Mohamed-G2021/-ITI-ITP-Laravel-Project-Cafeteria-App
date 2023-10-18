@@ -60,7 +60,7 @@ class OrderProductController extends Controller
         {
              $order = new Order();
             $order->status = 'processing';
-            $order->amount = 0;
+            $order->amount = $this->clac_amount();
             $order->user_id =1;  
             $order->save();
 
@@ -90,6 +90,8 @@ class OrderProductController extends Controller
                 'quantity'=>$quantity,
 
            ]);   
+           $x->save();
+
 
         }
    
@@ -102,7 +104,7 @@ class OrderProductController extends Controller
         $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
 
       }
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
+        return redirect('order-products' );
     }
 
     /**
@@ -137,7 +139,10 @@ class OrderProductController extends Controller
 
         }
         else{
-            $ord_product->quantity = $ord_product->quantity  - 1;
+            if($ord_product->quantity > 0){
+                $ord_product->quantity = $ord_product->quantity  - 1;
+
+            }
 
 
         }
@@ -152,7 +157,7 @@ class OrderProductController extends Controller
 
       }
 
-        return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
+      return redirect('order-products' );
 
 
     }
@@ -169,14 +174,22 @@ class OrderProductController extends Controller
         $Products = Product::all();
         $amount  =$this->clac_amount();
       
-        return to_route('order-products.index', ['orderProducts'=>$orderProducts, 'products'=>$Products, 'amount'=>$amount] );
+        return redirect('order-products' );
 
     }
     public function confirm_order(){
         $orderId = session('order_id');
         $amount = $this->clac_amount();
-        Order::where('order_id', $orderId)->amount = $amount;
-        OrderProduct::where('order_id', $orderId)->delete();
+        $order = Order::findorfail($orderId);
+        // $order->products()->detach();
+                // OrderProduct::where('order_id', $orderId)->detach();
+
+        $order->amount = $amount;
+        $order->save();
+
+        // Order::where('id', $orderId)->amount = $amount;
+        // OrderProduct::where('order_id', $orderId)->delete();
+        $order = new Order();
         session()->forget('order_products');
         return to_route('order-products.index');
     }
