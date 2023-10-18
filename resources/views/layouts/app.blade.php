@@ -13,7 +13,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -32,6 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+
                         <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('products.index')}}">Products</a>
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
@@ -56,10 +56,12 @@
                         </li>
                         @endif
                         @else
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
                             </a>
+
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -82,6 +84,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <div class="py-4">
+            @yield('body')
+</div>
     </div>
 </body>
 

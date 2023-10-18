@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {           
-         if(Schema::hasTable('order_products')) return;      
 
         Schema::create('order_products', function (Blueprint $table) {
+            
+
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('product_id');      
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->foreign('product_id')->constrained('products')->onDelete('cascade')->references('id')->on('products');
             $table->timestamps();
             
+            
         });
     }
 
@@ -32,6 +34,14 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Schema::table('order_products', function (Blueprint $table) {
+        //     //
+        //     $table->dropForeign('order_products_order_id_foreign');
+        //     $table->dropForeign('order_products_product_id_foreign');            
+        // });
+
+       
+
         Schema::dropIfExists('order_products');
     }
 };
