@@ -6,10 +6,8 @@ use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use  App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\checksController;
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,9 +37,4 @@ Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('orders', OrderController::class);
-
-
-
-
-
-Route::get('/checks', [checksController::class,'index']);
+Route::resource('checks', CheckController::class);
