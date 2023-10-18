@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    /* .card{
+        background:#F9EFDB;
+    } */
+</style>
 <div class="container">
     <h1 class="fs-1 fw-bolder text-capitalize my-3">{{$product->name}} product details</h1>
     <div class="row">
-        <div class="card col-10 p-0 shadow my-3">
+        <div class="card col-md-8 p-0 shadow my-3">
             <div class="row g-0">
                 <div class="col-md-4 ">
                     <img src="{{asset("/images/$product->image")}}" class="img-fluid rounded-start " style="width:100%;height:100%">
