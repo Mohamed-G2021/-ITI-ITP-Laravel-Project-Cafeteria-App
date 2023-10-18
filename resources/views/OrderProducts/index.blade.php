@@ -4,7 +4,6 @@
 
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
-    <h1>Welcome NameOfCust</h1>
   </div>
   <span>
     <div class="input-group d-flex " role="search">
@@ -29,6 +28,18 @@
 <div class="row">
 
   <div class="col">
+  @if(Auth::id())
+    
+  <h1>Add to user</h1>
+  <select class="form-select mb-4">
+      <option selected>Choose Branch</option>
+      <option value="">Zayed</option>
+      <option value="">Nasr City</option>
+      <option value="">New Cairo</option>
+  </select>
+  
+    @else
+   
 
     <h4 class="mt-5">Latest Order</h4>
     <div class="container text-center mt-3 ">
@@ -39,14 +50,10 @@
           <p>{{$orderProduct->product->name}}</p>
         </div>
         @endforeach
-
-
-
-
       </div>
     </div>
-
     <hr>
+  @endif
 
     </form>
     <div class="container text-center mt-3 ">
@@ -74,7 +81,7 @@
     </div>
   </div>
 
-  <div class="col ms-5 me-5">
+  <div class="col-4  ms-5 me-5">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
@@ -144,11 +151,11 @@
           <div class=" align-items-center ">
 
             <h3>Branch</h3>
-            <select class="form-select mb-4">
+            <select class="form-select mb-4" name="branch">
               <option selected>Choose Branch</option>
-              <option value="">Zayed</option>
-              <option value="">Nasr City</option>
-              <option value="">New Cairo</option>
+              <option value="1">Zayed</option>
+              <option value="2">Nasr City</option>
+              <option value="3">New Cairo</option>
             </select>
           </div>
           <br>
@@ -156,7 +163,6 @@
 
             <p class="fs-3 " id="amount">{{$amount}} EGP</p>
 
-            <p class="fs-3 ">{{$amount}} EGP</p>
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
               @csrf
               <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>

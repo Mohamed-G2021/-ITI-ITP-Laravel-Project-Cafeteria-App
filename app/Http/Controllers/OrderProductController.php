@@ -182,20 +182,14 @@ class OrderProductController extends Controller
         $orderId = session('order_id');
         $amount = $this->calculate_amount();
         $order = Order::findorfail($orderId);
-        // $order->products()->detach();
-        // OrderProduct::where('order_id', $orderId)->detach();
-
-        // $order->amount = $amount;
-        // Update the product now.
+      
         $order->update([            
             'amount'=> $this->calculate_amount(),
         ]);        
 
         $order->notes = $request->get('notes');
+        $order->branch_id= (int)$request->get('branch');
         $order->save();
-
-
-        // Order::where('id', $orderId)->amount = $this->calculate_amount();
         // OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
         $confirm = true;
