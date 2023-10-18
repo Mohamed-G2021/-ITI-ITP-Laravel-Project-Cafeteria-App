@@ -10,14 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-     {
+    {
         Schema::create('order_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('product_id');
             $table->integer('quantity');
-            $table->foreign('order_id')->constrained()->onDelete('cascade')->references('id')->on('orders');
-            $table->foreign('product_id')->constrained()->onDelete('cascade')->references('id')->on('products');
+            $table->foreign('order_id')->constrained('orders')->onDelete('cascade')->references('id')->on('orders');
+            $table->foreign('product_id')->constrained('products')->onDelete('cascade')->references('id')->on('products');
             $table->timestamps();
         });
     }
