@@ -8,13 +8,14 @@ use App\Models\Product;
 use App\Models\Order;
 
 
+
 class OrderProductController extends Controller
 {    
 
     protected $confirm = false;
     protected $amount = 3;
 
-    protected function clac_amount(){
+    protected function calculate_amount(){
         $amount = 0;
         $orderProducts = OrderProduct::all();
 
@@ -24,8 +25,7 @@ class OrderProductController extends Controller
       }
       return $amount;
     }
-    // protected    $amount=0 ;
-
+  
 
 
     /**
@@ -34,9 +34,20 @@ class OrderProductController extends Controller
   
     public function index()
     {
+        // if($confirm == undefined || $confirm == true )
+        {
+            $orderProducts = new OrderProduct;
+            $confirm = false;
+
+        }
+        // else
+        {
+            // $orderProducts = OrderProduct::all();
+
+        }
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-        $amount  =$this->clac_amount($orderProducts);
+        $amount  =$this->calculate_amount($orderProducts);
         return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products , 'amount'=>$amount] );
     }
 
@@ -60,7 +71,7 @@ class OrderProductController extends Controller
         {
              $order = new Order();
             $order->status = 'processing';
-            $order->amount = $this->clac_amount();
+            $order->amount = $this->calculate_amount();
             $order->user_id =1;  
             $order->save();
 
@@ -69,7 +80,7 @@ class OrderProductController extends Controller
 
 
         $productId = $request->input('productId');    
-        $notes = $request->input('notes');       
+        $notes = $request->input('notes');  
    
         $orderId = session('order_id');
         $quantity = 1;
@@ -77,7 +88,6 @@ class OrderProductController extends Controller
 
        $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
         $x=$orderProduct;
-        // dd($orderId);
         if($orderProduct){
             $orderProduct->quantity +=1;
             $orderProduct->save();
@@ -98,12 +108,8 @@ class OrderProductController extends Controller
         session()->push('order_products', $productId);
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-        // $this->amount = $order->amount;
-        $amount=0 ;
-      foreach ($orderProducts as $orderProduct) {
-        $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }
+        $amount= $this->calculate_amount() ;
+     
         return redirect('order-products' );
     }
 
@@ -151,12 +157,7 @@ class OrderProductController extends Controller
 
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-        $amount=0 ;
-        foreach ($orderProducts as $orderProduct) {
-            $amount += ($orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }
-
+        $amount=$this->calculate_amount();
       return redirect('order-products' );
 
 
@@ -172,26 +173,33 @@ class OrderProductController extends Controller
         
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
-        $amount  =$this->clac_amount();
+        $amount  =$this->calculate_amount();
       
         return redirect('order-products' );
 
     }
-    public function confirm_order(){
+    public function confirm_order(Request $request){
         $orderId = session('order_id');
-        $amount = $this->clac_amount();
+        $amount = $this->calculate_amount();
         $order = Order::findorfail($orderId);
         // $order->products()->detach();
-                // OrderProduct::where('order_id', $orderId)->detach();
+        // OrderProduct::where('order_id', $orderId)->detach();
 
-        $order->amount = $amount;
+        // $order->amount = $amount;
+        // Update the product now.
+        $order->update([            
+            'amount'=> $this->calculate_amount(),
+        ]);        
+
+        $order->notes = $request->get('notes');
         $order->save();
 
-        // Order::where('id', $orderId)->amount = $amount;
+
+        // Order::where('id', $orderId)->amount = $this->calculate_amount();
         // OrderProduct::where('order_id', $orderId)->delete();
-        $order = new Order();
         session()->forget('order_products');
-        return to_route('order-products.index');
+        $confirm = true;
+        return to_route('orders.index');
     }
    
 }

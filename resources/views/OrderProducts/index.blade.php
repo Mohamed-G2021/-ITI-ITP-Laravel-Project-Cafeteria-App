@@ -132,8 +132,15 @@
             </tbody>
           </table>
 
-          <h3>Notes</h3>
-          <textarea name="notes" id="" cols="79" rows="5" class="w-100"></textarea>
+          
+          <div class="d-flex flex-column align-items-end">
+
+
+            <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
+                               @csrf
+        <h3>Notes</h3>
+         <textarea name="notes" type="submit" id="" cols="79" rows="5" class="w-100">{{old('notes')}}</textarea>
+
           <div class=" align-items-center ">
 
             <h3>Branch</h3>
@@ -146,12 +153,9 @@
           </div>
           <br>
           <hr>
-          <div class="d-flex flex-column align-items-end">
-
 
             <p class="fs-3 " id="amount">{{$amount}} EGP</p>
-            <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
-                    @csrf
+
                     <button class="btn btn-danger float-end" type="submit" onclick="del(event)" id="confirm" value="done">Confirm</button>
 
           </form>
