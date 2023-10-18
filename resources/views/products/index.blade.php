@@ -11,7 +11,7 @@
         <table class="table">
                 <thead>
                         <tr>
-                                <th>Product</th>
+                                <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Image</th>
                                 <th>Actions</th>
@@ -24,12 +24,12 @@
                         <tr>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->price}} egp</td>
-                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain;"> </td>
+                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain; width:100px;height:100px"> </td>
                                 <td>
                                         @if($product->availability == 'available')
-                                        <a href="" class="btn btn-warning"> Unavailable</a>
+                                        <a href="" class="btn btn-warning"> Available</a>
                                         @else
-                                        <a href="" class="btn btn-info">Available</a>
+                                        <a href="" class="btn btn-info">Unavailable</a>
                                         @endif
                                         <a href="{{route('products.show',$product->id)}}" class="btn btn-primary">show</a>
                                         <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning">edit</a>
@@ -44,6 +44,9 @@
 
                 </tbody>
         </table>
+        <div class="d-flex">
+ {!! $products->links() !!}
+ </div>
 </div>
 @endsection('content')
 @endsection

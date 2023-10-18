@@ -23,10 +23,6 @@ class User extends Authenticatable
         'password',
         'role',
         'image',
-        
-
-
-
 
     ];
 
@@ -54,4 +50,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
 }

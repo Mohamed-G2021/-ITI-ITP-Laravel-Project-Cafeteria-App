@@ -5,12 +5,13 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
+use  App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,14 @@ use App\Models\User;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view("layouts.app");
 });
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/process-data', [OrderProductController::class, 'store'])->name('process-data');
-
+Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
@@ -42,13 +43,13 @@ Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilt
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
 
+
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
 
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
-
 //  dd($googleUser);
     $user = User::where('email', $googleUser->email)->first();
 
@@ -70,7 +71,4 @@ Route::get('/auth/callback', function () {
 
     return redirect('/order-products');
 });
-
-
-
 

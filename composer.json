@@ -13,6 +13,9 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2"
     },
+    "files": [
+        "app/helpers.php"
+    ],
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
@@ -27,7 +30,12 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "classmap": [
+            "app/commands",
+            "app/controllers",
+            "app/lib"
+]
     },
     "autoload-dev": {
         "psr-4": {
