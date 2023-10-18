@@ -40,7 +40,6 @@
                             <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                             <a class="nav-link" href="{{route('orders.index')}}">My Orders</a>
                         @endif
-
                         @can('admin-access')
                             <a class="nav-link" href="{{route('products.index')}}">Products</a>
                             <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
