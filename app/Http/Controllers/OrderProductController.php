@@ -38,8 +38,8 @@ class OrderProductController extends Controller
   protected function cust(Request $request){
         $id = (int) $request->get('user');
         session(['user_id' => $id]);
-    
-        $user_orders =   Order::where('user_id', $id);
+        $orderId = session('order_id');  
+        $user_orders =   Order::where('user_id', $id)->where('order_id', $orderId-1);
         return to_route('order-products.index',['user_id'=>$id, 'user_orders'=>$user_orders ] );
   }
 
@@ -48,7 +48,10 @@ class OrderProductController extends Controller
     //   $user = Auth::user();
     //   $userOrders = Order::where('user_id', $user->id)->get();
     $user = Auth::user();
-    $userOrders = Order::where('user_id', $user->id)->get();
+    // $userOrders = Order::where('user_id', $user->id)->get();
+    $orderId = session('order_id');  
+    $userOrders =   $userOrders = Order::where('user_id', $user->id)->latest()->first();
+    
       dd($userOrders);
       return view('order-products.index', ['userOrders' => $userOrders]);
   }
@@ -58,17 +61,12 @@ class OrderProductController extends Controller
   
     public function index()
     {
-        // if($confirm == undefined || $confirm == true )
         {
             $orderProducts = new OrderProduct;
             $confirm = false;
 
         }
-        // else
-        {
-            // $orderProducts = OrderProduct::all();
-
-        }
+       
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $users = User::all();
@@ -78,7 +76,9 @@ class OrderProductController extends Controller
        }
        else{$amount = 0;}
         $user = Auth::user();
-        $userOrders = Order::where('user_id', $user->id)->get();
+
+        $orderId = session('order_id');  
+        $userOrders =   $userOrders = Order::where('user_id', $user->id)->latest()->first();
         $cart = session('cart', []);
 
         // dd($cart);
@@ -162,10 +162,13 @@ class OrderProductController extends Controller
         }
 
         session()->push('order_products', $productId);
+        // $orderId = session('order_id');  
+        // $user_orders =   $user_orders::where('user_id', $id)->where('order_id', $orderId-1);
+
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $amount= $this->calculate_amount() ;
-        return to_route('order-products.index' ,['user_orders'=> $user_orders, 'cart'=> $cart]);
+        return to_route('order-products.index' ,[ 'cart'=> $cart]);
     }
 
     /**
