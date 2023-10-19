@@ -15,11 +15,13 @@
   /* resize: none; */
 }
 </style>
-<!-- <nav class="navbar bg-body-tertiary justify-content-end me-5">
+<nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container d-flex justify-content-center ">
 
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
+
+    <h1>Welcome {{ Auth::user()->name }}</h1>
   </div>
   <span>
     <div class="input-group d-flex " role="search">
@@ -37,7 +39,9 @@
   </span>
   </form>
   </div>
-</nav> -->
+</nav>
+
+<div class="row">
 
 <div class="container shop">
 <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
@@ -45,6 +49,7 @@
 
     <div class="col-md-6">
   @if(Auth::check() && Auth::user()->role === 'admin')
+
 
   <h1>Add to user</h1>
   <form action="{{route('cust')}}" method="post" enctype="multipart/form-data">
@@ -59,28 +64,31 @@
 </form>
   @else
 
-    <h4 class="fw-bold fs-5">Latest Order</h4>
-       <div class="row row-cols-4 justify-content-center text-center">
-      @foreach ($userOrders as $user_order)
-            @foreach ($user_order->products as $product)
+    <h4 class="mt-5 m-5 fs-3 fw-bold">Latest Order</h4>
+    @if (!empty($userOrders))      
+    <div class="container text-center mt-3 ">
+      <div class="row row-cols-3">
+            @foreach ($userOrders->products as $product)
 
 
-         <div class="col">
-          <img src="{{ asset('images/'.$product->image) }}"
-            class="" alt="" style="width:50px;height:70px;">
-          <p class="text-center">{{$product->name}}</p>
-         </div>
-        @endforeach
+        <div class="col">
+          <img src="{{ asset('images/'.$product->image) }}" class="w-50" alt="">
+          <p>{{$product->name}}</p>
+        </div>
         @endforeach
 
       </div>
     </div>
+@else
+<h5 class="m-5 text-primary">You didn't order anything yet</h5>
     <hr>
   @endif
+    @endif
 
     </form>
     <div class="container text-center mt-3 ">
       <div class="row row-cols-4">
+
         @foreach ($products as $prd)
           <div class="col">
           <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
@@ -96,21 +104,24 @@
         @endforeach
       </div>
    </div>
-<!-- ///////////////////////////////////////////////////////////////////// -->
 <div class="col-md-6">
    <div class="cart">
         <a href="/" class="link-dark text-decoration-none">
           <h3 class="fw-bolder fs-5">Shopping Cart</h3>
+    </div>
+  </div>
 
   <div class="col-4  ms-5 me-5">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-          <!-- <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg> -->
+
+           <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
           <span class="fs-2 fw-semibold">Shopping Cart</span>
         </a>
+        <div class="list-group list-group-flush border-bottom ">
 
-          <table class="table table-dark text-center " >
+        <table class="table text-center mt-3 table-light">
             <thead>
               <th>Product</th>
               <th>Quantity</th>
@@ -118,12 +129,14 @@
               <th></th>
             </thead>
             <tbody id="table_body">
+
               @foreach ($cart as $item)
               <tr>
                 <th scope="row">{{$item->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
-                  <div class="border-5 d-flex bg-danger rounded text-center">
-                    <form action="{{ route('order-products.update', $item->id) }}" method="post">
+
+                  <div class="d-flex justify-content-center">
+                  <form action="{{ route('order-products.update', $item['id']) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="-" name="remove" class="btn btn-warning">
@@ -132,33 +145,35 @@
 
                     <button class="btn btn-warning-outline border-0 disabled fs-5">{{$item['quantity']}}</button>
 
-                    <form action="{{ route('order-products.update', $item->id) }}" method="post">
+
+                    <form action="{{ route('order-products.update', $item['id']) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="+" name="add" class="rounded btn btn-warning" >
                     </form>
+
                   </div>
                 </td>
                 <td>{{$item->product->price}} EGP</td>
                 <td>
-                  <form action="{{route('order-products.destroy', $item->id)}}" method="post">
+
+                  <form action="{{route('order-products.destroy', $item['id'])}}" method="post">
                     @csrf
                     @method('delete')
-                    <input type="submit" value="x" class="btn btn-danger">
+                    <input type="submit" value="X" class="btn btn-warning">
                   </form>
                 </td>
+
               </tr>
               @endforeach
             </tbody>
-       </table>
-   </div>
 
+          </table>
 
+          
           <div class="d-flex flex-column align-items-end">
-
-
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
-                               @csrf
+                  @csrf
         <h3>Notes</h3>
          <textarea name="notes" type="submit" id="" cols="79" rows="5" class="w-100">{{old('notes')}}</textarea>
 
@@ -199,7 +214,6 @@
             $('#amount').text('0 EGP');
             var Table = document.getElementById("table_body");
             Table.innerHTML = "";
-
 
         }
     </script>

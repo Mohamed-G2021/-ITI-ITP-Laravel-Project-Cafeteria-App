@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger ('order_id');
             $table->unsignedBigInteger ('product_id');
+
             $table->integer('quantity');
             $table->foreign('order_id')->constrained('orders')->onDelete('cascade')->references('id')->on('orders');
             $table->foreign('product_id')->constrained('products')->onDelete('cascade')->references('id')->on('products');
