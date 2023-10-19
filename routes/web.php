@@ -10,7 +10,8 @@ use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+//use Laravel\Socialite\Facades\Socialite;
+//use Socialite;
 use App\Models\User;
 
 /*
@@ -32,12 +33,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-<<<<<<< HEAD
-=======
+
 Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 Route::post('/cust', [OrderProductController::class, 'cust'])->name('cust');
 
->>>>>>> 2388f161fa9b82af1fecd3e745566fa343018756
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
