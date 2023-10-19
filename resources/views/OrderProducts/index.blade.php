@@ -59,11 +59,11 @@
 </form>
   @else
    
-    <h4 class="mt-5">Latest Order</h4>
+    <h4 class="mt-5 m-5 fs-3 fw-bold">Latest Order</h4>
+    @if (!empty($userOrders))      
     <div class="container text-center mt-3 ">
       <div class="row row-cols-3">
-      @foreach ($userOrders as $user_order)
-            @foreach ($user_order->products as $product)
+            @foreach ($userOrders->products as $product)
 
 
         <div class="col">
@@ -71,12 +71,14 @@
           <p>{{$product->name}}</p>
         </div>
         @endforeach
-        @endforeach
 
       </div>
     </div>
+@else
+<h5 class="m-5 text-primary">You didn't order anything yet</h5>
     <hr>
   @endif
+    @endif
 
     </form>
     <div class="container text-center mt-3 ">
