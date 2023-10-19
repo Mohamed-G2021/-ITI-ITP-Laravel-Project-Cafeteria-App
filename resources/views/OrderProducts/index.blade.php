@@ -47,12 +47,17 @@
     <h4 class="mt-5">Latest Order</h4>
     <div class="container text-center mt-3 ">
       <div class="row row-cols-3">
-        @foreach ($orderProducts as $orderProduct)
+      @foreach ($userOrders as $user_order)
+            @foreach ($user_order->products as $product)
+
+
         <div class="col">
-          <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" class="w-50" alt="">
-          <p>{{$orderProduct->product->name}}</p>
+          <img src="{{ asset('images/'.$product->image) }}" class="w-50" alt="">
+          <p>{{$product->name}}</p>
         </div>
         @endforeach
+        @endforeach
+
       </div>
     </div>
     <hr>
@@ -101,21 +106,21 @@
               <th></th>
             </thead>
             <tbody id="table_body">
-              @foreach ($orderProducts as $orderProduct)
-              <tr>
-                <th scope="row">{{$orderProduct->product->name}}</th>
+              @foreach ($cart as $item)
+              <tr>            
+                <th scope="row">{{$item->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
                   <div class="border-5 d-flex bg-danger rounded text-center">
-                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
+                    <form action="{{ route('order-products.update', $item->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="-" name="remove" class="btn btn-danger border-0">
                     </form>
 
 
-                    <button class="btn btn-warning-outline border-0 disabled fs-5">{{$orderProduct->quantity}}</button>
+                    <button class="btn btn-warning-outline border-0 disabled fs-5">{{$item['quantity']}}</button>
 
-                    <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
+                    <form action="{{ route('order-products.update', $item->id) }}" method="post">
                       @csrf
                       @method('PUT')
                       <input type="submit" value="+" name="add" class="btn btn-danger border-0">
@@ -123,9 +128,9 @@
 
                   </div>
                 </td>
-                <td>{{$orderProduct->product->price}} EGP</td>
+                <td>{{$item->product->price}} EGP</td>
                 <td>
-                  <form action="{{route('order-products.destroy', $orderProduct->id)}}" method="post">
+                  <form action="{{route('order-products.destroy', $item->id)}}" method="post">
                     @csrf
                     @method('delete')
                     <input type="submit" value="X" class="btn btn-danger">
@@ -168,7 +173,8 @@
 
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
               @csrf
-              <button class="btn btn-danger float-end" type="submit" value="done">Confirm</button>
+              <button class="btn btn-danger float-end" onclick="del()" value="done">Confirm</button>
+                  <input type="hidden" name="confirmed" value="0">
 
             </form>
           </div>
@@ -184,9 +190,13 @@
     </script>
 
 <script>
+
         function del(event) {
             $('#table_body').detach();
-            $('#amount').text('0 EGP')
+            $('#amount').text('0 EGP');
+            var Table = document.getElementById("table_body");
+            Table.innerHTML = "";
+
            
         }
     </script>
