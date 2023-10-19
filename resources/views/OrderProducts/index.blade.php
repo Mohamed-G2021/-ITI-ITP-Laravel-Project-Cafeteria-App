@@ -19,7 +19,7 @@ use \App\Http\Controllers\OrderProductController;
 </style>
 <!-- <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container d-flex justify-content-center ">
-    
+
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
     <h1>Welcome {{ Auth::user()->name }}</h1>
@@ -32,7 +32,7 @@ use \App\Http\Controllers\OrderProductController;
       </div>
       <span class="input-group-text w-25 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="IconChangeColor">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" 
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
            id="mainIconPathAttribute"></path>
         </svg>
       </span>
@@ -43,15 +43,15 @@ use \App\Http\Controllers\OrderProductController;
 </nav> -->
 
 <div class="container shop">
-<h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee</h1>
+<h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
  <div class="row mt-4 py-3">
-    
+
     <div class="col-md-6">
     <h4 class="fw-bold fs-5">Latest Order</h4>
        <div class="row row-cols-4 justify-content-center text-center">
         @foreach ($orderProducts as $orderProduct)
          <div class="col">
-          <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}" 
+          <img src="{{ asset('images/products_images/'.$orderProduct->product->image) }}"
             class="" alt="" style="width:50px;height:70px;">
           <p class="text-center">{{$orderProduct->product->name}}</p>
          </div>
@@ -79,9 +79,9 @@ use \App\Http\Controllers\OrderProductController;
    <div class="cart">
         <a href="/" class="link-dark text-decoration-none">
           <h3 class="fw-bolder fs-5">Shopping Cart</h3>
-         
+
         </a>
-       
+
         <table class="table text-center mt-3 table-light">
             <thead>
               <th>Product</th>
@@ -93,7 +93,7 @@ use \App\Http\Controllers\OrderProductController;
               @foreach ($orderProducts as $orderProduct)
               <tr>
                 <th scope="row">{{$orderProduct->product->name}}</th>
-                <td class=""> 
+                <td class="">
                   <div class="d-flex justify-content-center">
                   <form action="{{ route('order-products.update', $orderProduct->id) }}" method="post">
                       @csrf
@@ -119,7 +119,7 @@ use \App\Http\Controllers\OrderProductController;
               </tr>
               @endforeach
             </tbody>
-       </table>    
+       </table>
    </div>
 
           <div class=" mt-2">
@@ -144,7 +144,7 @@ use \App\Http\Controllers\OrderProductController;
               <button class="btn btn-danger float-end" type="submit" value="done">Order Now</button>
             </form>
           </div>
-   </div>       
+   </div>
     </div>
   </div>
 </div>

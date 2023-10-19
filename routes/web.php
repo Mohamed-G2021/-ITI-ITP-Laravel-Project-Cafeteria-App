@@ -32,7 +32,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
@@ -53,8 +52,8 @@ Route::get('/auth/callback', function () {
     $user = User::where('email', $googleUser->email)->first();
 
     if (!$user) {
-     
-   
+
+
         $user = User::updateOrCreate([
             'google_id' => $googleUser->id,
         ], [
@@ -71,4 +70,3 @@ Route::get('/auth/callback', function () {
     return redirect('/order-products');
 });
 
- 
