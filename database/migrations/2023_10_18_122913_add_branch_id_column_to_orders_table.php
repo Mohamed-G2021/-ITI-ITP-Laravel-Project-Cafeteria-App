@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             //
-            $table->string('notes')->nullable();
+            $table->foreignId('branch_id')->nullable()->constrained('branch')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -24,7 +24,8 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             //
-            $table->dropColumn('notes');
+            $table->dropForeign('orders_branch_id_foreign');
+            $table->dropColumn('branch_id');
         });
     }
 };

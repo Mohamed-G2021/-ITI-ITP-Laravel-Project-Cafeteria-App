@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container fw-bolder">
-        <h2 class="fw-bolder fs-1">All Products</h2>
+
+@if($errors->any())
+<div class="alert alert-danger">
+        <p><strong>Opps Something went wrong</strong></p>
+        <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+        </ul>
+</div>
+@endif
+<div class="container">
+        <h1>All Products</h1>
+
         <br>
         <a href="{{route('products.create')}}" class="btn btn-success">Add new product</a>
         <br><br>
@@ -12,6 +24,7 @@
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Image</th>
+                                <th>Available</th>
                                 <th>Actions</th>
                                 <th>Delete</th>
                         </tr>
@@ -25,16 +38,30 @@
                                 <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" style="object-fit:contain; width:50px;height:60px"> </td>
                                 <td>
                                         @if($product->availability == 'available')
-                                        <a href="" class="btn btn-success mr-1"> Available</a>
-                                        @else
-                                        <a href="" class="btn btn-secondary mr-1">Unavailable</a>
-                                        @endif
-                                        <a href="{{route('products.show',$product->id)}}" class="btn btn-info mr-1">show</a>
-                                        <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning mr-1">edit</a>
-                                        <form action="{{route('products.destroy',$product->id)}}" method="post">
+                                        <form action="{{route('products.change', $product->id)}}" method="post">
                                                 @csrf
-                                                @method('delete')
-                                <td> <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this product?')" class="btn btn-danger"></td>
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-warning" name='update-button' value='unavailable'>Unavailable</button>
+                                        </form>
+                                        @elseif($product->availability == 'unavailable')
+                                        <form action="{{route('products.change', $product->id)}}" method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-info" name='update-button' value='available'>Available</button>
+                                        </form>
+                                        @endif
+
+                                <td>
+                                        <a href="{{route('products.show',$product->id)}}" class="btn btn-primary">show</a>
+                                        <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning">edit</a>
+                                </td>
+
+                                <form action="{{route('products.destroy',$product->id)}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <td>
+                                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this product?')" class="btn btn-danger">
+                                        </td>
                                 </form>
 
                         </tr>
@@ -43,7 +70,7 @@
                 </tbody>
         </table>
         <div class="d-flex">
- {!! $products->links() !!}
- </div>
+                {!! $products->links() !!}
+        </div>
 </div>
 @endsection

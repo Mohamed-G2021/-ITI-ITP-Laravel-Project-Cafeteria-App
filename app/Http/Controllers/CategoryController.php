@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use App\Http\Controllers\ProductCategory;
 use App\Models\Category;
@@ -13,9 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=Category::all();
-            return view('categories.index',['categories'=>$categories]);
-        
+        $categories = Category::all();
+        return view('categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -30,23 +30,25 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {       
-  
+    {
+        $request_data = $request->all();
 
-     $request_data = $request->all();
-   
-    Category::create($request_data);
+        if ($request->input('submit-button') == 'back-to-product') {
+            Category::create($request_data);
+            return to_route('products.create');
+        }
 
-    return to_route("categories.index");
-    
+        Category::create($request_data);
+
+        return to_route("categories.index");
     }
-  
-        //
+
+    //
     public function show(Category $category)
     {
-        return view('categories.show', ['category'=>$category]);
+        return view('categories.show', ['category' => $category]);
     }
-   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -54,7 +56,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
-        return view('categories.edit', ['category'=>$category]);
+        return view('categories.edit', ['category' => $category]);
     }
 
     /**

@@ -10,7 +10,8 @@ use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+//use Laravel\Socialite\Facades\Socialite;
+//use Socialite;
 use App\Models\User;
 
 /*
@@ -32,7 +33,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
+Route::post('/cust', [OrderProductController::class, 'cust'])->name('cust');
+
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
@@ -42,8 +46,7 @@ Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
-
-
+Route::put('products/{product}', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
@@ -54,8 +57,8 @@ Route::get('/auth/callback', function () {
     $user = User::where('email', $googleUser->email)->first();
 
     if (!$user) {
-     
-   
+
+
         $user = User::updateOrCreate([
             'google_id' => $googleUser->id,
         ], [
