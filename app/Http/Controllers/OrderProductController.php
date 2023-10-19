@@ -10,7 +10,7 @@ use App\Http\Services\FatoorahServices;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Transaction;
 use Auth;
-use App\models\User;
+use App\Models\User;
 
 
 
@@ -47,17 +47,7 @@ class OrderProductController extends Controller
       else{ $amount=0;}
       return $amount;
     }
-    // protected    $amount=0 ;
 
-
-
-        foreach ($orderProducts as $orderProduct) {
-            $amount += ((int)$orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }}
-      else{ $amount=0;}
-      return $amount;
-    }
   protected function cust(Request $request){
         $id = (int) $request->get('user');
         session(['user_id' => $id]);
@@ -78,28 +68,7 @@ class OrderProductController extends Controller
       dd($userOrders);
       return view('order-products.index', ['userOrders' => $userOrders]);
   }
-    /**
-     * Display a listing of the resource.
-     */
 
-
-    protected function cust(Request $request){
-        $id = (int) $request->get('user');
-        session(['user_id' => $id]);
-
-        $user_orders =   Order::where('user_id', $id);
-        return to_route('order-products.index',['user_id'=>$id, 'user_orders'=>$user_orders ] );
-    }
-
-    public function getUserOrders(Request $request)
-    {
-      //   $user = Auth::user();
-      //   $userOrders = Order::where('user_id', $user->id)->get();
-      $user = Auth::user();
-      $userOrders = Order::where('user_id', $user->id)->get();
-        dd($userOrders);
-        return view('order-products.index', ['userOrders' => $userOrders]);
-    }
     public function index()
     {
         {
@@ -135,13 +104,6 @@ class OrderProductController extends Controller
         'amount'=>$amount , 'users'=>$users, 'userOrders'=>$userOrders, 'cart'=>$cart] );
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    /**
-     * Store a newly created resource in storage.
-     */
     public  function store(Request $request)
     {
         //
@@ -167,8 +129,6 @@ class OrderProductController extends Controller
         session(['order_id' => $order->id]);
         }
 
-
-
         $productId = $request->input('productId');    
         $notes = $request->input('notes');  
    
@@ -183,10 +143,6 @@ class OrderProductController extends Controller
             $orderProduct->quantity +=1;
             $orderProduct->save();
             session(['cart' => $cart]);
-
-            // $cart =$orderProduct;
-            // session()->push('cart', $cart);
-
         }
         else{
           $x =   OrderProduct::firstOrCreate([
@@ -202,9 +158,7 @@ class OrderProductController extends Controller
         }
 
         session()->push('order_products', $productId);
-        // $orderId = session('order_id');  
-        // $user_orders =   $user_orders::where('user_id', $id)->where('order_id', $orderId-1);
-
+   
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $amount= $this->calculate_amount() ;
@@ -240,11 +194,6 @@ class OrderProductController extends Controller
 
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
     public function destroy(string $id)
     {
         $cart = session('cart');
@@ -261,6 +210,7 @@ class OrderProductController extends Controller
         return redirect('order-products' );
 
     }
+    
     public function confirm_order(Request $request){            
 
         $orderId = session('order_id');
@@ -281,10 +231,7 @@ class OrderProductController extends Controller
 
         $confirm = true;
         $amount = 0;
-
-        //return to_route('orders.index', $amount);
-        //return $order;
-        //after select user data from db
+        
         $data=[
             'CustomerName' => $order->user->name,
             'NotificationOption'=>'LNK',
@@ -316,7 +263,6 @@ class OrderProductController extends Controller
         //return $paymentData;
         return to_route('order-products.index');
         //search in transaction table for returned invoiceid to get that userid
-
     }
 }
 
