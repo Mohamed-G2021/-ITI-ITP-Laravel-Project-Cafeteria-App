@@ -11,18 +11,15 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-
     public function index()
 
     {
-        // Retrieve users with the 'user' role
         $users = User::where('role', 'user')->get();
         return view('admins.index', ['users' => $users]);
     }
 
     public function create()
     {
-        //
         return view('admins.create');
     }
 
@@ -36,14 +33,9 @@ class AdminController extends Controller
         }
 
         User::create($request_data);
+        return to_route('admin-users.index');
 
-        return to_route('admins.index');
     }
-
-
-
-
-
     public function show($id)
     {
     }
@@ -52,8 +44,9 @@ class AdminController extends Controller
     {
         $user = User::find($id);
         return view('admins.edit', ['user' => $user]);
-    }
-
+    
+    return redirect()->route('admin-users.index');
+}
 
     public function update(Request $request, string $id)
     {
@@ -79,19 +72,15 @@ class AdminController extends Controller
         $user = User::findorfail($id);
         $user->update($request_data);
 
-        return redirect()->route('admins.index');
+        return redirect()->route('admin-users.index');
     }
-
 
     public function destroy(string $id)
     {
-        //
-        //   dd($user);
-
+       
         User::findorfail($id)->delete();
 
+        return to_route('admin-users.index');
 
-
-        return to_route('admins.index');
     }
 }

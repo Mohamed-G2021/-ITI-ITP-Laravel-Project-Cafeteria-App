@@ -2,8 +2,26 @@
 @extends('layouts.app')
 @section('content')
 
+<style>
+  textarea {
+  width: 100%;
+  height: 100px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  /* resize: none; */
+}
+</style>
+<!-- <nav class="navbar bg-body-tertiary justify-content-end me-5">
+  <div class="container d-flex justify-content-center ">
+    
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
+
+    <h1>Welcome {{ Auth::user()->name }}</h1>
   </div>
   <span>
     <div class="input-group d-flex " role="search">
@@ -13,7 +31,8 @@
       </div>
       <span class="input-group-text w-25 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="IconChangeColor">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" id="mainIconPathAttribute"></path>
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" 
+           id="mainIconPathAttribute"></path>
         </svg>
       </span>
     </div>
@@ -21,9 +40,6 @@
   </form>
   </div>
 </nav>
-
-
-
 
 <div class="row">
 
@@ -43,7 +59,6 @@
 </form>
   @else
    
-
     <h4 class="mt-5">Latest Order</h4>
     <div class="container text-center mt-3 ">
       <div class="row row-cols-3">
@@ -66,25 +81,21 @@
     </form>
     <div class="container text-center mt-3 ">
       <div class="row row-cols-4">
-        @foreach ($products as $prd)
-        <div class="col">
 
+        @foreach ($products as $prd)
+          <div class="col">
           <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <input name="productId" type="hidden" value="{{$prd->id}}">
             <button type="submit" class="border-0" onclick="">
-              <img src="{{asset("/images/$prd->image")}}" class="w-100" alt="">
+              <img src="{{asset("/images/$prd->image")}}" alt="order_image" style="width:50px;height:50px;">
             </button>
           </form>
-
           <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
           <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
         </div>
         @endforeach
-
-
       </div>
-
 
     </div>
   </div>
@@ -114,7 +125,7 @@
                     <form action="{{ route('order-products.update', $item->id) }}" method="post">
                       @csrf
                       @method('PUT')
-                      <input type="submit" value="-" name="remove" class="btn btn-danger border-0">
+                      <input type="submit" value="-" name="remove" class="btn btn-warning">
                     </form>
 
 
@@ -123,9 +134,8 @@
                     <form action="{{ route('order-products.update', $item->id) }}" method="post">
                       @csrf
                       @method('PUT')
-                      <input type="submit" value="+" name="add" class="btn btn-danger border-0">
+                      <input type="submit" value="+" name="add" class="rounded btn btn-warning" >
                     </form>
-
                   </div>
                 </td>
                 <td>{{$item->product->price}} EGP</td>
@@ -133,17 +143,11 @@
                   <form action="{{route('order-products.destroy', $item->id)}}" method="post">
                     @csrf
                     @method('delete')
-                    <input type="submit" value="X" class="btn btn-danger">
+                    <input type="submit" value="x" class="btn btn-danger">
                   </form>
                 </td>
-
               </tr>
-
-
-
-
               @endforeach
-
             </tbody>
           </table>
 
@@ -175,15 +179,11 @@
               @csrf
               <button class="btn btn-danger float-end" onclick="del()" value="done">Confirm</button>
                   <input type="hidden" name="confirmed" value="0">
-
             </form>
           </div>
-        </div>
-      </div>
+   </div>       
+    </div>
   </div>
-
-
-  </main>
 </div>
 <script src=
 "https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">

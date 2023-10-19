@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('content')
-<div class="container d-flex align-items-center justify-content-center " >
-    <div class="m-3 p-3 mt-5">
-        <a href="{{ route('categories.create') }}" class="btn btn-success mx-2">Add New Category</a>
-  
-        <table class="table table-light table-striped text-center  table-bordered my-4" style="width: 600px">
-            <thead >
-                <tr >
-                 
+<div class="container" >
+    <h1 class="fw-bolder fs-1">All Categories</h1>
+<a href="{{ route('categories.create') }}" class="btn btn-success p-2 mt-3">Add New Category</a>
+<div class="row justify-content-center mt-3">
+    <div class="col">
+        <table class="table fw-bolder text-capitalize">
+            <thead class="thead-light">
+                <tr class="table-secondary ">
                     <th>Name</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,7 +17,7 @@
                     <tr>
                    
                         <td>{{ $category->name }}</td>
-                        <td>
+                        <td  class="text-center">
                             <div class="d-flex justify-content-center">
                                 <a href="{{ route('categories.show', $category->id) }}" class="btn btn-info mx-1">Show</a>
                                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning mx-1">Edit</a>
@@ -33,5 +33,6 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
 @endsection
