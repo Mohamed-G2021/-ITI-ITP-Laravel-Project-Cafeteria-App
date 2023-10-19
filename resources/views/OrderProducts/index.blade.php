@@ -17,7 +17,7 @@
 </style>
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container d-flex justify-content-center ">
-    
+
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container-fluid d-flex justify-content-center ">
 
@@ -31,7 +31,7 @@
       </div>
       <span class="input-group-text w-25 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="IconChangeColor">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" 
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
            id="mainIconPathAttribute"></path>
         </svg>
       </span>
@@ -43,9 +43,14 @@
 
 <div class="row">
 
-  <div class="col">
+<div class="container shop">
+<h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
+ <div class="row mt-4 py-3">
+
+    <div class="col-md-6">
   @if(Auth::check() && Auth::user()->role === 'admin')
-    
+
+
   <h1>Add to user</h1>
   <form action="{{route('cust')}}" method="post" enctype="multipart/form-data">
     @csrf
@@ -53,12 +58,12 @@
     @foreach ($users as $user )
         <option value="{{$user->id}}">{{$user->name}}</option>
     @endforeach
-    
+
   </select>
   <button class="btn btn-danger float-end" type="submit">Go</button>
 </form>
   @else
-   
+
     <h4 class="mt-5 m-5 fs-3 fw-bold">Latest Order</h4>
     @if (!empty($userOrders))      
     <div class="container text-center mt-3 ">
@@ -98,7 +103,11 @@
         </div>
         @endforeach
       </div>
-
+   </div>
+<div class="col-md-6">
+   <div class="cart">
+        <a href="/" class="link-dark text-decoration-none">
+          <h3 class="fw-bolder fs-5">Shopping Cart</h3>
     </div>
   </div>
 
@@ -106,6 +115,7 @@
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
         <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+
            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
           <span class="fs-2 fw-semibold">Shopping Cart</span>
         </a>
@@ -118,12 +128,13 @@
               <th>Price</th>
               <th></th>
             </thead>
-            <tbody>
-             <tbody>
+            <tbody id="table_body">
+
               @foreach ($cart as $item)
               <tr>
                 <th scope="row">{{$item->product->name}}</th>
                 <td class="table-active d-flex justify-content-center">
+
                   <div class="d-flex justify-content-center">
                   <form action="{{ route('order-products.update', $item['id']) }}" method="post">
                       @csrf
@@ -133,6 +144,7 @@
 
 
                     <button class="btn btn-warning-outline border-0 disabled fs-5">{{$item['quantity']}}</button>
+
 
                     <form action="{{ route('order-products.update', $item['id']) }}" method="post">
                       @csrf
@@ -144,6 +156,7 @@
                 </td>
                 <td>{{$item->product->price}} EGP</td>
                 <td>
+
                   <form action="{{route('order-products.destroy', $item['id'])}}" method="post">
                     @csrf
                     @method('delete')
@@ -154,6 +167,7 @@
               </tr>
               @endforeach
             </tbody>
+
           </table>
 
           
@@ -182,9 +196,10 @@
               @csrf
               <button class="btn btn-danger float-end" onclick="del()" value="done">Confirm</button>
                   <input type="hidden" name="confirmed" value="0">
+
             </form>
           </div>
-   </div>       
+   </div>
     </div>
   </div>
 </div>
@@ -200,7 +215,6 @@
             var Table = document.getElementById("table_body");
             Table.innerHTML = "";
 
-           
         }
     </script>
 
