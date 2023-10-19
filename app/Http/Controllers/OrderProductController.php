@@ -138,7 +138,8 @@ class OrderProductController extends Controller
        $x=$orderProduct;
         if($item){
             $item['quantity'] +=1;
-            // $orderProduct->save();
+            $orderProduct->quantity +=1;
+            $orderProduct->save();
             session(['cart' => $cart]);
 
             // $cart =$orderProduct;
@@ -193,39 +194,26 @@ class OrderProductController extends Controller
         //       
          $cart = session('cart');
 
-        // $ord_product=  OrderProduct::findorfail($id);
+        $ord_product=  OrderProduct::findorfail($id);
         $item = collect($cart)->firstWhere('id', $id);
 
         if( $request->get("add")){
             $item['quantity'] += 1; // Update the quantity of the item
+            $ord_product['quantity'] = $ord_product['quantity']  + 1;
+
         }
         else{
             if($item['quantity'] > 0){
 
             $item['quantity'] -= 1; // Update the quantity of the item
+            $ord_product['quantity'] = $ord_product['quantity']  - 1;
+
                         }
         }
-            // Store the updated cart back into the session
             session(['cart' => $cart]);
 
 
-
-
-        // if( $request->get("add")){
-        // $ord_product['quantity'] = $ord_product['quantity']  + 1;
-
-
-        // }
-        // else{
-        //     if($ord_product['quantity'] > 0){
-        //         $ord_product['quantity'] = $ord_product['quantity']  - 1;
-
-        //     }
-
-
-        // }
-        // $product->update($request->all());
-        // $ord_product->save();
+        $ord_product->save();
 
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
@@ -249,7 +237,7 @@ class OrderProductController extends Controller
         session(['cart' => $cart]);
     
         // Delete the item from the database
-        // OrderProduct::findOrFail($id)->delete();
+        OrderProduct::findOrFail($id)->delete();
     
         // Recalculate the amount
         $amount = $this->calculate_amount();
