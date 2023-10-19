@@ -134,12 +134,15 @@ class OrderProductController extends Controller
 
 
        $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
-        $x=$orderProduct;
-        if($orderProduct){
-            $orderProduct->quantity +=1;
-            $orderProduct->save();
-            $cart =$orderProduct;
-            session()->push('cart', $cart);
+       $item = collect($cart)->where('order_id', $orderId)->where('product_id', $productId)->first();
+       $x=$orderProduct;
+        if($item){
+            $item['quantity'] +=1;
+            // $orderProduct->save();
+            session(['cart' => $cart]);
+
+            // $cart =$orderProduct;
+            // session()->push('cart', $cart);
 
         }
         else{
@@ -237,12 +240,20 @@ class OrderProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        OrderProduct::findorfail($id)->delete();
-        
-        $orderProducts = OrderProduct::all();
-        $Products = Product::all();
-        $amount  =$this->calculate_amount();
+        $cart = session('cart');
+
+        $cart = collect($cart)->filter(function ($item) use ($id) {
+            return $item['id'] != $id;
+        })->values()->all();
+
+        session(['cart' => $cart]);
+    
+        // Delete the item from the database
+        // OrderProduct::findOrFail($id)->delete();
+    
+        // Recalculate the amount
+        $amount = $this->calculate_amount();
+    
       
         return redirect('order-products' );
 
