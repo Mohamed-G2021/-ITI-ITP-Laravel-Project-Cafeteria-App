@@ -105,10 +105,8 @@
   <div class="col-4  ms-5 me-5">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
-        <!-- <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"> -->
            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
           <span class="fs-2 fw-semibold">Shopping Cart</span>
-        <!-- </a> -->
         <div class="list-group list-group-flush border-bottom ">
 
         <table class="table text-center mt-3 table-light">
@@ -167,7 +165,6 @@
 
             <h3>Branch</h3>
             <select class="form-select mb-4" name="branch" >
-              <option selected>Choose Branch</option>
               <option value="1">Zayed</option>
               <option value="2">Nasr City</option>
               <option value="3">New Cairo</option>
