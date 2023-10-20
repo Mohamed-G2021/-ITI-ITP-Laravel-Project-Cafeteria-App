@@ -6,18 +6,30 @@ use Illuminate\Http\Request;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Order;
-use App\Models\User;
+use App\Http\Services\FatoorahServices;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\Transaction;
 use Auth;
 use DB;
+use App\Models\User;
+
 
 
 class OrderProductController extends Controller
-{    
-
+{
     protected $confirm = false;
     protected $amount = 3;
     protected $id ;
     protected $user_orders = [];
+
+
+    private $fatoorahServices;
+
+    public function __construct(FatoorahServices $fatoorahServices){
+        $this->fatoorahServices=$fatoorahServices;
+    }
+
+
 
     protected function calculate_amount(){
         $amount = 0;
@@ -37,6 +49,7 @@ class OrderProductController extends Controller
       else{ $amount=0;}
       return $amount;
     }
+
   protected function cust(Request $request){
         $id = (int) $request->get('user');
         session(['user_id' => $id]);
@@ -51,7 +64,7 @@ class OrderProductController extends Controller
   
     public function index()
     {
-       
+
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $users = User::all();
@@ -61,11 +74,13 @@ class OrderProductController extends Controller
        else{$amount = 0;}
         $user = Auth::user();
 
+
         $orderId = session('order_id');  
         $userOrders =   $userOrders = Order::where('user_id', $user->id)->where('amount','>',0)->latest()->first();
         $cart = session('cart', []);
 
         return view('OrderProducts.index',
+
         ['orderProducts'=>$orderProducts, 'products'=>$Products , 
         'amount'=>$amount , 'users'=>$users, 'userOrders'=>$userOrders, 'cart'=>$cart] );
     }
@@ -99,13 +114,11 @@ class OrderProductController extends Controller
         session(['order_id' => $order->id]);
         }
 
-
         $productId = $request->input('productId');    
         $notes = $request->input('notes');  
    
         $orderId = session('order_id');
         $quantity = 1;
-
        $item = collect($cart)->where('order_id', $orderId)->where('product_id', $productId)->first();
         if($item){
             $item['quantity'] +=1;
@@ -116,7 +129,6 @@ class OrderProductController extends Controller
                 'order_id'=>$orderId,
                 'product_id'=>$productId,
                 'quantity'=>$quantity,
-
            ]);    
             OrderProduct::where('order_id', $orderId)->delete();
             session()->push('cart', $cart);
@@ -130,16 +142,10 @@ class OrderProductController extends Controller
         return to_route('order-products.index' ,[ 'cart'=> $cart]);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
-    {
-          
+    {          
         $cart = session('cart');
         $item = collect($cart)->firstWhere('id', $id);
-
         if( $request->get("add")){
             $item['quantity'] += 1; 
 
@@ -155,12 +161,8 @@ class OrderProductController extends Controller
         $amount=$this->calculate_amount();
       return redirect('order-products' );
 
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $cart = session('cart');
@@ -168,13 +170,12 @@ class OrderProductController extends Controller
         $cart = collect($cart)->filter(function ($item) use ($id) {
             return $item['id'] != $id;
         })->values()->all();
-
         session(['cart' => $cart]);
         $amount = $this->calculate_amount();
-    
         return redirect('order-products' );
 
     }
+    
     public function confirm_order(Request $request){            
 
         $orderId = session('order_id');
@@ -206,7 +207,40 @@ class OrderProductController extends Controller
 
         $confirm = true;
         $amount = 0;
-        return to_route('orders.index', $amount);
+        
+        $data=[
+            'CustomerName' => $order->user->name,
+            'NotificationOption'=>'LNK',
+            'InvoiceValue'=>$order->amount,
+            'CustomerEmail'=>$order->user->email,
+            'CallBackUrl'=>'http://localhost:8000/api/callback',
+            'ErrorUrl'=>'http://localhost:8000/api/error',
+            'Language'=>'en',
+            'DisplayCurrencyIso'=>'SAR'
+        ];
+        $info= $this->fatoorahServices->sendPayment($data);
+        Transaction::create([
+            'user_id'=>$order->user_id,
+            'invoiceid'=>$info['Data']['InvoiceId']
+        ]);
+        //return $info;
+        return redirect($info['Data']['InvoiceURL']);
+        //transaction table  invoiceid , userid
     }
-   
+    public function paymentCallBack(Request $request){
+        //return $request;
+        $data=[];
+        $data['Key']=$request->paymentId;
+        $data['KeyType']='paymentId';
+
+        $paymentData=$this->fatoorahServices->getPaymentStatus($data);
+        $usertrans=Transaction::where('invoiceid',$paymentData['Data']['InvoiceId'])->first();
+        $usertrans->update(['paymentid'=>$request->paymentId]);
+        //return $paymentData;
+        return to_route('order-products.index');
+        //search in transaction table for returned invoiceid to get that userid
+    }
 }
+
+
+

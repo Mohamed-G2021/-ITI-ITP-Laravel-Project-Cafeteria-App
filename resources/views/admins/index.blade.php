@@ -19,7 +19,7 @@
                     @foreach($users as $user)
                     <tr>
                         <td> {{$user->name}}</td>
-                        <td> <img src="{{asset('images/users_images/'.$user->image)}}" width="50" height="60"></td>
+                        <td> <img src="{{asset('images/users_images/users_images/'.$user->image)}}" width="50" height="60"></td>
 
                         <td> {{$user->email}}</td>
 
