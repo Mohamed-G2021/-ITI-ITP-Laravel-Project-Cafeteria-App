@@ -60,11 +60,11 @@
   @else
    
     <h4 class="mt-5 m-5 fs-3 fw-bold">Latest Order</h4>
+
     @if (!empty($userOrders))      
     <div class="container text-center mt-3 ">
       <div class="row row-cols-3">
             @foreach ($userOrders->products as $product)
-
 
         <div class="col">
           <img src="{{ asset('images/'.$product->image) }}" class="w-50" alt="">
@@ -105,10 +105,10 @@
   <div class="col-4  ms-5 me-5">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
-        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <!-- <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"> -->
            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
           <span class="fs-2 fw-semibold">Shopping Cart</span>
-        </a>
+        <!-- </a> -->
         <div class="list-group list-group-flush border-bottom ">
 
         <table class="table text-center mt-3 table-light">
@@ -192,17 +192,6 @@
 "https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js">
     </script>
 
-<script>
-
-        function del(event) {
-            $('#table_body').detach();
-            $('#amount').text('0 EGP');
-            var Table = document.getElementById("table_body");
-            Table.innerHTML = "";
-
-           
-        }
-    </script>
 
 <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="">

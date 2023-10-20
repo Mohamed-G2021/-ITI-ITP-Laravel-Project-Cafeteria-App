@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
 use Auth;
+use DB;
 
 
 class OrderProductController extends Controller
@@ -20,18 +21,19 @@ class OrderProductController extends Controller
 
     protected function calculate_amount(){
         $amount = 0;
-        // $orderProducts = OrderProduct::all();
-                    // session()->forget('cart');
-
+        // session()->forget('cart');
         if( session()->has('cart')){
-
             $orderProducts = session('cart');
-
-
-        foreach ($orderProducts as $orderProduct) {
-            $amount += ((int)$orderProduct->quantity* (int)$orderProduct->product->price);
-
-      }}
+            $i =0;     
+            foreach ($orderProducts as $orderProduct) {
+                $quantity = $orderProduct['quantity'];            
+                $product = isset($orderProduct['product_id']) ? Product::find($orderProduct['product_id']) : null;
+            
+                if ($product) {
+                    $amount += ((int)$quantity * (int)$product->price);
+                }
+            }
+        }
       else{ $amount=0;}
       return $amount;
     }
@@ -43,66 +45,39 @@ class OrderProductController extends Controller
         return to_route('order-products.index',['user_id'=>$id, 'user_orders'=>$user_orders ] );
   }
 
-  public function getUserOrders(Request $request)
-  {
-    //   $user = Auth::user();
-    //   $userOrders = Order::where('user_id', $user->id)->get();
-    $user = Auth::user();
-    // $userOrders = Order::where('user_id', $user->id)->get();
-    $orderId = session('order_id');  
-    $userOrders =   $userOrders = Order::where('user_id', $user->id)->latest()->first();
-    
-      dd($userOrders);
-      return view('order-products.index', ['userOrders' => $userOrders]);
-  }
     /**
      * Display a listing of the resource.
      */
   
     public function index()
     {
-        {
-            $orderProducts = new OrderProduct;
-            $confirm = false;
-
-        }
        
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $users = User::all();
-       if( session()->has('cart')){
-        $amount  =$this->calculate_amount($orderProducts);
-
+        if( session()->has('cart')){
+            $amount  =$this->calculate_amount($orderProducts);
        }
        else{$amount = 0;}
         $user = Auth::user();
 
         $orderId = session('order_id');  
-        $userOrders =   $userOrders = Order::where('user_id', $user->id)->latest()->first();
+        $userOrders =   $userOrders = Order::where('user_id', $user->id)->where('amount','>',0)->latest()->first();
         $cart = session('cart', []);
-
-        // dd($cart);
 
         return view('OrderProducts.index',
         ['orderProducts'=>$orderProducts, 'products'=>$Products , 
         'amount'=>$amount , 'users'=>$users, 'userOrders'=>$userOrders, 'cart'=>$cart] );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public  function store(Request $request)
     {
-        //
-     $user_orders =null;
+        
+        $user_orders =null;
         $productIds = session('order_products', []);
         $cart = session('cart', []);
         if(empty($productIds))
@@ -131,93 +106,50 @@ class OrderProductController extends Controller
         $orderId = session('order_id');
         $quantity = 1;
 
-
-
-       $orderProduct = OrderProduct::where('order_id', $orderId)->where('product_id', $productId)->first();
        $item = collect($cart)->where('order_id', $orderId)->where('product_id', $productId)->first();
-       $x=$orderProduct;
         if($item){
             $item['quantity'] +=1;
-            $orderProduct->quantity +=1;
-            $orderProduct->save();
             session(['cart' => $cart]);
-
-            // $cart =$orderProduct;
-            // session()->push('cart', $cart);
-
         }
         else{
-          $x =   OrderProduct::firstOrCreate([
+            $cart =   OrderProduct::firstOrCreate([
                 'order_id'=>$orderId,
                 'product_id'=>$productId,
                 'quantity'=>$quantity,
 
-           ]);   
-           $x->save();
-           $cart = $x ;
-           session()->push('cart', $cart);
-
-
+           ]);    
+            OrderProduct::where('order_id', $orderId)->delete();
+            session()->push('cart', $cart);
 
         }
 
         session()->push('order_products', $productId);
-        // $orderId = session('order_id');  
-        // $user_orders =   $user_orders::where('user_id', $id)->where('order_id', $orderId-1);
-
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $amount= $this->calculate_amount() ;
         return to_route('order-products.index' ,[ 'cart'=> $cart]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //       
-         $cart = session('cart');
-
-        $ord_product=  OrderProduct::findorfail($id);
+          
+        $cart = session('cart');
         $item = collect($cart)->firstWhere('id', $id);
 
         if( $request->get("add")){
-            $item['quantity'] += 1; // Update the quantity of the item
-            $ord_product['quantity'] = $ord_product['quantity']  + 1;
+            $item['quantity'] += 1; 
 
         }
         else{
             if($item['quantity'] > 0){
-
-            $item['quantity'] -= 1; // Update the quantity of the item
-            $ord_product['quantity'] = $ord_product['quantity']  - 1;
-
-                        }
+                $item['quantity'] -= 1; 
+            }
         }
-            session(['cart' => $cart]);
-
-
-        $ord_product->save();
-
+        session(['cart' => $cart]);
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
         $amount=$this->calculate_amount();
@@ -238,14 +170,8 @@ class OrderProductController extends Controller
         })->values()->all();
 
         session(['cart' => $cart]);
-    
-        // Delete the item from the database
-        OrderProduct::findOrFail($id)->delete();
-    
-        // Recalculate the amount
         $amount = $this->calculate_amount();
     
-      
         return redirect('order-products' );
 
     }
@@ -259,11 +185,22 @@ class OrderProductController extends Controller
             'amount'=> $this->calculate_amount(),
         ]);        
 
+        $cart = session('cart', []);
+        foreach ($cart as $item) {
+            $productId = $item['product_id'];
+            $quantity = $item['quantity'];
+            $orderProduct = new OrderProduct();     
+            $orderProduct->id = (int)(DB::table('order_products')->max('id'))+1;
+
+            $orderProduct->order_id = $orderId;
+            $orderProduct->product_id = $productId;
+            $orderProduct->quantity = $quantity;
+            $orderProduct->save();
+        }
         $order->notes = $request->get('notes');
         $order->branch_id= (int)$request->get('branch');
         $order->save();       
 
-        // OrderProduct::where('order_id', $orderId)->delete();
         session()->forget('order_products');
         session()->forget('cart');
 
