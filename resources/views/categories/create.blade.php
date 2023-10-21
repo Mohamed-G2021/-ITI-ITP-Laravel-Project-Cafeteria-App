@@ -27,7 +27,7 @@
 
 
         <div class="d-flex justify-content-center">
-            @if(url()->previous()== "http://localhost:8000/products/create")
+            @if(url()->previous()== "http://localhost:8000/products/create" ||url()->previous()== "http://127.0.0.1:8000/products/create" )
             <button type="submit" class="btn btn-success" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to create product</button>
             @else
             <button type="submit" class="btn btn-success mb-3" style="width: 200px;">Submit</button>
