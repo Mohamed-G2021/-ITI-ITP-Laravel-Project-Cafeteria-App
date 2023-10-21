@@ -79,7 +79,7 @@
  </div>
  @else
  <div>
-  <h1 class="text-center fw-bolder fs-1 mt-5">Your Cart Is Currently Empty</h1>
+  <h1 class="text-center fw-bolder fs-1 mt-5">You didn't order anything yet</h1>
  </div>
  @endif
  

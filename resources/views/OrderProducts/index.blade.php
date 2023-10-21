@@ -20,6 +20,9 @@
   @foreach ($users as $user )
       @if (Auth::user()==null && $user->password==null)
       <h1>Welcome {{$user->name }}</h1>
+      <?php
+      $googleLogin = false;
+      ?>
       @endif
   @endforeach
   @else

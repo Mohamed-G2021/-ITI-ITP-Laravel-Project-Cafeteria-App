@@ -89,8 +89,7 @@ class OrderProductController extends Controller
             $userID =  $user->id;
 
         }
-
-
+        // dd(session('user_id'));
         $orderId = session('order_id');
         $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
@@ -236,6 +235,7 @@ class OrderProductController extends Controller
             'invoiceid' => $info['Data']['InvoiceId']
         ]);
 
+        // dd(session('user_id'));
         return redirect($info['Data']['InvoiceURL']);
     }
     public function paymentCallBack(Request $request)
@@ -249,7 +249,7 @@ class OrderProductController extends Controller
         $usertrans = Transaction::where('invoiceid', $paymentData['Data']['InvoiceId'])->first();
         $usertrans->update(['paymentid' => $request->paymentId]);
         //return $paymentData;
-        return to_route('orders.index');
+        return to_route('order-products.index');
         //search in transaction table for returned invoiceid to get that userid
     }
 }
