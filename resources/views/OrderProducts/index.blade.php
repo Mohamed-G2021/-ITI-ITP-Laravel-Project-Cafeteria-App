@@ -17,17 +17,19 @@
 </style>
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container d-flex justify-content-center ">
-
-<nav class="navbar bg-body-tertiary justify-content-end me-5">
-  <div class="container-fluid d-flex justify-content-center ">
-
     <h1>Welcome {{ Auth::user()->name }}</h1>
+
+<nav class="navbar bg-body-tertiary justify-content-end w-100">
+  <div class="container-fluid d-flex justify-content-center ">
+  <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
+
+    
   </div>
   <span>
     <div class="input-group d-flex " role="search">
 
       <div class="form-floating ">
-        <input class="form-control " type="search" placeholder="Search">
+        <input class="form-control p-1"type="search" placeholder="Search">
       </div>
       <span class="input-group-text w-25 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="IconChangeColor">
@@ -40,12 +42,10 @@
   </form>
   </div>
 </nav>
-
 <div class="row">
 
 <div class="container shop">
-<h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
- <div class="row mt-4 py-3">
+ <div class="row mt-4 py-3 ">
 
     <div class="col-md-6">
   @if(Auth::check() && Auth::user()->role === 'admin')
@@ -64,7 +64,7 @@
 </form>
   @else
 
-    <h4 class="mt-5 m-5 fs-3 fw-bold">Latest Order</h4>
+    <h4 class="mt-5 m-5 fs-3 fw-bold " style="color:brown;">Latest Order</h4>
 
     @if (!empty($userOrders))      
     <div class="container text-center mt-3 ">
@@ -72,8 +72,8 @@
             @foreach ($userOrders->products as $product)
 
         <div class="col">
-          <img src="{{ asset('images/'.$product->image) }}" class="w-50" alt="">
-          <p>{{$product->name}}</p>
+          <img src="{{ asset('images/'.$product->image) }}" class="w-50 h-75 rounded-circle" alt="">
+          <p class="fs-4 fw-bold">{{$product->name}}</p>
         </div>
         @endforeach
 
@@ -86,32 +86,33 @@
     @endif
 
     </form>
-    <div class="container text-center mt-3 ">
-      <div class="row row-cols-4">
+    <div class="container text-center mt-3 ms-5">
+      <div class="row row-cols-1 row-cols-md-3 ">
 
         @foreach ($products as $prd)
-          <div class="col">
+          <div class="col my-4">
           <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
             @csrf
-            <input name="productId" type="hidden" value="{{$prd->id}}">
-            <button type="submit" class="border-0" onclick="">
-              <img src="{{asset("/images/$prd->image")}}" alt="order_image" style="width:50px;height:50px;">
-            </button>
+            <div class="card" style="width: 18rem; height:20rem">            
+              <input name="productId" type="hidden" value="{{$prd->id}}">
+              <button type="submit" class="border-0" onclick="">
+                  <img src="{{asset("/images/$prd->image")}}" class="card-img-top" alt="order_image" style="height:200px" >
+              </button>
+                <div class="card-body">
+                  <h5 class="card-title fs-4 fw-bold " style="color:brown" name="name" value="{{ $prd->name }}">{{ $prd->name }}</h5>
+                  <p class="card-text fs-5 float-end fw-bold" name="price" value="{{ $prd->price }}"> {{ $prd->price }} EGP</p>
+                </div>
+              </div>
+ 
           </form>
-          <p name="name" value="{{ $prd->name }}">{{ $prd->name }}</p>
-          <p name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</p>
         </div>
         @endforeach
       </div>
    </div>
-<div class="col-md-6">
-   <div class="cart">
-        <a href="/" class="link-dark text-decoration-none">
-          <h3 class="fw-bolder fs-5">Shopping Cart</h3>
-    </div>
-  </div>
+</div>
 
-  <div class="col-4  ms-5 me-5">
+
+  <div class="col-3  ms-5 me-5 ms-auto">
     <main>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
            <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
@@ -190,8 +191,7 @@
 
             <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
               @csrf
-              <button class="btn btn-danger float-end" onclick="del()" value="done">Confirm</button>
-                  <input type="hidden" name="confirmed" value="0">
+              <button class="btn btn-danger float-end"  value="done">Confirm</button>
 
             </form>
           </div>
