@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+use App\Http\Controllers\OrderProductController;
+
+Route::post('process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
+
+Route::get('callback',[OrderProductController::class,'paymentCallBack']);
+Route::get('error',function(){
+    return 'payment failed';
 });
