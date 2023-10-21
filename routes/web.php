@@ -38,4 +38,4 @@ Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilt
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('checks', CheckController::class);
-Route::put('products/{product}', [ProductController::class, 'changeAvailability'])->name('products.change');
+Route::put('products/{product}/change', [ProductController::class, 'changeAvailability'])->name('products.change');
