@@ -24,7 +24,7 @@
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Image</th>
-                                <th>Available</th>
+                                <th>Availability</th>
                                 <th>Actions</th>
                                 <th>Delete</th>
                         </tr>
@@ -37,17 +37,18 @@
                                 <td>{{$product->price}} egp</td>
                                 <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" style="object-fit:contain; width:50px;height:60px"> </td>
                                 <td>
+                                        {{$product->availability}}
                                         @if($product->availability == 'available')
                                         <form action="{{route('products.change', $product->id)}}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-warning" name='update-button' value='unavailable'>Unavailable</button>
+                                                <button type="submit" class="btn btn-warning" name='update-button' value='unavailable'>Make unavailable</button>
                                         </form>
                                         @elseif($product->availability == 'unavailable')
                                         <form action="{{route('products.change', $product->id)}}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-info" name='update-button' value='available'>Available</button>
+                                                <button type="submit" class="btn btn-info" name='update-button' value='available'>Make available</button>
                                         </form>
                                         @endif
 

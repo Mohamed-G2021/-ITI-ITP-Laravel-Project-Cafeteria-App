@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin-access");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,6 +39,7 @@ class CategoryController extends Controller
 
         if ($request->input('submit-button') == 'back-to-product') {
             Category::create($request_data);
+
             return to_route('products.create');
         }
 
