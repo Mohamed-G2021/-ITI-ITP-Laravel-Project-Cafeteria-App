@@ -50,7 +50,6 @@ Route::get('/auth/redirect', function () {
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
     $user = User::where('email', $googleUser->email)->first();
-
     if (!$user) {
 
         $user = User::updateOrCreate([
@@ -59,6 +58,7 @@ Route::get('/auth/callback', function () {
             'name' => $googleUser->name,
             'email' => $googleUser->email,
             'password' => null,
+            'image' => $googleUser->avatar,
             'google_token' => $googleUser->token,
             'google_refresh_token' => $googleUser->refreshToken,
         ]);

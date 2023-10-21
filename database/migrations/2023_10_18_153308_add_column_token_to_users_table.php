@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('google_id')->nullable();
             $table->string('google_token')->nullable();
             $table->string('google_refresh_token')->nullable();
-    
         });
     }
 
@@ -28,7 +27,6 @@ return new class extends Migration
             $table->dropColumn('google_id');
             $table->dropColumn('google_token');
             $table->dropColumn('google_refresh_token');
-
         });
     }
 };
