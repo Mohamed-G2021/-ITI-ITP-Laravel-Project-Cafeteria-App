@@ -29,14 +29,11 @@ Route::get('/', function () {
     return view("welcome");
 });
 
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 Route::post('/cust', [OrderProductController::class, 'cust'])->name('cust');
-
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
@@ -46,32 +43,29 @@ Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
-Route::put('products/{product}', [ProductController::class, 'changeAvailability'])->name('products.change');
+Route::put('products/{product}/change', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
-
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
-//  dd($googleUser);
     $user = User::where('email', $googleUser->email)->first();
-
     if (!$user) {
 
 
         $user = User::updateOrCreate([
             'google_id' => $googleUser->id,
         ], [
-            'name' =>$googleUser->name,
+            'name' => $googleUser->name,
             'email' => $googleUser->email,
-            'password'=> null,
-             'google_token' =>$googleUser->token,
+            'password' => null,
+            'image' => $googleUser->avatar,
+            'google_token' => $googleUser->token,
             'google_refresh_token' => $googleUser->refreshToken,
         ]);
-      }
+    }
 
     Auth::login($user);
 
     return redirect('/order-products');
 });
-
