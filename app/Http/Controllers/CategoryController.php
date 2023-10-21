@@ -39,6 +39,7 @@ class CategoryController extends Controller
 
         if ($request->input('submit-button') == 'back-to-product') {
             Category::create($request_data);
+
             return to_route('products.create');
         }
 
