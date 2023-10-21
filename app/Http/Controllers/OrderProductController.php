@@ -207,8 +207,9 @@ class OrderProductController extends Controller
 
         $confirm = true;
         $amount = 0;
-        
-        $data=[
+        return to_route('orders.index');
+
+       /* $data=[
             'CustomerName' => $order->user->name,
             'NotificationOption'=>'LNK',
             'InvoiceValue'=>$order->amount,
@@ -223,9 +224,8 @@ class OrderProductController extends Controller
             'user_id'=>$order->user_id,
             'invoiceid'=>$info['Data']['InvoiceId']
         ]);
-        //return $info;
-        return redirect($info['Data']['InvoiceURL']);
-        //transaction table  invoiceid , userid
+
+        return redirect($info['Data']['InvoiceURL']);*/
     }
     public function paymentCallBack(Request $request){
         //return $request;
