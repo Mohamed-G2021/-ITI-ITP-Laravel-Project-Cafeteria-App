@@ -68,6 +68,7 @@ class OrderProductController extends Controller
 
     public function index()
     {
+        $googleLogin =false;
 
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
@@ -78,17 +79,27 @@ class OrderProductController extends Controller
             $amount = 0;
         }
         $user = Auth::user();
+        if($user == null){
+           $user = User::get()->where('password',null)->first;  
+           $userID= $user->id->id;   
+           $googleLogin = true;   
+
+        }
+        else{
+            $userID =  $user->id;
+
+        }
 
 
         $orderId = session('order_id');
-        $userOrders =   $userOrders = Order::where('user_id', $user->id)->where('amount', '>', 0)->latest()->first();
+        $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
 
         return view(
             'OrderProducts.index',
 
             [
-                'orderProducts' => $orderProducts, 'products' => $Products,
+                'orderProducts' => $orderProducts, 'products' => $Products,'googleLogin' =>$googleLogin,
                 'amount' => $amount, 'users' => $users, 'userOrders' => $userOrders, 'cart' => $cart
             ]
         );
@@ -208,7 +219,6 @@ class OrderProductController extends Controller
 
         $confirm = true;
         $amount = 0;
-        return to_route('orders.index');
 
         $data=[
             'CustomerName' => $order->user->name,
@@ -239,7 +249,7 @@ class OrderProductController extends Controller
         $usertrans = Transaction::where('invoiceid', $paymentData['Data']['InvoiceId'])->first();
         $usertrans->update(['paymentid' => $request->paymentId]);
         //return $paymentData;
-        return to_route('order-products.index');
+        return to_route('orders.index');
         //search in transaction table for returned invoiceid to get that userid
     }
 }
