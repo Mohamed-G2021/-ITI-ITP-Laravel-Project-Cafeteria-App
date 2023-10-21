@@ -2,7 +2,6 @@
 
 @section('content')
 
-@section('content')
 @if($errors->any())
 <div class="alert alert-danger">
         <p><strong>Opps Something went wrong</strong></p>
@@ -15,12 +14,13 @@
 @endif
 <div class="container">
         <h1>All Products</h1>
+
         <br>
-        <a href="{{route('products.create')}}" class="btn btn-primary">Add new product</a>
+        <a href="{{route('products.create')}}" class="btn btn-success">Add new product</a>
         <br><br>
-        <table class="table">
+        <table class="table text-capitalize">
                 <thead>
-                        <tr>
+                        <tr class="table-secondary">
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Image</th>
@@ -35,7 +35,7 @@
                         <tr>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->price}} egp</td>
-                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" height="200" style="object-fit: contain; width:100px;height:100px"> </td>
+                                <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" style="object-fit:contain; width:50px;height:60px"> </td>
                                 <td>
                                         @if($product->availability == 'available')
                                         <form action="{{route('products.change', $product->id)}}" method="post">
@@ -73,5 +73,4 @@
                 {!! $products->links() !!}
         </div>
 </div>
-@endsection('content')
 @endsection

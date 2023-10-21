@@ -19,7 +19,7 @@ class OrderController extends Controller
     }
     public function index()
     {
-        //  $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
+        //   $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
           $orders=Order::paginate(6);
         return view('orders.index',['orders'=>$orders]);
     }
@@ -30,9 +30,16 @@ public function filter(Request $request)
     $start_date = $request->input('start_date');
     $end_date = $request->input('end_date');
     $orders = Order::where('user_id', $user->id)
-    ->whereBetween('created_at', [$start_date, $end_date])
-    ->get();
-    return view('orders.index', compact('orders'));
+        ->whereBetween('created_at', [$start_date, $end_date])
+        ->get();
+    if($orders->count()){
+        return view('orders.index', compact('orders'));
+    }
+    else{
+    $AllOrders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
+    return view('orders.index', ['orders'=>$AllOrders]);
+    }
+    
 }
     /**
      * Show the form for creating a new resource.
