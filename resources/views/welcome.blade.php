@@ -44,7 +44,7 @@
                 justify-content: flex-end;
                 font-family: system-ui;
             }
-           .Login{
+           .Login,.Home{
             color:#9E5A3D;
             text-decoration: none;
             font-size: 20px;
