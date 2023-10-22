@@ -49,6 +49,7 @@
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
                         <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
+                        <a class="nav-link" href="{{route('branches.index')}}">Branches</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
                         @endif
                         @endif
@@ -76,19 +77,18 @@
                                 @if(str_contains( auth()->user()->image, 'https'))
                                 <img src="{{ auth()->user()->image }}" alt="avatar" width="32" height="32" style="margin-right: 8px;">
                                 @else
-                                <img src="{{ asset('images/users_images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
+                                <img src="{{ asset('images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
                                 @endif
                                 {{ Auth::user()->name }}
-
-
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('user.edit', auth()->user()->id) }}">
+                                    edit profile
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>

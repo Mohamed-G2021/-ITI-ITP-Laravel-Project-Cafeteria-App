@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Branch;
 use App\Http\Services\FatoorahServices;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Transaction;
@@ -52,6 +53,13 @@ class OrderProductController extends Controller
         }
         return $amount;
     }
+    protected function search(Request $request)
+{
+    $keyword = $request->input('keyword');
+    $products = Product::where('name', 'LIKE', "%$keyword%")->get();
+    // return view('OrderProducts.search', compact('products'));
+    return $products;
+}
 
     protected function cust(Request $request)
     {
@@ -66,11 +74,19 @@ class OrderProductController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
+        $branches = Branch::all();
+        $googleLogin = false;
 
+        // $myProducts = $this->search($request);
+        if ($request->filled('keyword')) {
+            $keyword = $request->input('keyword');
+            $Products = Product::where('name', 'LIKE', "%$keyword%")->get();
+        } else {
+            $Products = Product::all();
+        }
         $orderProducts = OrderProduct::all();
-        $Products = Product::all();
         $users = User::all();
         if (session()->has('cart')) {
             $amount  = $this->calculate_amount($orderProducts);
@@ -78,18 +94,26 @@ class OrderProductController extends Controller
             $amount = 0;
         }
         $user = Auth::user();
-
-
+        if ($user == null) {
+            $user = User::get()->where('password', null)->first;
+            $userID = $user->id->id;
+            $googleLogin = true;
+        } else {
+            $userID =  $user->id;
+        }
+        // dd(session('user_id'));
         $orderId = session('order_id');
-        $userOrders =   $userOrders = Order::where('user_id', $user->id)->where('amount', '>', 0)->latest()->first();
+        $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
 
+         
+    
         return view(
             'OrderProducts.index',
 
             [
-                'orderProducts' => $orderProducts, 'products' => $Products,
-                'amount' => $amount, 'users' => $users, 'userOrders' => $userOrders, 'cart' => $cart
+                'orderProducts' => $orderProducts, 'products' => $Products, 'googleLogin' => $googleLogin,
+                'amount' => $amount, 'users' => $users, 'userOrders' => $userOrders, 'cart' => $cart, 'branches' => $branches,
             ]
         );
     }
@@ -145,6 +169,13 @@ class OrderProductController extends Controller
         $amount = $this->calculate_amount();
         return to_route('order-products.index', ['cart' => $cart]);
     }
+    public function show($id)
+{
+
+    $product = Product::findOrFail($id);
+    dd($product);
+    return view('product.show', compact('product'));
+}
 
     public function update(Request $request, string $id)
     {
@@ -225,6 +256,7 @@ class OrderProductController extends Controller
             'invoiceid' => $info['Data']['InvoiceId']
         ]);
 
+        // dd(session('user_id'));
         return redirect($info['Data']['InvoiceURL']);
     }
     public function paymentCallBack(Request $request)
