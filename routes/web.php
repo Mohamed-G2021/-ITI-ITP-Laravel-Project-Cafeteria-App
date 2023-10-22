@@ -10,7 +10,8 @@ use App\Http\Controllers\CheckController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+//use Laravel\Socialite\Facades\Socialite;
+//use Socialite;
 use App\Models\User;
 
 /*
@@ -28,11 +29,11 @@ Route::get('/', function () {
     return view("welcome");
 });
 
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
+Route::post('/cust', [OrderProductController::class, 'cust'])->name('cust');
 Route::resource('admin-users', AdminController::class)->middleware('can:admin-access');
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
@@ -46,12 +47,9 @@ Route::put('products/{product}/change', [ProductController::class, 'changeAvaila
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
-
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
-    //  dd($googleUser);
     $user = User::where('email', $googleUser->email)->first();
-
     if (!$user) {
 
 
@@ -61,6 +59,7 @@ Route::get('/auth/callback', function () {
             'name' => $googleUser->name,
             'email' => $googleUser->email,
             'password' => null,
+            'image' => $googleUser->avatar,
             'google_token' => $googleUser->token,
             'google_refresh_token' => $googleUser->refreshToken,
         ]);

@@ -25,19 +25,19 @@
             <div class="container">
                 <a class="navbar-brand text-warning fw-bolder fs-2" href="{{ url('/') }}">
                     <!-- {{ config('app.name', 'Laravel') }} -->
-                     <!-- <img src="{{asset("/images/logo.png")}}" alt="order_image" style="width:100px;height:70px;"> -->
-                     Cafeteria 
-                    </a>
+                    <!-- <img src="{{asset("/images/logo.png")}}" alt="order_image" style="width:100px;height:70px;"> -->
+                    Cafeteria
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                   
+
                     <ul class="navbar-nav me-auto">
-                    @if(Auth::user())
-                     @if(Auth::user()->role == "user")
+                        @if(Auth::user())
+                        @if(Auth::user()->role == "user")
                         <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('orders.index')}}">My Orders</a>
                         @endif
@@ -47,7 +47,7 @@
                         <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('products.index')}}">Products</a>
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
-                         <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
+                        <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
                         @endif
@@ -73,9 +73,13 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <img src="{{ asset('images/user.png') }}" alt="" style="width:50px;height:50px;">   
-                            {{ Auth::user()->name }}
-                               
+                                @if(str_contains( auth()->user()->image, 'https'))
+                                <img src="{{ auth()->user()->image }}" alt="avatar" width="32" height="32" style="margin-right: 8px;">
+                                @else
+                                <img src="{{ asset('images/users_images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
+                                @endif
+                                {{ Auth::user()->name }}
+
 
                             </a>
 

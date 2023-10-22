@@ -8,6 +8,11 @@ use  App\Models\User;
 
 class CheckController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:admin-access");
+    }
+
     public function index(Request $request)
     {
         $query = Order::query();
@@ -20,7 +25,7 @@ class CheckController extends Controller
         /*end if from_date filtration based on inputs*/
 
         /*start if to_date filtration based on inputs*/
-        if ($request->has('to_date') && !empty($request->input('to_date')) ) {
+        if ($request->has('to_date') && !empty($request->input('to_date'))) {
             $toDate = date('Y-m-d', strtotime($request->input('to_date')));
             $query->where('created_at', '<=', $toDate);
         }
@@ -36,7 +41,7 @@ class CheckController extends Controller
 
         $orders = $query->with("user")->with('products')->get();
         //return $orders;
-        $allusers = User::where('role','user')->get();
+        $allusers = User::where('role', 'user')->get();
 
         /*start filter function to get just users that has orders*/
         $users = $allusers->filter(function ($user) use ($orders) {
