@@ -77,7 +77,7 @@
                                 @if(str_contains( auth()->user()->image, 'https'))
                                 <img src="{{ auth()->user()->image }}" alt="avatar" width="32" height="32" style="margin-right: 8px;">
                                 @else
-                                <img src="{{ asset('images/users_images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
+                                <img src="{{ asset('images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
                                 @endif
                                 {{ Auth::user()->name }}
                             </a>
