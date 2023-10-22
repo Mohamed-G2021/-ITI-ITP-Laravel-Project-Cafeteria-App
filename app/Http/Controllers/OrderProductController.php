@@ -52,6 +52,13 @@ class OrderProductController extends Controller
         }
         return $amount;
     }
+    protected function search(Request $request)
+{
+    $keyword = $request->input('keyword');
+    $products = Product::where('name', 'LIKE', "%$keyword%")->get();
+    // return view('OrderProducts.search', compact('products'));
+    return $products;
+}
 
     protected function cust(Request $request)
     {
@@ -66,12 +73,18 @@ class OrderProductController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
         $googleLogin =false;
 
+        // $myProducts = $this->search($request);
+        if ($request->filled('keyword')) {
+            $keyword = $request->input('keyword');
+            $Products = Product::where('name', 'LIKE', "%$keyword%")->get();
+        } else {
+            $Products = Product::all();
+        }
         $orderProducts = OrderProduct::all();
-        $Products = Product::all();
         $users = User::all();
         if (session()->has('cart')) {
             $amount  = $this->calculate_amount($orderProducts);
@@ -94,6 +107,8 @@ class OrderProductController extends Controller
         $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
 
+         
+    
         return view(
             'OrderProducts.index',
 
@@ -155,6 +170,13 @@ class OrderProductController extends Controller
         $amount = $this->calculate_amount();
         return to_route('order-products.index', ['cart' => $cart]);
     }
+    public function show($id)
+{
+
+    $product = Product::findOrFail($id);
+    dd($product);
+    return view('product.show', compact('product'));
+}
 
     public function update(Request $request, string $id)
     {
