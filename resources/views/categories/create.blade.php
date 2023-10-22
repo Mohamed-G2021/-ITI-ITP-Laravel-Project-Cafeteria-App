@@ -27,8 +27,10 @@
 
 
         <div class="d-flex justify-content-center">
-            @if(url()->previous()== "http://localhost:8000/products/create")
+            @if(str_contains(url()->previous(), 'create'))
             <button type="submit" class="btn btn-success" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to create product</button>
+            @elseif(str_contains(url()->previous(), 'edit'))
+            <button type="submit" class="btn btn-success" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to edit product</button>
             @else
             <button type="submit" class="btn btn-success mb-3" style="width: 200px;">Submit</button>
             @endif
