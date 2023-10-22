@@ -101,9 +101,12 @@
         </form>
         <div class="container text-center mt-3 ms-5">
           <div class="row row-cols-1 row-cols-md-3 ">
-          @foreach ($products as $prd)
-          <div class="col-lg-4 col-md-6 mb-4">
-          <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+
+            @foreach ($products as $prd)
+            @if($prd ->availability =='available')
+            <div class="col my-4">
+              <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+
                 @csrf
             <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
                <div class="">
@@ -122,10 +125,9 @@
             <div class="hover-overlay">
               <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
             </div>
-        </div>
-        </form>
-      </div>      
-         @endforeach
+            @endif
+            @endforeach
+
           </div>
         </div>
       </div>
