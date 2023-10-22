@@ -2,6 +2,10 @@
 @section('content')
 
 <style>
+  .row{
+    background-color:#823a35;
+  }
+  
   textarea {
     width: 100%;
     height: 100px;
@@ -13,22 +17,25 @@
     font-size: 16px;
     /* resize: none; */
   }
+  .naving{
+    background-color:#823a35;
+  }
 </style>
-<nav class="navbar bg-body-tertiary justify-content-end me-5">
-  <div class="container d-flex justify-content-center ">
+<nav class="navbar  justify-content-end  naving">
+  <div class="container d-flex justify-content-center mt-5">
   @if($googleLogin==true  )
   @foreach ($users as $user )
       @if (Auth::user()==null && $user->password==null)
-      <h1>Welcome {{$user->name }}</h1>
+      <h1 class="text-white">Welcome {{$user->name }}</h1>
       <?php
       $googleLogin = false;
       ?>
       @endif
   @endforeach
   @else
-    <h1>Welcome {{ Auth::user()->name }}</h1>
+    <h1 class="text-white">Welcome {{ Auth::user()->name }}</h1>
   @endif
-    <nav class="navbar bg-body-tertiary justify-content-end w-100">
+    <nav class="navbar  justify-content-end w-100">
       <div class="container-fluid d-flex justify-content-center ">
         <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
 
@@ -47,29 +54,22 @@
 <div class="row">
 
   <div class="container shop">
-    <div class="row mt-4 py-3 ">
+    <div class="row mt-4 py-3  ">
 
       <div class="col-md-6">
         @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin')  )
-        <h1>Add to user</h1>
-        <form action="{{route('cust')}}" method="post" enctype="multipart/form-data">
+        <h1 class="ms-5">Add to user</h1>
+        <form class="ms-5" action="{{route('cust')}}" method="post" enctype="multipart/form-data">
           @csrf
-          <select class="form-select mb-4" name="user">
+          <select class="form-select mb-4" name="user" value="{{ old('user') }}">
             @foreach ($users as $user )
-            @if (Auth::user()==null)
-                <option value="{{$user->id}}">{{$user->name}}</option>
-            @else
-            <option value="{{$user->id}}">{{$user->name}}</option>
-
-            @endif
+            <option value="{{$user->id}}" name="name">{{$user->name}}</option>            
             @endforeach
-
           </select>
           <button class="btn btn-danger float-end" type="submit">Go</button>
         </form>
         @else
-
-        <h4 class="mt-5 m-5 fs-3 fw-bold " style="color:brown;">Latest Order</h4>
+        <h4 class="mt-5 m-5 fs-3 fw-bold " style="color:white;">Latest Order</h4>
 
         @if (!empty($userOrders))
         <div class="container text-center mt-3 ">
@@ -78,7 +78,7 @@
 
             <div class="col">
               <img src="{{ asset('images/'.$product->image) }}" class="w-50 h-75 rounded-circle" alt="">
-              <p class="fs-4 fw-bold">{{$product->name}}</p>
+              <p class="fs-4 fw-bold text-white">{{$product->name}}</p>
             </div>
             @endforeach
 
@@ -93,37 +93,43 @@
         </form>
         <div class="container text-center mt-3 ms-5">
           <div class="row row-cols-1 row-cols-md-3 ">
-
-            @foreach ($products as $prd)
-            <div class="col my-4">
-              <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+          @foreach ($products as $prd)
+          <div class="col-lg-4 col-md-6 mb-4">
+          <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="card" style="width: 18rem; height:20rem">
-                  <input name="productId" type="hidden" value="{{$prd->id}}">
-                  <button type="submit" class="border-0" onclick="">
-                    <img src="{{asset("/images/$prd->image")}}" class="card-img-top" alt="order_image" style="height:200px">
-                  </button>
-                  <div class="card-body">
-                    <h5 class="card-title fs-4 fw-bold " style="color:brown" name="name" value="{{ $prd->name }}">{{ $prd->name }}</h5>
-                    <p class="card-text fs-5 float-end fw-bold" name="price" value="{{ $prd->price }}"> {{ $prd->price }} EGP</p>
-                  </div>
-                </div>
+            <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+               <div class="">
+                <input name="productId" type="hidden" value="{{$prd->id}}">
 
-              </form>
+            <button type="submit" class="border-0" onclick="">
+                <img src="{{asset("/images/$prd->image")}}" class=" " alt="order_image"  style="height:15rem; width:10rem; object-fit:cover;">
+            </button>
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+              <div class="d-flex justify-content-center align-items-start h-100">
+              <h5><span class="badge bg-light pt-2 ms-3 mt-3 text-dark"  name="name" value="{{ $prd->name }}">{{ $prd->name }}</span></h5>
+                <h5><span class="badge bg-light pt-2 ms-5 mt-3 text-dark"  name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</span></h5>
+              </div>
             </div>
-            @endforeach
+                </div>
+            <div class="hover-overlay">
+              <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+            </div>
+        </div>
+        </form>
+      </div>      
+         @endforeach
           </div>
         </div>
       </div>
 
 
-      <div class="col-3  ms-5 me-5 ms-auto">
+      <div class="col-lg-3 col-12 ms-5 me-5 ms-auto p-5">
         <main>
-          <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="">
+          <div class="d-flex flex-column align-items-stretch flex-shrink-0 " style="">
             <svg class="bi me-2" width="30" height="24">
               <use xlink:href="#bootstrap" />
             </svg>
-            <span class="fs-2 fw-semibold">Shopping Cart</span>
+            <span class="fs-2 fw-semibold" style="color: #faceca">Shopping Cart</span>
             <div class="list-group list-group-flush border-bottom ">
 
               <table class="table text-center mt-3 table-light">
@@ -179,12 +185,12 @@
               <div class="d-flex flex-column align-items-end">
                 <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
                   @csrf
-                  <h3>Notes</h3>
+                  <h3 style="color: #faceca">Notes</h3>
                   <textarea name="notes" type="submit" id="" cols="79" rows="5" class="w-100">{{old('notes')}}</textarea>
 
                   <div class=" align-items-center ">
 
-                    <h3>Branch</h3>
+                    <h3 style="color: #faceca">Branch</h3>
                     <select class="form-select mb-4" name="branch">
                       <option value="1">Zayed</option>
                       <option value="2">Nasr City</option>
@@ -194,11 +200,11 @@
                   <br>
                   <hr>
 
-                  <p class="fs-3 " id="amount">{{$amount}} EGP</p>
+                  <p class="fs-3 " id="amount" style="color: #faceca">{{$amount}} EGP</p>
 
                   <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <button class="btn btn-danger float-end" value="done">Confirm</button>
+                    <button class="btn btn-warning float-end" value="done">Confirm</button>
 
                   </form>
               </div>
@@ -206,6 +212,10 @@
           </div>
       </div>
     </div>
+    <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
