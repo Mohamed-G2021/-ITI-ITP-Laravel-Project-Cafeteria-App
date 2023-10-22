@@ -21,21 +21,22 @@
     background-color:#823a35;
   }
 </style>
-<nav class="navbar  justify-content-end  naving">
-  <div class="container d-flex justify-content-center mt-5">
-  @if($googleLogin==true  )
-  @foreach ($users as $user )
-      @if (Auth::user()==null && $user->password==null)
-      <h1 class="text-white">Welcome {{$user->name }}</h1>
-      <?php
-      $googleLogin = false;
-      ?>
-      @endif
-  @endforeach
-  @else
-    <h1 class="text-white">Welcome {{ Auth::user()->name }}</h1>
-  @endif
-    <nav class="navbar  justify-content-end w-100">
+<nav class="navbar bg-body-tertiary justify-content-end me-5">
+  <div class="container d-flex justify-content-center ">
+    @if($googleLogin==true )
+    @foreach ($users as $user )
+    @if (Auth::user()==null && $user->password==null)
+    <h1>Welcome {{$user->name }}</h1>
+    <?php
+    $googleLogin = false;
+    ?>
+    @endif
+    @endforeach
+    @else
+    <h1>Welcome {{ Auth::user()->name }}</h1>
+    @endif
+    <nav class="navbar bg-body-tertiary justify-content-end w-100">
+
       <div class="container-fluid d-flex justify-content-center ">
         <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
 
@@ -57,13 +58,20 @@
     <div class="row mt-4 py-3  ">
 
       <div class="col-md-6">
+
         @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin')  )
         <h1 class="ms-5">Add to user</h1>
         <form class="ms-5" action="{{route('cust')}}" method="post" enctype="multipart/form-data">
           @csrf
           <select class="form-select mb-4" name="user" value="{{ old('user') }}">
             @foreach ($users as $user )
-            <option value="{{$user->id}}" name="name">{{$user->name}}</option>            
+            @if (Auth::user()==null)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+            @else
+            <option value="{{$user->id}}">{{$user->name}}</option>
+
+            @endif
+
             @endforeach
           </select>
           <button class="btn btn-danger float-end" type="submit">Go</button>
@@ -192,9 +200,9 @@
 
                     <h3 style="color: #faceca">Branch</h3>
                     <select class="form-select mb-4" name="branch">
-                      <option value="1">Zayed</option>
-                      <option value="2">Nasr City</option>
-                      <option value="3">New Cairo</option>
+                      @foreach($branches as $branch)
+                      <option value="{{$branch->id}}">{{$branch->name}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <br>

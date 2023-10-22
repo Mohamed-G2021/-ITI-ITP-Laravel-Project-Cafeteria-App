@@ -49,6 +49,7 @@
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
                         <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
+                        <a class="nav-link" href="{{route('branches.index')}}">Branches</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
                         @endif
                         @endif
