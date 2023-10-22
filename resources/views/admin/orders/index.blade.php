@@ -1,9 +1,22 @@
 @extends('layouts.app')
 @section('content')
+<style>
+   .main{
+        background-color:#823a35;
+        color:white;
+        height:100%;
+   }
+  .orders .row{
+    background-color:#a1625d !important;
+    color:white !important;
+   }
+ 
+</style>
+<div class="main">
 <section class="container">
     <h2>My Orders</h2>
   <form action="{{ route('adminfilter.filter') }}" method="GET">
-  <div class="row my-4">
+  <div class="row my-4 ">
   <div class="input-group mb-3 col">
   <input type="date" name="start_date" id="start_date" class="form-control">
   </div> 
@@ -83,6 +96,11 @@
         });
     });
 </script> -->
+  </main>
+  <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 @endsection
 
 

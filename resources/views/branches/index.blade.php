@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <h1 class="fw-bolder fs-1">All Branches</h1>
-    <a href="{{ route('branches.create') }}" class="btn btn-success p-2 mt-3">Add New Branch</a>
+    <a href="{{ route('branches.create') }}" class="btn btn-warning p-2 mt-3">Add New Branch</a>
     <div class="row justify-content-center mt-3">
         <div class="col">
             <table class="table fw-bolder text-capitalize">
