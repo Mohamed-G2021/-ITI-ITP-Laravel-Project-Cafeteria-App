@@ -47,6 +47,7 @@ Route::put('products/{product}/change', [ProductController::class, 'changeAvaila
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
+
 Route::get('/auth/callback', function () {
     $googleUser = Socialite::driver('google')->stateless()->user();
     $user = User::where('email', $googleUser->email)->first();
