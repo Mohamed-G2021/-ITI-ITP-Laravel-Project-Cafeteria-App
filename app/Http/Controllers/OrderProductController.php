@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Branch;
 use App\Http\Services\FatoorahServices;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Transaction;
@@ -68,7 +69,8 @@ class OrderProductController extends Controller
 
     public function index()
     {
-        $googleLogin =false;
+        $branches = Branch::all();
+        $googleLogin = false;
 
         $orderProducts = OrderProduct::all();
         $Products = Product::all();
@@ -79,15 +81,12 @@ class OrderProductController extends Controller
             $amount = 0;
         }
         $user = Auth::user();
-        if($user == null){
-           $user = User::get()->where('password',null)->first;  
-           $userID= $user->id->id;   
-           $googleLogin = true;   
-
-        }
-        else{
+        if ($user == null) {
+            $user = User::get()->where('password', null)->first;
+            $userID = $user->id->id;
+            $googleLogin = true;
+        } else {
             $userID =  $user->id;
-
         }
         // dd(session('user_id'));
         $orderId = session('order_id');
@@ -98,8 +97,8 @@ class OrderProductController extends Controller
             'OrderProducts.index',
 
             [
-                'orderProducts' => $orderProducts, 'products' => $Products,'googleLogin' =>$googleLogin,
-                'amount' => $amount, 'users' => $users, 'userOrders' => $userOrders, 'cart' => $cart
+                'orderProducts' => $orderProducts, 'products' => $Products, 'googleLogin' => $googleLogin,
+                'amount' => $amount, 'users' => $users, 'userOrders' => $userOrders, 'cart' => $cart, 'branches' => $branches,
             ]
         );
     }
@@ -219,7 +218,7 @@ class OrderProductController extends Controller
         $confirm = true;
         $amount = 0;
 
-        $data=[
+        $data = [
             'CustomerName' => $order->user->name,
             'NotificationOption' => 'LNK',
             'InvoiceValue' => $order->amount,

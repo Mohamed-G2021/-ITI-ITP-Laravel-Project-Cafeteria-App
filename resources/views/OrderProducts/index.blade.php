@@ -16,18 +16,18 @@
 </style>
 <nav class="navbar bg-body-tertiary justify-content-end me-5">
   <div class="container d-flex justify-content-center ">
-  @if($googleLogin==true  )
-  @foreach ($users as $user )
-      @if (Auth::user()==null && $user->password==null)
-      <h1>Welcome {{$user->name }}</h1>
-      <?php
-      $googleLogin = false;
-      ?>
-      @endif
-  @endforeach
-  @else
+    @if($googleLogin==true )
+    @foreach ($users as $user )
+    @if (Auth::user()==null && $user->password==null)
+    <h1>Welcome {{$user->name }}</h1>
+    <?php
+    $googleLogin = false;
+    ?>
+    @endif
+    @endforeach
+    @else
     <h1>Welcome {{ Auth::user()->name }}</h1>
-  @endif
+    @endif
     <nav class="navbar bg-body-tertiary justify-content-end w-100">
       <div class="container-fluid d-flex justify-content-center ">
         <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
@@ -56,14 +56,14 @@
     <div class="row mt-4 py-3 ">
 
       <div class="col-md-6">
-        @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin')  )
+        @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin') )
         <h1>Add to user</h1>
         <form action="{{route('cust')}}" method="post" enctype="multipart/form-data">
           @csrf
           <select class="form-select mb-4" name="user">
             @foreach ($users as $user )
             @if (Auth::user()==null)
-                <option value="{{$user->id}}">{{$user->name}}</option>
+            <option value="{{$user->id}}">{{$user->name}}</option>
             @else
             <option value="{{$user->id}}">{{$user->name}}</option>
 
@@ -192,9 +192,9 @@
 
                     <h3>Branch</h3>
                     <select class="form-select mb-4" name="branch">
-                      <option value="1">Zayed</option>
-                      <option value="2">Nasr City</option>
-                      <option value="3">New Cairo</option>
+                      @foreach($branches as $branch)
+                      <option value="{{$branch->id}}">{{$branch->name}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <br>

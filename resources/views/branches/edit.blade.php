@@ -6,7 +6,7 @@
 
     <div class="card p-4 m-5" style="width: 500px;">
         <div class="card-body">
-            <h1 class="card-title text center">Update Branch {{$branch->name}}</h1>
+            <h1 class="card-title text center">Update {{$branch->name}} branch</h1>
 
             <form method="post" action="{{ route('branches.update', $branch->id) }}" enctype="multipart/form-data">
                 @csrf
