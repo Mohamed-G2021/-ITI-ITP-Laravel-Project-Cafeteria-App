@@ -27,19 +27,7 @@
   @if($orders->count())
   <h2 class="fw-bolder fs-1">My Orders</h2>
   <form action="{{ route('select.filter') }}" method="GET">
-<<<<<<< Updated upstream
-    <div class="row my-4">
-      <div class="input-group mb-3 col">
-        <input type="date" name="start_date" id="start_date" class="form-control">
-      </div>
-      <div class="input-group mb-3 col">
-        <input type="date" name="end_date" id="start_date" class="form-control">
-      </div>
-      <div class="col">
-        <button type="submit" class="btn btn-secondary">Filter</button>
-      </div>
-    </div>
-=======
+
   <div class="row my-4">
   <div class="input-group mb-3 col">
   <input type="date" name="start_date" id="start_date" class="text-white form-control">
@@ -51,7 +39,6 @@
   <button type="submit" class="btn btn-warning" >Filter</button>
   </div>
 </div>
->>>>>>> Stashed changes
   </form>
   <div class="orders">
     <table class="table fw-bolder">
