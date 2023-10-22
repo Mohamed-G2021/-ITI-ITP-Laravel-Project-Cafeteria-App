@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .card{
+        background-color:#823a35;
+        color:white;
 
+    }
+</style>
+<div class="main">
 <div class="container d-flex align-items-center justify-content-center mt-5">
 
 
@@ -27,16 +34,27 @@
 
 
         <div class="d-flex justify-content-center">
+<<<<<<< Updated upstream
             @if(str_contains(url()->previous(), 'create'))
             <button type="submit" class="btn btn-success" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to create product</button>
             @elseif(str_contains(url()->previous(), 'edit'))
             <button type="submit" class="btn btn-success" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to edit product</button>
+=======
+            @if(url()->previous()== "http://localhost:8000/products/create" ||url()->previous()== "http://127.0.0.1:8000/products/create" )
+            <button type="submit" class="btn btn-warning" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to create product</button>
+
+            @elseif (str_contains(url()->previous() , 'edit'))            
+            <button type="submit" class="btn btn-warning" name="submit-button" value='back-to-product' style="width: 250px;">Submit and back to edit product</button>
+
+>>>>>>> Stashed changes
             @else
-            <button type="submit" class="btn btn-success mb-3" style="width: 200px;">Submit</button>
+            <button type="submit" class="btn btn-warning mb-3" style="width: 200px;">Submit</button>
             @endif
         </div>
         </form>
     </div>
 </div>
 </div>
+</div>
+
 @endsection

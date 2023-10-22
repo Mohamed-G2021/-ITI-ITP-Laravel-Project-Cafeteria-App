@@ -1,7 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+        width:100%;
 
+    }
+</style>    
+<div class="main">
 <div class="container ">
     <h2 class="text-center fw-bolder">Register</h2>
     <div class="row justify-content-center ">
@@ -56,4 +65,5 @@
             </div>
         </div>
     </div>
+</div>
     @endsection

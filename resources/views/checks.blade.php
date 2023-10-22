@@ -1,10 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .main{
+        background-color:#823a35;
+        color:white;
+        height:100%;
+        width:100%;
 
+    }
+    td{
+        background-color:#a1625d;
+        padding:10px;
+    }
+    table td{
+        background-color:#a1625d !important;
+    }
+
+    input[type="date"], option, tr{
+    background-color:#a1625d !important;
+    color:white;
+
+}
+</style>  
 <!--start container-->
-<div class="container">
-    <h2 class="fs-1 fw-bolder">Checks</h2>
+<div class="main">
+
+<div class="container pt-5">
+    <h2 class="fs-1 fw-bolder ">Checks</h2>
 
     <p>
         {{--$orders->first()->user--}}
@@ -126,6 +149,11 @@
 </div>
 <!--end container-->
 
+</div>
+<div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 
 @endsection
 

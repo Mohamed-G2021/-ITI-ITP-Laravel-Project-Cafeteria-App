@@ -1,5 +1,13 @@
 @extends('layouts.app')
 @section('content')
+<style>
+   .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+   }
+</style>
+<div class="main">
 
 <section class="order_details  container my-5">
 <div class="row border gap-5 justify-content-center py-4">
@@ -14,4 +22,6 @@
  </div>
  <h1>Total:{{$order->amount}}</h1>
 </section>
+</div>
+
 @endsection
