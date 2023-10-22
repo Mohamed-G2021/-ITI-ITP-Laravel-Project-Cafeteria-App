@@ -34,7 +34,6 @@ class AdminController extends Controller
 
         User::create($request_data);
         return to_route('admin-users.index');
-
     }
     public function show($id)
     {
@@ -44,9 +43,9 @@ class AdminController extends Controller
     {
         $user = User::find($id);
         return view('admins.edit', ['user' => $user]);
-    
-    return redirect()->route('admin-users.index');
-}
+
+        return redirect()->route('admin-users.index');
+    }
 
     public function update(Request $request, string $id)
     {
@@ -77,10 +76,9 @@ class AdminController extends Controller
 
     public function destroy(string $id)
     {
-       
+
         User::findorfail($id)->delete();
 
         return to_route('admin-users.index');
-
     }
 }

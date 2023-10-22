@@ -19,8 +19,11 @@
                     @foreach($users as $user)
                     <tr>
                         <td> {{$user->name}}</td>
-                        <td> <img src="{{asset('images/users_images/users_images/'.$user->image)}}" width="50" height="60"></td>
-
+                        @if(str_contains( $user->image, 'https'))
+                        <td><img src="{{ asset("$user->image") }}" width="50" height="60"> </td>
+                        @else
+                        <td> <img src="{{asset('images/'.$user->image)}}" width="50" height="60"></td>
+                        @endif
                         <td> {{$user->email}}</td>
 
                         <td> <a href="{{ route('admin-users.edit', $user->id) }}" class="btn btn-warning"> Edit </a></td>
