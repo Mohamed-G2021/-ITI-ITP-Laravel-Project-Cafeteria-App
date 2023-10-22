@@ -80,16 +80,15 @@
                                 <img src="{{ asset('images/users_images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
                                 @endif
                                 {{ Auth::user()->name }}
-
-
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('user.edit', auth()->user()->id) }}">
+                                    edit profile
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
