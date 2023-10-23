@@ -28,7 +28,7 @@ class OrderProductController extends Controller
 
     public function __construct(FatoorahServices $fatoorahServices)
     {
-        $this->middleware('auth')->only(['store','destroy','confirm_order']);
+        $this->middleware('auth')->only(['store', 'destroy', 'confirm_order']);
         $this->fatoorahServices = $fatoorahServices;
     }
 
@@ -99,7 +99,7 @@ class OrderProductController extends Controller
         $orderId = session('order_id');
         $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
-    
+
         return view(
             'OrderProducts.index',
 
@@ -162,12 +162,12 @@ class OrderProductController extends Controller
         return to_route('order-products.index', ['cart' => $cart]);
     }
     public function show($id)
-{
+    {
 
-    $product = Product::findOrFail($id);
-    dd($product);
-    return view('product.show', compact('product'));
-}
+        $product = Product::findOrFail($id);
+        dd($product);
+        return view('product.show', compact('product'));
+    }
 
     public function update(Request $request, string $id)
     {
@@ -252,6 +252,20 @@ class OrderProductController extends Controller
     }
     public function paymentCallBack(Request $request)
     {
+        $order = Order::latest()->first();
+        $orderProducts = DB::table('order_products')->where('order_id', $order->id)->get();
+        $products = [];
+        $quantity = [];
+
+        foreach ($orderProducts as $orderProduct) {
+            array_push($products, DB::table('products')->where('id', $orderProduct->product_id)->first());
+            array_push($quantity, $orderProduct->quantity);
+        }
+        // foreach ($orderProducts as $orderProduct) {
+        //     $products['name'] = DB::table('products')->where('id', $orderProduct->product_id)->select('name')->first();
+        //     $products['price'] = DB::table('products')->where('id', $orderProduct->product_id)->select('price')->first();
+        //     $products['quantity'] = DB::table('order_products')->where('id', $orderProduct->product_id)->select('quantity')->first();
+        // }
         $data = [];
         $data['Key'] = $request->paymentId;
         $data['KeyType'] = 'paymentId';
@@ -259,8 +273,15 @@ class OrderProductController extends Controller
         $paymentData = $this->fatoorahServices->getPaymentStatus($data);
         $usertrans = Transaction::where('invoiceid', $paymentData['Data']['InvoiceId'])->first();
         $usertrans->update(['paymentid' => $request->paymentId]);
-        //return $paymentData;
-        return to_route('order-products.index');
-        //search in transaction table for returned invoiceid to get that userid
+
+        return view(
+            'payment.succeed',
+            [
+                'order' => $order,
+                'orderProducts' => $orderProducts,
+                'products' => $products,
+                'quantity' => $quantity
+            ]
+        );
     }
 }

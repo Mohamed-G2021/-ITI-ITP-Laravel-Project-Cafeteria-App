@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\OrderProductController;
 
-Route::post('process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
+// Route::post('process-data', [OrderProductController::class, 'confirm_order'])->name('process-data');
 
-Route::get('callback',[OrderProductController::class,'paymentCallBack']);
-Route::get('error',function(){
-    return 'payment failed';
+Route::get('callback', [OrderProductController::class, 'paymentCallBack']);
+Route::get('error', function () {
+    Order::latest()->first()->delete();
+    return view('payment.failed');
 });
