@@ -70,7 +70,7 @@
             <option value="{{$user->id}}" name="name">{{$user->name}}</option>            
             @endforeach
           </select>
-          <button class="btn btn-danger float-end" type="submit">Go</button>
+          <button class="btn btn-warning float-end" type="submit">Go</button>
         </form>
         @else
         <h4 class="mt-5 m-5 fs-3 fw-bold " style="color:white;">Latest Order</h4>

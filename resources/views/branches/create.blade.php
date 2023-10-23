@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('content')
-
+<style>
+  
+   .main{
+    background-color:#823a35;
+    height: 100vh;
+    
+   }
+</style>
+<div class="main">
 <div class="container d-flex align-items-center justify-content-center mt-5">
 
 
@@ -25,11 +33,12 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success mb-3" style="width: 200px;">Submit</button>
+            <button type="submit" class="btn btn-warning mb-3" style="width: 200px;">Submit</button>
         </div>
 
         </form>
     </div>
+</div>
 </div>
 </div>
 @endsection

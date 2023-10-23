@@ -5,7 +5,7 @@
     .main{
         background-color:#823a35;
         color:white;
-        height:100%;
+        height:100rem;
         width:100%;
 
     }
@@ -13,7 +13,7 @@
         background-color:#a1625d;
         padding:10px;
     }
-    table td{
+    table td, table th, select{
         background-color:#a1625d !important;
     }
 
@@ -22,6 +22,7 @@
     color:white;
 
 }
+
 </style>  
 <!--start container-->
 <div class="main">
@@ -78,10 +79,10 @@
 
     <table class="table text-capitalize fw-bolder">
             <thead>
-                <tr class="table-secondary">
+                <tr class="table-secondary ">
 
-                <th scope="col">Name</th>
-                <th scope="col">Total Amount</th>
+                <th scope="col" class="bg-white">Name</th>
+                <th scope="col" class="bg-white">Total Amount</th>
                 </tr>
             </thead>
 
@@ -115,7 +116,7 @@
                                 <tr class="productbody d-none">
                                     <td colspan="2">
                                         <!--start show product-->
-                                            <div class="row">
+                                            <div class="row ">
                                                 @foreach($order->products as $product)
                                                     <div class="col-md-3">
                                                         <div class="productprice">
