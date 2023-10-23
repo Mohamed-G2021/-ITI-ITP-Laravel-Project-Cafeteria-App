@@ -78,7 +78,7 @@
 </div>
 </div>
 <div class="text-center p-4 text-white " style="background-color: #823a35">
-    © 2021 Copyright:
+    © 2023 Copyright:
     <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
   </div>
 @endsection
