@@ -28,6 +28,7 @@ class OrderProductController extends Controller
 
     public function __construct(FatoorahServices $fatoorahServices)
     {
+        $this->middleware('auth')->only(['store','destroy','confirm_order']);
         $this->fatoorahServices = $fatoorahServices;
     }
 
