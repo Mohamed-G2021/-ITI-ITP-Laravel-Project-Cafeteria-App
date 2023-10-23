@@ -1,15 +1,24 @@
 @extends('layouts.app')
 @section('content')
 <style>
-  .success {
-    background: #b6ddb6;
+ *{
+  background-color: #823a35;
+
+} 
+.success {
+    background: #f8f8f8;
     text-transform: capitalize;
   }
+
+ th{
+  background-color:#a1625d !important;
+}
+
 </style>
 <section class="container">
   <div class="row justify-content-center mt-3">
     <div class="col-6 success p-5 rounded">
-      <h1 class="fs-1 fw-bolder mb-3 text-center ">payment done successfully</h1>
+      <h1 class="fs-1 fw-bolder mb-3 text-center bg-white text-black">payment done successfully</h1>
       <table class="table">
         <thead>
           <tr>
@@ -36,7 +45,7 @@
         </tbody>
       </table>
 
-      <div class="h3 text-success">
+      <div class="h3 text-black bg-white">
         Amount: {{$order->amount}}
       </div>
       <a href="{{route('order-products.index')}}"> <button type="button" class="btn btn-danger">Go to home</button></a>
