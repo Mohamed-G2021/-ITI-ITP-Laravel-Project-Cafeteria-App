@@ -1,7 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+        width:100%;
 
+    }
+    .card{
+        background-color:#a1625d;
+    }
+
+</style>    
+<div class="main">
 <div class="container ">
     <h2 class="text-center fw-bolder">Register</h2>
     <div class="row justify-content-center ">
@@ -49,11 +62,12 @@
                         @enderror
                     </div>
 
-                    <button  type="submit" class="btn btn-primary px-4">
+                    <button  type="submit" class="btn btn-warning px-4">
                         Add
                     </button>
                 </form>
             </div>
         </div>
     </div>
+</div>
     @endsection

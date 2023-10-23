@@ -1,11 +1,27 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .main{
+        background-color:#823a35;
+        color:white;
+    }
+    td{
+        background-color:#a1625d;
+        padding:10px;
+    }
 
-<div class="container ">
-    <a href="{{route('admin-users.create') }}" class="btn btn-success mt-3">Add New User</a>
-    <div class="row justify-content-center fw-bolder">
+    .row{
+    background-color:#a1625d !important;
+
+}
+</style>        
+<div class="container d-flex flex-column min-vh-100">
+    <div>
+    <a href="{{route('admin-users.create') }}" class="mb-4 btn btn-warning mt-3 ">Add New User</a>
+    </div>
+    <div class="row justify-content-center fw-bolder ">
         <div class="col mt-4">
-            <table class="table">
+            <table class="table-dark table-striped table-hover m-5 ">
                 <thead>
                     <tr class="table-secondary">
                         <th>Name</th>
@@ -42,5 +58,10 @@
         </div>
 
     </div>
+    <div class="text-center p-4 text-white mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
+
 
     @endsection

@@ -1,5 +1,19 @@
 @extends('layouts.app')
 @section('content')
+<style>
+    .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+        width:100%;
+
+    }
+    .card{
+        background-color:#a1625d;
+    }
+
+</style>   
+
 <div class="container d-flex align-items-center justify-content-center mt-5" >
 
 
@@ -25,8 +39,8 @@
                  
             
                   <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success mb-3" style="width: 200px;">
-                        <a href="{{ route('categories.index') }}" class="text-white" style="text-decoration: none;">Back to all categories</a>
+                    <button type="submit" class="btn btn-warning  mb-3" style="width: 200px;">
+                        <a href="{{ route('categories.index') }}" class="text-black" style="text-decoration: none;">Back to all categories</a>
                     </button>
                 </div>
                 

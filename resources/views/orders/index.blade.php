@@ -8,22 +8,37 @@
   .show {
     display: block;
   }
+  .main{
+        background-color:#823a35;
+        color:white;
+        height:100%;
+   }
+   input[type=date], input[type=submit]{
+    background-color:#a1625d;
+    
+
+   }
+   .table .row{
+    background-color:#a1625d;
+   }
 </style>
+<div class="main">
 <section class="container">
   @if($orders->count())
   <h2 class="fw-bolder fs-1">My Orders</h2>
   <form action="{{ route('select.filter') }}" method="GET">
-    <div class="row my-4">
-      <div class="input-group mb-3 col">
-        <input type="date" name="start_date" id="start_date" class="form-control">
-      </div>
-      <div class="input-group mb-3 col">
-        <input type="date" name="end_date" id="start_date" class="form-control">
-      </div>
-      <div class="col">
-        <button type="submit" class="btn btn-secondary">Filter</button>
-      </div>
-    </div>
+
+  <div class="row my-4">
+  <div class="input-group mb-3 col">
+  <input type="date" name="start_date" id="start_date" class="text-white form-control">
+  </div> 
+  <div class="input-group mb-3 col">
+  <input type="date" name="end_date" id="start_date" class="text-white form-control">
+  </div>
+  <div class="col">
+  <button type="submit" class="btn btn-warning" >Filter</button>
+  </div>
+</div>
   </form>
   <div class="orders">
     <table class="table fw-bolder">
@@ -91,7 +106,11 @@
 
 
 </section>
-
+</div>
+<div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>

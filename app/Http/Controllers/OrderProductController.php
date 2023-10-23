@@ -28,6 +28,7 @@ class OrderProductController extends Controller
 
     public function __construct(FatoorahServices $fatoorahServices)
     {
+        $this->middleware('auth')->only(['store','destroy','confirm_order']);
         $this->fatoorahServices = $fatoorahServices;
     }
 
@@ -53,13 +54,7 @@ class OrderProductController extends Controller
         }
         return $amount;
     }
-    protected function search(Request $request)
-{
-    $keyword = $request->input('keyword');
-    $products = Product::where('name', 'LIKE', "%$keyword%")->get();
-    // return view('OrderProducts.search', compact('products'));
-    return $products;
-}
+
 
     protected function cust(Request $request)
     {
@@ -79,12 +74,11 @@ class OrderProductController extends Controller
         $branches = Branch::all();
         $googleLogin = false;
 
-        // $myProducts = $this->search($request);
         if ($request->filled('keyword')) {
             $keyword = $request->input('keyword');
-            $Products = Product::where('name', 'LIKE', "%$keyword%")->get();
+            $Products = Product::where('name', 'LIKE', "%$keyword%")->paginate(3);
         } else {
-            $Products = Product::all();
+            $Products = Product::paginate(3);
         }
         $orderProducts = OrderProduct::all();
         $users = User::all();
@@ -105,8 +99,6 @@ class OrderProductController extends Controller
         $orderId = session('order_id');
         $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
-
-         
     
         return view(
             'OrderProducts.index',
@@ -256,12 +248,10 @@ class OrderProductController extends Controller
             'invoiceid' => $info['Data']['InvoiceId']
         ]);
 
-        // dd(session('user_id'));
         return redirect($info['Data']['InvoiceURL']);
     }
     public function paymentCallBack(Request $request)
     {
-        //return $request;
         $data = [];
         $data['Key'] = $request->paymentId;
         $data['KeyType'] = 'paymentId';

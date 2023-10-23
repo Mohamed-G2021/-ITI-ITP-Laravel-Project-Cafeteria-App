@@ -1,22 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+   .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+   }
+   td{
+    background-color:#a1625d !important;
+    color:white !important;
+   }
+</style>
+<div class="main pt-5">
 
-@if($errors->any())
-<div class="alert alert-danger">
-        <p><strong>Opps Something went wrong</strong></p>
-        <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-        </ul>
-</div>
-@endif
 <div class="container">
         <h1>All Products</h1>
 
         <br>
-        <a href="{{route('products.create')}}" class="btn btn-success">Add new product</a>
+        <a href="{{route('products.create')}}" class="btn btn-warning">Add new product</a>
         <br><br>
         <table class="table text-capitalize">
                 <thead>
@@ -48,12 +50,12 @@
                                         <form action="{{route('products.change', $product->id)}}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" class="btn btn-info" name='update-button' value='available'>Make available</button>
+                                                <button type="submit" class="btn btn-warning" name='update-button' value='available'>Make available</button>
                                         </form>
                                         @endif
 
                                 <td>
-                                        <a href="{{route('products.show',$product->id)}}" class="btn btn-primary">show</a>
+                                        <a href="{{route('products.show',$product->id)}}" class="btn text-white" style="background-color:#823a35">show</a>
                                         <a href="{{route('products.edit',$product->id)}}" class="btn btn-warning">edit</a>
                                 </td>
 
@@ -74,4 +76,9 @@
                 {!! $products->links() !!}
         </div>
 </div>
+</div>
+<div class="text-center p-4 text-white " style="background-color: #823a35">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 @endsection
