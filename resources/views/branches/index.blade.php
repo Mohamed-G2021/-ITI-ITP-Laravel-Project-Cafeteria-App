@@ -7,10 +7,10 @@
    }
    .main{
     background-color:#823a35;
-    height:100vh;
+    /* height:100vh; */
    }
 </style>
-<div class="main">
+<div class="main d-flex flex-column min-vh-100">
 <div class="container">
     <h1 class="fw-bolder fs-1">All Branches</h1>
     <a href="{{ route('branches.create') }}" class="btn btn-warning p-2 mt-3">Add New Branch</a>
@@ -46,4 +46,9 @@
     </div>
 </div>
 </div>
+<div class="text-center p-4 text-white mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+</div>
+
 @endsection

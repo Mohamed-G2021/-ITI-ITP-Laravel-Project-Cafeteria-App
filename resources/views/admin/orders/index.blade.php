@@ -24,7 +24,7 @@
   <input type="date" name="end_date" id="start_date" class="form-control">
   </div>
   <div class="col">
-  <button type="submit" class="btn btn-secondary" >Filter</button>
+  <button type="submit" class="btn btn-warning" >Filter</button>
   </div>
 </div>
   </form>
