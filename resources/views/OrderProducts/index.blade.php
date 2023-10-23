@@ -3,7 +3,8 @@
 
 <style>
   .row{
-    background-color:#823a35;    
+    background-color:#823a35;   
+    width:100%; 
   }
   
   textarea {
@@ -24,7 +25,11 @@
     background-color:#a1625d;
     color:white;
    }
-   
+    .pagination .page-item.active .page-link {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color:black;
+    }
 </style>
 <nav class="navbar  justify-content-end  naving">
   <div class="container d-flex justify-content-center mt-5">
@@ -125,7 +130,12 @@
          @endforeach
           </div>
         </div>
-      </div>
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{ $products->links() }}
+        </ul>
+    </nav>
+</div>
 
 
       <div class="col-lg-3 col-12 ms-5 me-5 ms-auto p-5">

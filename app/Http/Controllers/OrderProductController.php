@@ -83,9 +83,9 @@ class OrderProductController extends Controller
         // $myProducts = $this->search($request);
         if ($request->filled('keyword')) {
             $keyword = $request->input('keyword');
-            $Products = Product::where('name', 'LIKE', "%$keyword%")->get();
+            $Products = Product::where('name', 'LIKE', "%$keyword%")->paginate(3);
         } else {
-            $Products = Product::all();
+            $Products = Product::paginate(3);
         }
         $orderProducts = OrderProduct::all();
         $users = User::all();
@@ -106,8 +106,6 @@ class OrderProductController extends Controller
         $orderId = session('order_id');
         $userOrders =   $userOrders = Order::where('user_id', $userID)->where('amount', '>', 0)->latest()->first();
         $cart = session('cart', []);
-
-         
     
         return view(
             'OrderProducts.index',
