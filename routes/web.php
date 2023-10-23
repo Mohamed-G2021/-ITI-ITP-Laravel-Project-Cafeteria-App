@@ -41,7 +41,6 @@ Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('order-products', OrderProductController::class);
-Route::post('/order-products/search', [OrderProductController::class,'search'])->name('order-products.search');
 Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter');
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
