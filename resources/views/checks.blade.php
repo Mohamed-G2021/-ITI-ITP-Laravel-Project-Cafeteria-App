@@ -13,7 +13,7 @@
         background-color:#a1625d;
         padding:10px;
     }
-    table td{
+    table td, table th, select{
         background-color:#a1625d !important;
     }
 
@@ -22,9 +22,10 @@
     color:white;
 
 }
+
 </style>  
 <!--start container-->
-<div class="main">
+<div class="main d-flex flex-column min-vh-100">
 
 <div class="container pt-5">
     <h2 class="fs-1 fw-bolder ">Checks</h2>
@@ -78,10 +79,10 @@
 
     <table class="table text-capitalize fw-bolder">
             <thead>
-                <tr class="table-secondary">
+                <tr class="table-secondary ">
 
-                <th scope="col">Name</th>
-                <th scope="col">Total Amount</th>
+                <th scope="col" class="bg-white">Name</th>
+                <th scope="col" class="bg-white">Total Amount</th>
                 </tr>
             </thead>
 
@@ -115,7 +116,7 @@
                                 <tr class="productbody d-none">
                                     <td colspan="2">
                                         <!--start show product-->
-                                            <div class="row">
+                                            <div class="row ">
                                                 @foreach($order->products as $product)
                                                     <div class="col-md-3">
                                                         <div class="productprice">
@@ -151,7 +152,7 @@
 
 </div>
 <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2021 Copyright:
+    © 2023 Copyright:
     <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
   </div>
 

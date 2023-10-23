@@ -4,9 +4,6 @@
     .main{
         background-color:#823a35;
         color:white;
-        height:100vh;
-        width:100%;
-
     }
     td{
         background-color:#a1625d;
@@ -18,8 +15,10 @@
 
 }
 </style>        
-<div class="container ">
-    <a href="{{route('admin-users.create') }}" class="mb-4 btn btn-warning mt-3">Add New User</a>
+<div class="container d-flex flex-column min-vh-100">
+    <div>
+    <a href="{{route('admin-users.create') }}" class="mb-4 btn btn-warning mt-3 ">Add New User</a>
+    </div>
     <div class="row justify-content-center fw-bolder ">
         <div class="col mt-4">
             <table class="table-dark table-striped table-hover m-5 ">
@@ -59,8 +58,8 @@
         </div>
 
     </div>
-    <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2021 Copyright:
+    <div class="text-center p-4 text-white mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
     <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
   </div>
 

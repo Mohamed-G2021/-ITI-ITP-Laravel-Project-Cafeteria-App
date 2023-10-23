@@ -3,7 +3,8 @@
 
 <style>
   .row{
-    background-color:#823a35;
+    background-color:#823a35;   
+    width:100%; 
   }
   
   textarea {
@@ -24,6 +25,11 @@
     background-color:#a1625d;
     color:white;
    }
+    .pagination .page-item.active .page-link {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color:black;
+    }
 </style>
 <nav class="navbar  justify-content-end  naving">
   <div class="container d-flex justify-content-center mt-5">
@@ -70,7 +76,7 @@
             <option value="{{$user->id}}" name="name">{{$user->name}}</option>            
             @endforeach
           </select>
-          <button class="btn btn-danger float-end" type="submit">Go</button>
+          <button class="btn btn-warning float-end" type="submit">Go</button>
         </form>
         @else
         <h4 class="mt-5 m-5 fs-3 fw-bold " style="color:white;">Latest Order</h4>
@@ -106,10 +112,10 @@
                 <input name="productId" type="hidden" value="{{$prd->id}}">
 
             <button type="submit" class="border-0" onclick="">
-                <img src="{{asset("/images/$prd->image")}}" class=" " alt="order_image"  style="height:15rem; width:10rem; object-fit:cover;">
+                <img src="{{asset("/images/$prd->image")}}" class=" " alt="order_image"  style="height:10rem; width:10rem; object-fit:cover;">
             </button>
             <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
-              <div class="d-flex justify-content-center align-items-start h-100">
+              <div class="d-flex justify-content-center align-items-start h-50">
               <h5><span class="badge bg-light pt-2 ms-3 mt-3 text-dark"  name="name" value="{{ $prd->name }}">{{ $prd->name }}</span></h5>
                 <h5><span class="badge bg-light pt-2 ms-5 mt-3 text-dark"  name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</span></h5>
               </div>
@@ -124,7 +130,12 @@
          @endforeach
           </div>
         </div>
-      </div>
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{ $products->links() }}
+        </ul>
+    </nav>
+</div>
 
 
       <div class="col-lg-3 col-12 ms-5 me-5 ms-auto p-5">
@@ -217,7 +228,7 @@
       </div>
     </div>
     <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2021 Copyright:
+    © 2023 Copyright:
     <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
   </div>
 

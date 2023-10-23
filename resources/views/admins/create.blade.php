@@ -9,6 +9,10 @@
         width:100%;
 
     }
+    .card{
+        background-color:#a1625d;
+    }
+
 </style>    
 <div class="main">
 <div class="container ">
@@ -58,7 +62,7 @@
                         @enderror
                     </div>
 
-                    <button  type="submit" class="btn btn-primary px-4">
+                    <button  type="submit" class="btn btn-warning px-4">
                         Add
                     </button>
                 </form>
