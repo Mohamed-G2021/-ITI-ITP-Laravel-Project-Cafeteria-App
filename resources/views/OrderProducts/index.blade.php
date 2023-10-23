@@ -2,11 +2,11 @@
 @section('content')
 
 <style>
-  .row{
-    background-color:#823a35;   
-    width:100%; 
+  .row {
+    background-color: #823a35;
+    width: 100%;
   }
-  
+
   textarea {
     width: 100%;
     height: 100px;
@@ -18,33 +18,39 @@
     font-size: 16px;
     /* resize: none; */
   }
-  .naving{
-    background-color:#823a35;
+
+  .naving {
+    background-color: #823a35;
   }
-  .table-light tr, textarea , select, input[type='text']{
-    background-color:#a1625d;
-    color:white;
-   }
-    .pagination .page-item.active .page-link {
-        background-color: #ffc107;
-        border-color: #ffc107;
-        color:black;
-    }
+
+  .table-light tr,
+  textarea,
+  select,
+  input[type='text'] {
+    background-color: #a1625d;
+    color: white;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: black;
+  }
 </style>
 <nav class="navbar  justify-content-end  naving">
   <div class="container d-flex justify-content-center mt-5">
-  @if($googleLogin==true  )
-  @foreach ($users as $user )
-      @if (Auth::user()==null && $user->password==null)
-      <h1 class="text-white">Welcome {{$user->name }}</h1>
-      <?php
-      $googleLogin = false;
-      ?>
-      @endif
-  @endforeach
-  @else
+    @if($googleLogin==true )
+    @foreach ($users as $user )
+    @if (Auth::user()==null && $user->password==null)
+    <h1 class="text-white">Welcome {{$user->name }}</h1>
+    <?php
+    $googleLogin = false;
+    ?>
+    @endif
+    @endforeach
+    @else
     <h1 class="text-white">Welcome {{ Auth::user()->name }}</h1>
-  @endif
+    @endif
     <nav class="navbar  justify-content-end w-100">
       <div class="container-fluid d-flex justify-content-center ">
         <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
@@ -54,11 +60,11 @@
       <form action="{{ route('order-products.index') }}" method="GET">
         @csrf
         <div class="d-flex ">
-            <input class="form-control" type="text" name="keyword" placeholder="Enter a keyword" value="{{ request('keyword') }}">
-        <button class="btn btn-warning" type="submit">Search</button>
-</div>
-        
-    </form>
+          <input class="form-control" type="text" name="keyword" placeholder="Enter a keyword" value="{{ request('keyword') }}">
+          <button class="btn btn-warning" type="submit">Search</button>
+        </div>
+
+      </form>
   </div>
 </nav>
 <div class="row">
@@ -67,13 +73,13 @@
     <div class="row mt-4 py-3  ">
 
       <div class="col-md-6">
-        @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin')  )
+        @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin') )
         <h1 class="ms-5">Add to user</h1>
         <form class="ms-5" action="{{route('cust')}}" method="post" enctype="multipart/form-data">
           @csrf
           <select class="form-select mb-4" name="user" value="{{ old('user') }}">
             @foreach ($users as $user )
-            <option value="{{$user->id}}" name="name">{{$user->name}}</option>            
+            <option value="{{$user->id}}" name="name">{{$user->name}}</option>
             @endforeach
           </select>
           <button class="btn btn-warning float-end" type="submit">Go</button>
@@ -103,39 +109,39 @@
         </form>
         <div class="container text-center mt-3 ms-5">
           <div class="row row-cols-1 row-cols-md-3 ">
-          @foreach ($products as $prd)
-          <div class="col-lg-4 col-md-6 mb-4">
-          <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
+            @foreach ($products as $prd)
+            <div class="col-lg-4 col-md-6 mb-4">
+              <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
-            <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
-               <div class="">
-                <input name="productId" type="hidden" value="{{$prd->id}}">
+                <div class="bg-image hover-zoom ripple shadow-1-strong rounded">
+                  <div class="">
+                    <input name="productId" type="hidden" value="{{$prd->id}}">
 
-            <button type="submit" class="border-0" onclick="">
-                <img src="{{asset("/images/$prd->image")}}" class=" " alt="order_image"  style="height:10rem; width:10rem; object-fit:cover;">
-            </button>
-            <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
-              <div class="d-flex justify-content-center align-items-start h-50">
-              <h5><span class="badge bg-light pt-2 ms-3 mt-3 text-dark"  name="name" value="{{ $prd->name }}">{{ $prd->name }}</span></h5>
-                <h5><span class="badge bg-light pt-2 ms-5 mt-3 text-dark"  name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</span></h5>
-              </div>
-            </div>
+                    <button type="submit" class="border-0" onclick="">
+                      <img src="{{asset("/images/$prd->image")}}" class=" " alt="order_image" style="height:10rem; width:10rem; object-fit:cover;">
+                    </button>
+                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.3);">
+                      <div class="d-flex justify-content-center align-items-start h-50">
+                        <h5><span class="badge bg-light pt-2 ms-3 mt-3 text-dark" name="name" value="{{ $prd->name }}">{{ $prd->name }}</span></h5>
+                        <h5><span class="badge bg-light pt-2 ms-5 mt-3 text-dark" name="price" value="{{ $prd->price }}">{{ $prd->price }} EGP</span></h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hover-overlay">
+                    <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                  </div>
                 </div>
-            <div class="hover-overlay">
-              <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+              </form>
             </div>
-        </div>
-        </form>
-      </div>      
-         @endforeach
+            @endforeach
           </div>
         </div>
-    <nav>
-        <ul class="pagination justify-content-center">
+        <nav>
+          <ul class="pagination justify-content-center">
             {{ $products->links() }}
-        </ul>
-    </nav>
-</div>
+          </ul>
+        </nav>
+      </div>
 
 
       <div class="col-lg-3 col-12 ms-5 me-5 ms-auto p-5">
@@ -207,9 +213,9 @@
 
                     <h3 style="color: #faceca">Branch</h3>
                     <select class="form-select mb-4" name="branch">
-                      <option value="1">Zayed</option>
-                      <option value="2">Nasr City</option>
-                      <option value="3">New Cairo</option>
+                      @foreach($branches as $branch)
+                      <option value="{{$branch->id}}">{{$branch->name}}</option>
+                      @endforeach
                     </select>
                   </div>
                   <br>
@@ -228,9 +234,9 @@
       </div>
     </div>
     <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2023 Copyright:
-    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
-  </div>
+      © 2023 Copyright:
+      <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
