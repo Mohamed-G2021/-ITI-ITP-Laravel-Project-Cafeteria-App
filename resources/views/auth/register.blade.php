@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container ">
+<style>
+      .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+    }
+</style>
+<div class="container main">
     <div class="row justify-content-center mt-3">
         <div class="card shadow col-lg-6 fw-bolder p-3">
 
@@ -49,7 +56,7 @@
                         @enderror
                     </div>
 
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-warning" type="submit">
                         Register
                     </button>
                 </form>
