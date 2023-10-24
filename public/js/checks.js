@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var filtrationForm = document.getElementById('filtration-form');
 
     // Add event listener for changes in filtration form elements
-    filtrationForm.lastElementChild.addEventListener('change', function(event) {
+    filtrationForm.lastElementChild.lastElementChild.addEventListener('change', function(event) {
         // Submit the form
         event.preventDefault();
         filtrationForm.submit();

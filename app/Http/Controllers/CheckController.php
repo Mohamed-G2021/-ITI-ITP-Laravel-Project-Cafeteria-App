@@ -25,9 +25,14 @@ class CheckController extends Controller
         /*end if from_date filtration based on inputs*/
 
         /*start if to_date filtration based on inputs*/
+        // if ($request->has('to_date') && !empty($request->input('to_date'))) {
+        //     $toDate = date('Y-m-d', strtotime($request->input('to_date')));
+        //     $query->where('created_at', '<=', $toDate);
+        // }
         if ($request->has('to_date') && !empty($request->input('to_date'))) {
             $toDate = date('Y-m-d', strtotime($request->input('to_date')));
-            $query->where('created_at', '<=', $toDate);
+            $nextDay = date('Y-m-d', strtotime($toDate . '+1 day'));
+            $query->where('created_at', '<', $nextDay);
         }
         /*end if to_date filtration based on inputs*/
 

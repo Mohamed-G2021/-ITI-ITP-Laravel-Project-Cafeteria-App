@@ -32,8 +32,9 @@ class AdminOrderController extends Controller
     $start_date = $request->input('start_date');
     $end_date = $request->input('end_date');
     //$orders = Order::whereBetween('created_at', [$start_date, $end_date])->paginate(3);
-    $orders= Order::whereDate('created_at', '>=', $start_date)
+    $orders= Order::whereDate('created_at', '>=',$start_date)
         ->whereDate('created_at', '<=', $end_date)->paginate(3);
+    $orders->appends(request()->query());
     if ($orders) {
         return view('admin.orders.index', compact('orders'));
     }

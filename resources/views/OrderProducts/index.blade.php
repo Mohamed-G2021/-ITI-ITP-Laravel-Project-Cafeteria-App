@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
 <style>
   .row {
     background-color: #823a35;

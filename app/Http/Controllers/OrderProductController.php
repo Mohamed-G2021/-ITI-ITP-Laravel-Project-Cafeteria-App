@@ -273,7 +273,7 @@ class OrderProductController extends Controller
         $paymentData = $this->fatoorahServices->getPaymentStatus($data);
         $usertrans = Transaction::where('invoiceid', $paymentData['Data']['InvoiceId'])->first();
         $usertrans->update(['paymentid' => $request->paymentId]);
-
+       
         return view(
             'payment.succeed',
             [
