@@ -15,12 +15,12 @@ class AdminController extends Controller
 
     {
         $users = User::where('role', 'user')->get();
-        return view('admins.index', ['users' => $users]);
+        return view('users.index', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('admins.create');
+        return view('users.create');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class AdminController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admins.edit', ['user' => $user]);
+        return view('users.edit', ['user' => $user]);
 
         return redirect()->route('admin-users.index');
     }
@@ -58,6 +58,8 @@ class AdminController extends Controller
 
             ],
             'image' => 'required',
+            'password' => 'required',
+            'password_confirmation' =>'required',
         ]);
 
         $request_data = $request->all();
