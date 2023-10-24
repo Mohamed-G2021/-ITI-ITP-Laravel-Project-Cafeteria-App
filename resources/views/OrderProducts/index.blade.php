@@ -224,7 +224,11 @@
 
                   <form action="{{route('process-data')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <button class="btn btn-warning float-end" value="done">Confirm</button>
+                    @if (empty($cart))
+                    <button class="btn btn-warning float-end" value="done" disabled id="confirmBtn" >Confirm</button>
+                    @else
+                    <button class="btn btn-warning float-end" value="done" id="confirmBtn" >Confirm</button>
+                    @endif
 
                   </form>
               </div>

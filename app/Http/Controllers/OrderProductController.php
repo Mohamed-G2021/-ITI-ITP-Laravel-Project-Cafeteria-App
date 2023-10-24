@@ -231,7 +231,9 @@ class OrderProductController extends Controller
 
         $confirm = true;
         $amount = 0;
-
+         if( $order->amount == 0){
+            return redirect('order-products');
+         }
         $data = [
             'CustomerName' => $order->user->name,
             'NotificationOption' => 'LNK',
