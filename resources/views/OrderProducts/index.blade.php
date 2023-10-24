@@ -38,18 +38,20 @@
 </style>
 <nav class="navbar  justify-content-end  naving">
   <div class="container d-flex justify-content-center mt-5">
-    @if($googleLogin==true )
+  @if (Auth::user()==null)
+  @elseif(Auth::user()!=null)
+  <h1 class="text-white">Welcome {{Auth::user()->name }}</h1>
+  @else 
     @foreach ($users as $user )
-    @if (Auth::user()==null && $user->password==null)
-    <h1 class="text-white">Welcome {{$user->name }}</h1>
-    <?php
-    $googleLogin = false;
-    ?>
-    @endif
+      @if ($user->google_id!=null)
+      <h1 class="text-white">Welcome {{$user->name }}</h1>
+      <?php
+      $googleLogin = false;
+      ?>
+  @endif
     @endforeach
-    @else
-    <h1 class="text-white">Welcome {{ Auth::user()->name }}</h1>
-    @endif
+  @endif  
+
     <nav class="navbar  justify-content-end w-100">
       <div class="container-fluid d-flex justify-content-center ">
         <h1 class="fw-bolder fs-1 text-center text-warning">Enjoy Your Coffee </h1>
