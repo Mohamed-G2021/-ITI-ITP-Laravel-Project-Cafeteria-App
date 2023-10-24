@@ -6,7 +6,9 @@ use App\Http\Controllers\OrderProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use  App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CheckController;
+use App\Http\Controllers\Auth\EditProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +45,8 @@ Route::get('/selects',  [OrderController::class, 'filter'])->name('select.filter
 Route::get('/select',  [AdminOrderController::class, 'filter'])->name('adminfilter.filter');
 Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
+Route::resource('branches', BranchController::class);
+Route::resource('user', EditProfileController::class);
 Route::put('products/{product}/change', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();

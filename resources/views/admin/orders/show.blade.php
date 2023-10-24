@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('content')
-
+<style>
+   .main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+   }
+</style>
+<div class="main">
  <section class="order_details  container my-5">
 <div class="row border gap-5 justify-content-center py-4">
 @foreach($order->products as $product)
@@ -14,4 +21,9 @@
  </div>
  <h1>Total:{{$order->amount}}</h1>
 </section>
+</main>
+<div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
+  </div>
 @endsection

@@ -14,8 +14,9 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    function __construct(){
-     //  $this->middleware('auth')->only(['index','store', 'update', 'destroy']);
+    function __construct()
+    {
+        //  $this->middleware('auth')->only(['index','store', 'update', 'destroy']);
     }
     public function index()
     {
@@ -37,19 +38,18 @@ public function filter(Request $request)
     if($orders->count()){
         return view('orders.index', compact('orders'));
     }
-    else{
-    $AllOrders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
-    return view('orders.index', ['orders'=>$AllOrders]);
+        $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
+        return view('orders.index', ['orders' => $orders]);
+
     }
-    
-}
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $orders=Order::all();
-        return view('orders.create',['orders'=>$orders]);
+        $orders = Order::all();
+        return view('orders.create', ['orders' => $orders]);
     }
 
     /**
@@ -58,45 +58,45 @@ public function filter(Request $request)
     public function store(Request $request)
     {
         //
-    //     // Create a new order
-    // $order = new Order();
-    // // $order->user_id = auth()->user()->id; // Assuming you have authentication and want to associate the order with the authenticated user
+        //     // Create a new order
+        // $order = new Order();
+        // // $order->user_id = auth()->user()->id; // Assuming you have authentication and want to associate the order with the authenticated user
 
-    // // Get the product IDs from the session
-    // $productIds = session('order_products', []);
-    // // dd($productIds);
-    // $amount = [];
-    // // Loop through the product IDs and create order products
-    // foreach ($productIds as $productId) {
-    //     $orderProduct = new OrderProduct();
-    //     $orderProduct->order_id = $order->id;
-    //     $orderProduct->product_id = $productId;
+        // // Get the product IDs from the session
+        // $productIds = session('order_products', []);
+        // // dd($productIds);
+        // $amount = [];
+        // // Loop through the product IDs and create order products
+        // foreach ($productIds as $productId) {
+        //     $orderProduct = new OrderProduct();
+        //     $orderProduct->order_id = $order->id;
+        //     $orderProduct->product_id = $productId;
 
-    //     // $amount->push($orderProduct->products->price);
+        //     // $amount->push($orderProduct->products->price);
 
-    //     $orderProduct->quantity = 1; // Set the initial quantity to 1
-    //     $orderProduct->save();
-    // }
-    // // dd($orderProduct->products->price);
-    // $order->save();
+        //     $orderProduct->quantity = 1; // Set the initial quantity to 1
+        //     $orderProduct->save();
+        // }
+        // // dd($orderProduct->products->price);
+        // $order->save();
 
-    // // Clear the order products from the session
-    // session()->forget('order_products');
-    // $orderProducts = OrderProduct::all();
-    // $Products = Product::all();
+        // // Clear the order products from the session
+        // session()->forget('order_products');
+        // $orderProducts = OrderProduct::all();
+        // $Products = Product::all();
 
-    // return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
+        // return view('OrderProducts.index',['orderProducts'=>$orderProducts, 'products'=>$Products] );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request,Order $order)
+    public function show(Request $request, Order $order)
     {
         if ($request->ajax()) {
-            return view('orders.show', ['order'=>$order]);
+            return view('orders.show', ['order' => $order]);
         }
-    
+
         return redirect()->back();
     }
 
@@ -114,8 +114,6 @@ public function filter(Request $request)
     public function update(Request $request, Order $order)
 
     {
-      
-       
     }
 
     /**
@@ -124,7 +122,7 @@ public function filter(Request $request)
     public function destroy(Order $order)
 
     {
-         $order->delete();
-         return to_route('orders.index');
+        $order->delete();
+        return to_route('orders.index');
     }
 }

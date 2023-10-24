@@ -17,12 +17,23 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+    #app{
+        background-color:#a1625d;
+        color:white;
+        
+
+    }
+    .nav-link{
+        color:white;
+    }
+</style>
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fw-bolder fs-5">
-            <div class="container">
+        <nav class="navbar navbar-expand-md   shadow-sm fw-bolder fs-5">
+            <div class="container text-white">
                 <a class="navbar-brand text-warning fw-bolder fs-2" href="{{ url('/') }}">
                     <!-- {{ config('app.name', 'Laravel') }} -->
                     <!-- <img src="{{asset("/images/logo.png")}}" alt="order_image" style="width:100px;height:70px;"> -->
@@ -35,10 +46,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
 
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-auto ">
                         @if(Auth::user())
                         @if(Auth::user()->role == "user")
-                        <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
+                        <a class="nav-link text-white" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('orders.index')}}">My Orders</a>
                         @endif
                         @endif
@@ -49,6 +60,7 @@
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
                         <a class="nav-link" href="{{route('admins-orders.index')}}">Orders</a>
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
+                        <a class="nav-link" href="{{route('branches.index')}}">Branches</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
                         @endif
                         @endif
@@ -76,19 +88,18 @@
                                 @if(str_contains( auth()->user()->image, 'https'))
                                 <img src="{{ auth()->user()->image }}" alt="avatar" width="32" height="32" style="margin-right: 8px;">
                                 @else
-                                <img src="{{ asset('images/users_images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
+                                <img src="{{ asset('images/'.Auth::user()->image) }}" alt="" style="width:50px;height:50px;">
                                 @endif
                                 {{ Auth::user()->name }}
-
-
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('user.edit', auth()->user()->id) }}">
+                                    edit profile
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -101,14 +112,15 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <div class="main">
+        <main class="py-4 ">
             @yield('content')
         </main>
         <div class="py-4">
             @yield('body')
         </div>
     </div>
-
+    </div>
     <script src="{{ asset('js/checks.js')}}"></script>
 </body>
 

@@ -1,6 +1,20 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<style>
+.main{
+        background-color:#823a35;
+        color:white;
+        height:100vh;
+        width:100%;
+
+    }
+    input{
+        background-color:red;
+ 
+    }
+</style>
+<div class="main pt-5">
+<div class="container ">
         <div class="row  justify-content-center mt-4 fw-bolder fs-5">
           <div class="col-lg-6 fw-bolder shadow p-5 rounded">
           <h1 class="fw-bolder"> Add new product</h1>
@@ -18,7 +32,7 @@
                                                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                                                 @endforeach
                                                         </select>
-                                                        <a href="{{ route('categories.create') }}" class="btn btn-info mx-1">Add New Category</a>
+                                                        <a href="{{ route('categories.create') }}" class="btn btn-warning mx-1">Add New Category</a>
                                                 </div>
                                         </div>
                                 </div>
@@ -48,7 +62,7 @@
                         </div>
 
                         <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-warning">Submit</button>
 
                         </div>
         </form>
@@ -57,5 +71,5 @@
         </div>
       
 </div>
-
+</div>
 @endsection
