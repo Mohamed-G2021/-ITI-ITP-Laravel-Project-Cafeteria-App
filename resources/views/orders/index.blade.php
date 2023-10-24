@@ -103,8 +103,6 @@
     <h1 class="text-center fw-bolder fs-1 mt-5">You didn't order anything yet</h1>
   </div>
   @endif
-
-
 </section>
 </div>
 <div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">

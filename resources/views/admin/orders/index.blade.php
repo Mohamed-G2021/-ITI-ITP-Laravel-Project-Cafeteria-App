@@ -28,6 +28,9 @@
   </div>
 </div>
   </form>
+  @if($orders->count()==0)
+  <h1 class="fw-bolder fs-3 text-center mt-5">No order found for the given dates</h1>
+  @else
 <div class="orders">
 <table class="table  table-striped table-bordered">
   <thead>
@@ -81,7 +84,7 @@
     @endforeach
   </tbody>
 </table> 
-
+@endif
 </div>
 <div class="d-flex pagination">
  {!! $orders->links() !!}
