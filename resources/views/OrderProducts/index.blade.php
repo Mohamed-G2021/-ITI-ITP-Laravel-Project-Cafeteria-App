@@ -132,8 +132,8 @@
                   </div>
                 </div>
               </form>
-            </div>
-            @endforeach
+            </div>                        
+            @endforeach            
           </div>
         </div>
         <nav>

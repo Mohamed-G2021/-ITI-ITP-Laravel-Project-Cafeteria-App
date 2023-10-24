@@ -76,9 +76,9 @@ class OrderProductController extends Controller
 
         if ($request->filled('keyword')) {
             $keyword = $request->input('keyword');
-            $Products = Product::where('name', 'LIKE', "%$keyword%")->paginate(3);
+            $Products = Product::where('name', 'LIKE', "%$keyword%")->where('availability', 'available')->paginate(3);
         } else {
-            $Products = Product::paginate(3);
+            $Products = Product::where('availability', 'available')->paginate(3);
         }
         $orderProducts = OrderProduct::all();
         $users = User::all();
