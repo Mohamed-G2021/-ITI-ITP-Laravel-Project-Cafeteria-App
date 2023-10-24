@@ -19,8 +19,8 @@ class OrderController extends Controller
     }
     public function index()
     {
-        //   $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(5);
-          $orders=Order::paginate(6);
+        $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->get();
+        //   $orders=Order::paginate(6);
         return view('orders.index',['orders'=>$orders]);
     }
      
@@ -29,9 +29,11 @@ public function filter(Request $request)
     $user = auth()->user();
     $start_date = $request->input('start_date');
     $end_date = $request->input('end_date');
-    $orders = Order::where('user_id', $user->id)
-        ->whereBetween('created_at', [$start_date, $end_date])
-        ->get();
+    // $orders = Order::where('user_id', $user->id)
+    //     ->whereBetween('created_at', [$start_date, $end_date])
+    //     ->get();
+    $orders= Order::where('user_id', $user->id)->whereDate('created_at', '>=', $start_date)
+    ->whereDate('created_at', '<=', $end_date)->get();
     if($orders->count()){
         return view('orders.index', compact('orders'));
     }

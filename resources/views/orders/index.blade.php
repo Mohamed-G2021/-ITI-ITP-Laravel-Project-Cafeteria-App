@@ -74,9 +74,7 @@
   </tbody>
 </table> 
 </div>
-<div class="d-flex pagination">
- {!! $orders->links() !!}
- </div>
+
  @else
  <div>
   <h1 class="text-center fw-bolder fs-1 mt-5">Your Cart Is Currently Empty</h1>

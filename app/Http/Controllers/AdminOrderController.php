@@ -18,7 +18,7 @@ class AdminOrderController extends Controller
     {
          $user=Auth::user();
         if($user->role =='admin'){
-            $orders = Order::orderBy('created_at', 'desc')->paginate(6);
+            $orders = Order::orderBy('created_at', 'desc')->paginate(3);
             return view('admin.orders.index', compact('orders'));
         }
       else{
@@ -31,8 +31,14 @@ class AdminOrderController extends Controller
 {
     $start_date = $request->input('start_date');
     $end_date = $request->input('end_date');
-    $orders = Order::whereBetween('created_at', [$start_date, $end_date])->paginate(6);
-    return view('admin.orders.index', compact('orders'));
+    //$orders = Order::whereBetween('created_at', [$start_date, $end_date])->paginate(3);
+    $orders= Order::whereDate('created_at', '>=', $start_date)
+        ->whereDate('created_at', '<=', $end_date)->paginate(3);
+    if ($orders) {
+        return view('admin.orders.index', compact('orders'));
+    }
+        return response('No order found for the given dates', 404);
+    
 }
     /**
      * Show the form for creating a new resource.
