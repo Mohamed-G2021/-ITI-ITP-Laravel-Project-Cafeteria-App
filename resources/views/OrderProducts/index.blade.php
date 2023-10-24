@@ -110,6 +110,7 @@
         <div class="container text-center mt-3 ms-5">
           <div class="row row-cols-1 row-cols-md-3 ">
             @foreach ($products as $prd)
+            @if($prd->availability=='available')
             <div class="col-lg-4 col-md-6 mb-4">
               <form action="{{route('order-products.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -133,6 +134,7 @@
                 </div>
               </form>
             </div>
+            @endif
             @endforeach
           </div>
         </div>
