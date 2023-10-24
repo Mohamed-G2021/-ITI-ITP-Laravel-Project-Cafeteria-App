@@ -19,7 +19,7 @@ class AdminOrderController extends Controller
          $user=Auth::user();
         if($user->role =='admin'){
             $orders = Order::orderBy('created_at', 'desc')->paginate(3);
-            return view('admin.orders.index', compact('orders'));
+            return view('admin-orders.index', compact('orders'));
         }
       else{
         return abort(403);
@@ -36,7 +36,7 @@ class AdminOrderController extends Controller
         ->whereDate('created_at', '<=', $end_date)->paginate(3);
     $orders->appends(request()->query());
     if ($orders) {
-        return view('admin.orders.index', compact('orders'));
+        return view('admin-orders.index', compact('orders'));
     }
         return response('No order found for the given dates', 404);
     
@@ -63,7 +63,7 @@ class AdminOrderController extends Controller
     public function show(Order $order)
     {
         dd($order);
-         return view('admin.orders.show', ['order'=>$order]);
+         return view('admin-orders.show', ['order'=>$order]);
     }
 
     /**

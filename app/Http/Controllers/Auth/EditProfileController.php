@@ -29,7 +29,10 @@ class EditProfileController extends Controller
                 Rule::unique('users')->ignore($user->id)
 
             ],
-            'image' => 'required','mimes:jpg,bmp,png'
+            'image' => 'required','mimes:jpg,bmp,png',
+            'password' => 'required',
+            'password_confirmation' =>'required',
+
         ]);
 
         $request_data = $request->all();

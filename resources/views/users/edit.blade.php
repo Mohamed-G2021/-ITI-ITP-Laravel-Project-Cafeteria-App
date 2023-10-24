@@ -28,7 +28,7 @@
 
                     <div class="form-group mb-3">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control py-2" id="password" name="password" placeholder="Password" value="{{$user->password}}" />
+                        <input type="password" class="form-control py-2" id="password" name="password" placeholder="Password" value="" />
                         @error('password')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -36,7 +36,7 @@
 
                     <div class="form-group mb-3">
                         <label for="password_confirmation">Confirm Password</label>
-                        <input type="password" class="form-control py-2" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation" value="{{$user->password}}" />
+                        <input type="password" class="form-control py-2" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation" value="" />
                         @error('password_confirmation')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
