@@ -74,7 +74,7 @@
     <div class="row mt-4 py-3  ">
 
       <div class="col-md-6">
-        @if($googleLogin==true||(Auth::check() && Auth::user()->role === 'admin') )
+        @if((Auth::check() && Auth::user()->role === 'admin') )
         <h1 class="ms-5">Add to user</h1>
         <form class="ms-5" action="{{route('cust')}}" method="post" enctype="multipart/form-data">
           @csrf
