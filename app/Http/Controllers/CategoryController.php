@@ -19,7 +19,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', ['categories' => $categories]);
+        // return view('categories.index', ['categories' => $categories]);
+        return view('admin-dashboard.categories.index', ['categories' => $categories]);
+
     }
 
     /**
@@ -27,7 +29,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        // return view('categories.create');
+        return view('admin-dashboard.categories.create');
+
     }
 
     /**
@@ -40,7 +44,9 @@ class CategoryController extends Controller
         if ($request->input('submit-button') == 'back-to-product') {
             Category::create($request_data);
 
-            return to_route('products.create');
+            // return to_route('products.create');
+            return view('admin-dashboard.products.create');
+
         }
 
         Category::create($request_data);
@@ -51,7 +57,9 @@ class CategoryController extends Controller
     //
     public function show(Category $category)
     {
-        return view('categories.show', ['category' => $category]);
+        // return view('categories.show', ['category' => $category]);
+        return view('admin-dashboard.categories.show', ['category' => $category]);
+
     }
 
 
@@ -61,7 +69,9 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
-        return view('categories.edit', ['category' => $category]);
+        // return view('categories.edit', ['category' => $category]);
+        return view('admin-dashboard.categories.edit', ['category' => $category]);
+
     }
 
     /**
@@ -71,7 +81,9 @@ class CategoryController extends Controller
     {
         //   
         $category->update($request->all());
-        return to_route('categories.show', $category->id);
+        // return to_route('categories.show', $category->id);
+        return redirect(url('admin/dashboard/categories/' . $category->id));
+
     }
 
     /**
@@ -80,6 +92,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return to_route('categories.index');
+        // return to_route('categories.index');
+        return redirect(url('admin/dashboard/categories/' ));
+
     }
 }

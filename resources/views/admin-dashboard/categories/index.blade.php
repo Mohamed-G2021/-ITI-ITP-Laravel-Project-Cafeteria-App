@@ -2,7 +2,7 @@
 @section('content')
 <head>
 
-    <title>SB Admin 2 - All Products</title>
+    <title>SB Admin 2 - All Categories</title>
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
@@ -31,11 +31,11 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">All Products</h1>
+                    <h1 class="h3 mb-2 text-gray-800">All Categories</h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
-        <a href="{{url('admin/dashboard/products/create')}}" class="btn btn-warning">Add new product</a>
+        <a href="{{url('admin/dashboard/categories/create')}}" class="btn btn-warning">Add New Category</a>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -46,63 +46,35 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Image</th>
-                                        <th>Availability</th>
-                                        <th>Actions</th>
-                                        <th>Delete</th>
+                                            <th>Name</th>
+                                            <th class="text-center">Action</th>
+
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                        <th>Image</th>
-                                        <th>Availability</th>
-                                        <th>Actions</th>
-                                        <th>Delete</th>
+                                            <th>Name</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach($products as $product)
-                                        <tr>
-                                            <td>{{$product->name}}</td>
-                                            <td>{{$product->price}} egp</td>
-                                            <td><img src="{{asset("/images/$product->image")}}" class="card-img-top" style="object-fit:contain; width:50px;height:60px"> </td>
-                                            <td>
-                                                    {{$product->availability}}
-                                                    @if($product->availability == 'available')
-                                                    <form action="{{route('products.change', $product->id)}}" method="post">
+                                        @foreach($categories as $category)
+                                            <tr>
+                                                <td>{{ $category->name }}</td>
+                                                <td  class="text-center">
+                                                    <div class="d-flex justify-content-center">
+                                                    <a href="{{ url('admin/dashboard/categories', $category->id) }}" class="btn text-white" style="background-color:#823a35">show</a>
+                                                    <a href="{{url('admin/dashboard/categories/' . $category->id . '/edit')}}" class="btn btn-warning">edit</a>
+                                                        <form action="{{ route('categories.destroy',$category->id) }}" method="post" style="display: inline;">
                                                             @csrf
-                                                            @method('PUT')
-                                                            <button type="submit" class="btn btn-warning" name='update-button' value='unavailable'>Make unavailable</button>
-                                                    </form>
-                                                    @elseif($product->availability == 'unavailable')
-                                                    <form action="{{route('products.change', $product->id)}}" method="post">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <button type="submit" class="btn btn-warning" name='update-button' value='available'>Make available</button>
-                                                    </form>
-                                                    @endif
-
-                                            <td>
-                                                    <a href="{{ url('admin/dashboard/products', $product->id) }}" class="btn text-white" style="background-color:#823a35">show</a>
-                                                    <a href="{{url('admin/dashboard/products/' . $product->id . '/edit')}}" class="btn btn-warning">edit</a>
-                                            </td>
-
-                                            <form action="{{route('products.destroy',$product->id)}}" method="post">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <td>
-                                                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this product?')" class="btn btn-danger">
-                                                    </td>
-                                            </form>
-
-                                        </tr>
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
-
-                                </tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -158,5 +130,4 @@
     @include('admin-dashboard.scripts')
 
 </body>
-
 </html>

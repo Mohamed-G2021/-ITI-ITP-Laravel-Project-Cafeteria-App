@@ -92,3 +92,6 @@ Route::get('/auth/callback', function () {
 Route::prefix('admin/dashboard')->group(function () {
     Route::resource('products', ProductController::class);
 });
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('categories', CategoryController::class);
+});
