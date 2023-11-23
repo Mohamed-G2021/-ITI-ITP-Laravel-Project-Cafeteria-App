@@ -35,11 +35,24 @@
         </a>
     </li>
 
-    <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{url('admin/dashboard/categories')}}" >
             <i class="fas fa-fw fa-wrench"></i>
             Categories
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('admin/dashboard/orders')}}" >
+            <i class="fas fa-fw fa-wrench"></i>
+            Orders
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('admin/dashboard/checks')}}" >
+            <i class="fas fa-fw fa-wrench"></i>
+            Checks
         </a>
     </li>
 

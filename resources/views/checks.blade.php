@@ -1,34 +1,35 @@
 @extends('layouts.app')
-
 @section('content')
-<style>
-    .main{
-        background-color:#823a35;
-        color:white;
-        height:100%;
-        width:100%;
+<head>
 
-    }
-    td{
-        background-color:#a1625d;
-        padding:10px;
-    }
-    table td, table th, select{
-        background-color:#a1625d !important;
-    }
+    <title>SB Admin 2 - All Products</title>
+    <title>SB Admin 2 - Dashboard</title>
 
-    input[type="date"], option, tr{
-    background-color:#a1625d !important;
-    color:white;
+    <!-- Custom fonts for this template-->
+    <link href="{{ asset('vendor/admin-dashboard/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-}
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('css/admin-dashboard/sb-admin-2.min.css') }}" rel="stylesheet">
 
-</style>  
-<!--start container-->
-<div class="main d-flex flex-column min-vh-100">
+</head>
 
-<div class="container pt-5">
-    <h2 class="fs-1 fw-bolder ">Checks</h2>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+    @include('admin-dashboard.sidebar')
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+            @include('admin-dashboard.topbar')
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                <h2 class="fs-1 fw-bolder ">Checks</h2>
 
     <p>
         {{--$orders->first()->user--}}
@@ -151,11 +152,10 @@
 <!--end container-->
 
 </div>
-<div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2023 Copyright:
-    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
   </div>
-
+    </div>
+    @include('admin-dashboard.scripts')
+</body>
 @endsection
 
 

@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::where('user_id',Auth::user()->id)->orderBy('created_at','desc')->paginate(3);
-        return view('orders.index',['orders'=>$orders]);
+        return view('admin-dashboard.orders.index',['orders'=>$orders]);
     }
      
 public function filter(Request $request)
@@ -33,7 +33,7 @@ public function filter(Request $request)
                       ->whereDate('created_at', '<=', $end_date)->paginate(3);
     $orders->appends(request()->query());
     if($orders){
-        return view('orders.index', compact('orders'));
+        return view('admin-dashboard.orders.index', compact('orders'));
     }
         // $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
         // return view('orders.index', ['orders' => $orders]);
@@ -45,7 +45,7 @@ public function filter(Request $request)
     public function create()
     {
         $orders = Order::all();
-        return view('orders.create', ['orders' => $orders]);
+        return view('admin-dashboard.orders.create', ['orders' => $orders]);
     }
 
     /**
@@ -90,7 +90,7 @@ public function filter(Request $request)
     public function show(Request $request, Order $order)
     {
         if ($request->ajax()) {
-            return view('orders.show', ['order' => $order]);
+            return view('admin-dashboard.orders.show', ['order' => $order]);
         }
 
         return redirect()->back();
@@ -119,6 +119,8 @@ public function filter(Request $request)
 
     {
         $order->delete();
-        return to_route('orders.index');
+        // return to_route('orders.index');
+        return redirect(url('admin/dashboard/orders/' ));
+
     }
 }

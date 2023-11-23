@@ -84,14 +84,16 @@ Route::get('/auth/callback', function () {
 });
 
 // Admin
-// Route::get('/admin/dashboard/products',[ProductController::class, 'index'] )->name('admin-dashboard.products.index');
-// Route::get('/admin/dashboard/products/id',[ProductController::class, 'show'] )->name('admin-dashboard.products.show');
-// Route::post('/admin/dashboard/products',[ProductController::class, 'create'] )->name('admin-dashboard.products.create');
-// Route::post('/admin/dashboard/products/id',[ProductController::class, 'update'] )->name('admin-dashboard.products.edit');
-// Route::delete('/admin/dashboard/products/id',[ProductController::class, 'destroy'] )->name('admin-dashboard.products.destroy');
 Route::prefix('admin/dashboard')->group(function () {
     Route::resource('products', ProductController::class);
 });
 Route::prefix('admin/dashboard')->group(function () {
     Route::resource('categories', CategoryController::class);
 });
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('orders', OrderController::class);
+});
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('checks', CheckController::class);
+});
+
