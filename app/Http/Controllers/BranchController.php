@@ -17,7 +17,7 @@ class BranchController extends Controller
     public function index()
     {
         $branches = Branch::all();
-        return view('branches.index', ['branches' => $branches]);
+        return view('admin-dashboard.branches.index', ['branches' => $branches]);
     }
 
     /**
@@ -25,7 +25,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('branches.create');
+        return view('admin-dashboard.branches.create');
     }
 
     /**
@@ -35,7 +35,9 @@ class BranchController extends Controller
     {
         $request_data = $request->all();
         Branch::create($request_data);
-        return to_route("branches.index");
+        // return to_route("branches.index");
+        return redirect(url('admin/dashboard/branches/'));
+
     }
 
     /**
@@ -51,7 +53,7 @@ class BranchController extends Controller
      */
     public function edit(Branch $branch)
     {
-        return view('branches.edit', ['branch' => $branch]);
+        return view('admin-dashboard.branches.edit', ['branch' => $branch]);
     }
 
     /**
@@ -60,7 +62,9 @@ class BranchController extends Controller
     public function update(Request $request, Branch $branch)
     {
         $branch->update($request->all());
-        return to_route('branches.index');
+        // return to_route('branches.index');
+        return redirect(url('admin/dashboard/branches/'));
+
     }
 
     /**
@@ -69,6 +73,6 @@ class BranchController extends Controller
     public function destroy(Branch $branch)
     {
         $branch->delete();
-        return to_route('branches.index');
+        return redirect(url('admin/dashboard/branches/'));
     }
 }

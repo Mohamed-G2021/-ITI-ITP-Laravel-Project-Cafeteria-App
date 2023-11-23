@@ -56,6 +56,19 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('admin/dashboard/branches')}}" >
+            <i class="fas fa-fw fa-wrench"></i>
+            Branches
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{url('admin/dashboard/users')}}" >
+            <i class="fas fa-fw fa-wrench"></i>
+            Users
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 

@@ -12,7 +12,6 @@ use App\Http\Controllers\Auth\EditProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\adminDshboardController;
 
 //use Laravel\Socialite\Facades\Socialite;
 //use Socialite;
@@ -49,7 +48,6 @@ Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
 Route::resource('branches', BranchController::class);
 Route::resource('user', EditProfileController::class);
-Route::resource('admin-dashboard',adminDshboardController::class);
 Route::put('products/{product}/change', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -96,4 +94,9 @@ Route::prefix('admin/dashboard')->group(function () {
 Route::prefix('admin/dashboard')->group(function () {
     Route::resource('checks', CheckController::class);
 });
-
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('branches', BranchController::class);
+});
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('users', AdminController::class);
+});

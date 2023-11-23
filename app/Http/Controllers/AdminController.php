@@ -15,12 +15,12 @@ class AdminController extends Controller
 
     {
         $users = User::where('role', 'user')->get();
-        return view('users.index', ['users' => $users]);
+        return view('admin-dashboard.users.index', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('users.create');
+        return view('admin-dashboard.users.create');
     }
 
     public function store(Request $request)
@@ -33,7 +33,9 @@ class AdminController extends Controller
         }
 
         User::create($request_data);
-        return to_route('admin-users.index');
+        // return to_route('admin-users.index');
+        return redirect(url('admin/dashboard/users/'));
+
     }
     public function show($id)
     {
@@ -42,9 +44,8 @@ class AdminController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit', ['user' => $user]);
+        return view('admin-dashboard.users.edit', ['user' => $user]);
 
-        return redirect()->route('admin-users.index');
     }
 
     public function update(Request $request, string $id)
@@ -74,6 +75,8 @@ class AdminController extends Controller
         $user->update($request_data);
 
         return redirect()->route('admin-users.index');
+        return redirect(url('admin/dashboard/users/' ));
+
     }
 
     public function destroy(string $id)
@@ -81,6 +84,8 @@ class AdminController extends Controller
 
         User::findorfail($id)->delete();
 
-        return to_route('admin-users.index');
+        // return to_route('admin-users.index');
+        return redirect(url('admin/dashboard/users/' ));
+
     }
 }
