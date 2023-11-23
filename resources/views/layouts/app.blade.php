@@ -19,19 +19,23 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
     #app{
-        background-color:#a1625d;
+        /* background-color:#a1625d;
         color:white;
-        
+         */
 
     }
     .nav-link{
-        color:white;
+        /* color:white; */
     }
 </style>
 </head>
 
-<body>
+<body>    
+
     <div id="app">
+    @if(Auth::user())
+    @if(Auth::user()->role == "user")
+
         <nav class="navbar navbar-expand-md   shadow-sm fw-bolder fs-5">
             <div class="container text-white">
                 <a class="navbar-brand text-warning fw-bolder fs-2" href="{{ url('/') }}">
@@ -47,14 +51,11 @@
                     <!-- Left Side Of Navbar -->
 
                     <ul class="navbar-nav me-auto ">
-                        @if(Auth::user())
-                        @if(Auth::user()->role == "user")
                         <a class="nav-link text-white" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('orders.index')}}">My Orders</a>
-                        @endif
-                        @endif
-                        @if(Auth::user())
-                        @if(Auth::user()->role == "admin")
+                       
+                        <!-- @if(Auth::user()) -->
+                        <!-- @if(Auth::user()->role == "admin")
                         <a class="nav-link" href="{{route('order-products.index')}}">Home</a>
                         <a class="nav-link" href="{{route('products.index')}}">Products</a>
                         <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
@@ -62,9 +63,10 @@
                         <a class="nav-link" href="{{route('checks.index')}}">Checks</a>
                         <a class="nav-link" href="{{route('branches.index')}}">Branches</a>
                         <a class="nav-link" href="{{route('admin-users.index')}}">Users</a>
-                        @endif
-                        @endif
+                        @endif -->
+                        <!-- @endif -->
 
+                       
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -108,10 +110,14 @@
 
                         @endguest
                     </ul>
+               
+                   
                 </div>
             </div>
-        </nav>
+            @endif
+            @endif
 
+        </nav>
         <div class="main">
         <main class="py-4 ">
             @yield('content')
@@ -121,6 +127,7 @@
         </div>
     </div>
     </div>
+
     <script src="{{ asset('js/checks.js')}}"></script>
 </body>
 

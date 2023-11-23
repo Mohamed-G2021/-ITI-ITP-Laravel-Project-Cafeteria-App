@@ -22,7 +22,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(6);
-        return view('products.index', ['products' => $products]);
+        return view('admin-dashboard.products.index', ['products' => $products]);
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductController extends Controller
     {
 
         $categories = Category::all();
-        return view('products.create', ["categories" => $categories]);
+        return view('admin-dashboard.products.create', ["categories" => $categories]);
     }
 
     /**
@@ -46,7 +46,9 @@ class ProductController extends Controller
             $request_data['image'] = $image_path;
         }
         Product::create($request_data);
-        return to_route('products.index');
+        // return to_route('admin-dashboard.products.index');
+        return redirect(url('admin/dashboard/products/'));
+
     }
 
     /**
@@ -55,7 +57,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $products = Product::all();
-        return view('products.show', ['product' => $product, 'products' => $products]);
+        return view('admin-dashboard.products.show', ['product' => $product, 'products' => $products]);
     }
 
     /**
@@ -64,7 +66,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('products.edit', ['product' => $product, 'categories' => $categories]);
+        return view('admin-dashboard.products.edit', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
@@ -78,7 +80,9 @@ class ProductController extends Controller
             $request_data['image'] = $image_path;
         }
         $product->update($request_data);
-        return to_route('products.show', $product->id);
+        // return to_route('admin-dashboard.products.show', $product->id);
+        return redirect(url('admin/dashboard/products/' . $product->id));
+
     }
 
     public function changeAvailability(Request $request, Product $product)
@@ -91,7 +95,9 @@ class ProductController extends Controller
             $product->save();
         }
 
-        return to_route('products.index');
+        // return to_route('admin-dashboard.products.index');
+        return redirect(url('admin/dashboard/products/' ));
+
     }
 
 
@@ -101,6 +107,8 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return to_route('products.index');
+        // return to_route('admin-dashboard.products.index');
+        return redirect(url('admin/dashboard/products/' ));
+
     }
 }

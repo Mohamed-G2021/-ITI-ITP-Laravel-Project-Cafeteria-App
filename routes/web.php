@@ -12,6 +12,8 @@ use App\Http\Controllers\Auth\EditProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\adminDshboardController;
+
 //use Laravel\Socialite\Facades\Socialite;
 //use Socialite;
 use App\Models\User;
@@ -47,6 +49,7 @@ Route::resource('/admins-orders', AdminOrderController::class);
 Route::resource('checks', CheckController::class);
 Route::resource('branches', BranchController::class);
 Route::resource('user', EditProfileController::class);
+Route::resource('admin-dashboard',adminDshboardController::class);
 Route::put('products/{product}/change', [ProductController::class, 'changeAvailability'])->name('products.change');
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -71,6 +74,21 @@ Route::get('/auth/callback', function () {
     }
 
     Auth::login($user);
+    if($user->role == 'user'){
+        return redirect('order-products');
+    }
+    else{
+        return redirect('admin-dashboard');
+    }
 
-    return redirect('/order-products');
+});
+
+// Admin
+// Route::get('/admin/dashboard/products',[ProductController::class, 'index'] )->name('admin-dashboard.products.index');
+// Route::get('/admin/dashboard/products/id',[ProductController::class, 'show'] )->name('admin-dashboard.products.show');
+// Route::post('/admin/dashboard/products',[ProductController::class, 'create'] )->name('admin-dashboard.products.create');
+// Route::post('/admin/dashboard/products/id',[ProductController::class, 'update'] )->name('admin-dashboard.products.edit');
+// Route::delete('/admin/dashboard/products/id',[ProductController::class, 'destroy'] )->name('admin-dashboard.products.destroy');
+Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('products', ProductController::class);
 });
