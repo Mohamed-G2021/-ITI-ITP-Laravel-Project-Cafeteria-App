@@ -119,10 +119,10 @@
 
         </nav>
         <div class="main">
-        <main class="py-4 ">
+        <main class=" ">
             @yield('content')
         </main>
-        <div class="py-4">
+        <div class="">
             @yield('body')
         </div>
     </div>

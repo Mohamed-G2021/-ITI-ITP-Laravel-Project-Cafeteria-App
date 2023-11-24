@@ -30,9 +30,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-<section class="container">
+<section class="">
   @if($orders->count())
-  <h2 class="fw-bolder fs-1">My Orders</h2>
+  <h1 class="h3 mb-2 text-gray-800">My Orders</h1>
   <form action="{{ route('select.filter') }}" method="GET">
 
   <div class="row my-4">
@@ -43,7 +43,7 @@
   <input type="date" name="end_date" id="start_date" class="text-white form-control">
   </div>
   <div class="col">
-  <button type="submit" class="btn btn-warning" >Filter</button>
+  <button type="submit" class="btn btn-warning text-black" >Filter</button>
   </div>
 </div>
   </form>
@@ -108,15 +108,12 @@
     <h1 class="text-center fw-bolder fs-1 mt-5">You didn't order anything yet</h1>
   </div>
   @endif
- <div class="d-flex pagination">
+ <div class="d-flex pagination justify-content-center">
  {!! $orders->links() !!}
  </div>
 </section>
 </div>
-<div class="text-center p-4 text-white" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2023 Copyright:
-    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
-  </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>

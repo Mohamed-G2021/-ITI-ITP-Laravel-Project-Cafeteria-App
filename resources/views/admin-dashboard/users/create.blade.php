@@ -74,7 +74,7 @@
                         @enderror
                     </div>
 
-                    <button  type="submit" class="btn btn-warning px-4">
+                    <button  type="submit" class="btn btn-warning text-black px-4">
                         Add
                     </button>
                 </form>

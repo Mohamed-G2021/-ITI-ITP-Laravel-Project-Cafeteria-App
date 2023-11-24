@@ -34,7 +34,7 @@
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
-                    <a href="{{url('admin/dashboard/products/create')}}" class="btn btn-warning">Add new product</a>
+                    <a href="{{url('admin/dashboard/products/create')}}" class="btn btn-warning mb-3">Add new product</a>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -103,13 +103,16 @@
 
                                 </tbody>
                                 </table>
+                               <div class="d-flex pagination justify-content-center ">
+                                        {!! $products->links() !!}
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <!-- /.container-fluid -->
-
+               
             </div>
             <!-- End of Main Content -->
 

@@ -3,7 +3,6 @@
 <head>
 
     <title>SB Admin 2 - All Categories</title>
-    <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/admin-dashboard/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -35,7 +34,7 @@
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
                             href="https://datatables.net">official DataTables documentation</a>.</p>
-        <a href="{{url('admin/dashboard/categories/create')}}" class="btn btn-warning">Add New Category</a>
+        <a href="{{url('admin/dashboard/categories/create')}}" class="btn btn-warning mb-3">Add New Category</a>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -47,31 +46,39 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th class="text-center">Action</th>
+                                            <th >Action</th>
+                                            <th >Delete</th>
+
 
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
-                                            <th class="text-center">Action</th>
+                                            <th>Action</th>
+                                            <th>Delete</th>
+
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach($categories as $category)
                                             <tr>
                                                 <td>{{ $category->name }}</td>
-                                                <td  class="text-center">
-                                                    <div class="d-flex justify-content-center">
+                                                <td >
+                                                    <!-- <div class="d-flex justify-content-center"> -->
+                                                        
                                                     <a href="{{ url('admin/dashboard/categories', $category->id) }}" class="btn text-white" style="background-color:#823a35">show</a>
                                                     <a href="{{url('admin/dashboard/categories/' . $category->id . '/edit')}}" class="btn btn-warning">edit</a>
-                                                        <form action="{{ route('categories.destroy',$category->id) }}" method="post" style="display: inline;">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-danger mx-1">Delete</button>
-                                                        </form>
-                                                    </div>
-                                                </td>
+                                                </td> 
+                                                <form action="{{ route('categories.destroy',$category->id) }}" method="post" style="display: inline;">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <td>
+                                                        <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                                    </td>
+                                                </form>
+                                                    <!-- </div> -->
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>

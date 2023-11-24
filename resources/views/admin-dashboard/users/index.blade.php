@@ -27,8 +27,9 @@
             @include('admin-dashboard.topbar')
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                <h1 class="h3 mb-2 text-gray-800">All Users</h1>
 
-    <a href="{{url('admin/dashboard/users/create') }}" class="mb-4 btn btn-warning mt-3 ">Add New User</a>
+    <a href="{{url('admin/dashboard/users/create') }}" class="mb-4 btn btn-warning text-black mt-3 ">Add New User</a>
     </div>
     <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -57,7 +58,7 @@
                         @endif
                         <td> {{$user->email}}</td>
 
-                        <td> <a href="{{ route('admin-users.edit', $user->id) }}" class="btn btn-warning"> Edit </a></td>
+                        <td> <a href="{{ route('admin-users.edit', $user->id) }}" class="btn btn-warning text-black"> Edit </a></td>
                         <td>
                             <form action="{{ route('admin-users.destroy', $user->id) }}" method="post">
                                 @csrf

@@ -46,7 +46,7 @@
                                                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                                                 @endforeach
                                                         </select>
-                                                        <a href="{{ route('categories.create') }}" class="btn btn-warning mx-1">Add New Category</a>
+                                                        <a href="{{ route('categories.create') }}" class="btn btn-warning mx-1 text-black">Add New Category</a>
                                                 </div>
                                         </div>
                                 </div>
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="mb-3">
-                                <button type="submit" class="btn btn-warning">Submit</button>
+                                <button type="submit" class="btn btn-warning text-black">Submit</button>
 
                         </div>
         </form>

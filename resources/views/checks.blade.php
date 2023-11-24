@@ -2,8 +2,7 @@
 @section('content')
 <head>
 
-    <title>SB Admin 2 - All Products</title>
-    <title>SB Admin 2 - Dashboard</title>
+    <title>SB Admin 2 - All Checks</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/admin-dashboard/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -29,7 +28,7 @@
             @include('admin-dashboard.topbar')
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                <h2 class="fs-1 fw-bolder ">Checks</h2>
+                <h2 class="h3 mb-2 text-gray-800 ">Checks</h2>
 
     <p>
         {{--$orders->first()->user--}}
@@ -47,15 +46,15 @@
             <!-- Add your filtration form elements here -->
         <div class="row my-4 fw-bolder">
             <div class=" mb-3 col-md-6">
-            <label for="start" class="form-label">Date From</label>
+            <label for="start" class="form-label text-primary">Date From</label>
             <input type="date" id="start" name="from_date" class="form-control">
             </div> 
             <div class="mb-3 col-md-6">
-            <label for="end" class="form-label">Date To</label>
+            <label for="end" class="form-label text-primary">Date To</label>
             <input type="date" id="end" name="to_date" class="form-control">
             </div> 
             <div class="col-md-6">
-            <label for="name" class="form-label">User name</label>
+            <label for="name" class="form-label text-primary">User name</label>
             <select name="user_id" class="form-select" aria-label="Default select example">
                 <option value="-1" selected >Select User</option>
                 <option value="0"  >All User</option>

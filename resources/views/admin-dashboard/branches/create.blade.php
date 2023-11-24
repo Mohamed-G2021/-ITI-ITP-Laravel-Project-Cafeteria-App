@@ -52,7 +52,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-warning mb-3" style="width: 200px;">Submit</button>
+            <button type="submit" class="btn btn-warning text-black mb-3" style="width: 200px;">Submit</button>
         </div>
 
         </form>

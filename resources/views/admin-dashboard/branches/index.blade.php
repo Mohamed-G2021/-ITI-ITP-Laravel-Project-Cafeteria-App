@@ -27,8 +27,8 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-    <h1 class="fw-bolder fs-1">All Branches</h1>
-    <a href="{{ url('admin/dashboard/branches/create') }}" class="btn btn-warning p-2 mt-3">Add New Branch</a>
+    <h1 class="h3 mb-2 text-gray-800">All Branches</h1>
+    <a href="{{ url('admin/dashboard/branches/create') }}" class="btn btn-warning text-black p-2 my-3 ">Add New Branch</a>
     <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -49,7 +49,7 @@
                         <td>{{ $branch->name }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center">
-                                <a href="{{url('admin/dashboard/branches/' . $branch->id . '/edit')}}" class="btn btn-warning mx-1">Edit</a>
+                                <a href="{{url('admin/dashboard/branches/' . $branch->id . '/edit')}}" class="btn btn-warning text-black mx-1">Edit</a>
                                 <form action="{{ route('branches.destroy', $branch->id) }}" method="post" style="display: inline;">
                                     @csrf
                                     @method('delete')
@@ -65,10 +65,6 @@
         </div>
     </div>
 </div>
-</div>
-<div class="text-center p-4 text-white mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2023 Copyright:
-    <a class="text-reset fw-bold" href="#">Cafeteria.com</a>
 </div>
 </div>
     </div>

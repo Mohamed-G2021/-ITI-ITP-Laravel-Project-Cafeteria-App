@@ -41,10 +41,10 @@ class LoginController extends Controller
           protected function authenticated($request, $user)
       {
           if ($user->role === 'admin') {
-             return redirect()->route('admin-users.index'); 
+             return redirect('admin/dashboard/admin-order-products'); 
           }
 
-          return redirect()->route('order-products.index'); 
+          return redirect('/order-products'); 
      }
 
 }

@@ -29,10 +29,10 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="card shadow" style="width: 400px; height: 500px;">
+        <div class="card shadow" style="width: 600px; height: 600px;">
 
             <div class="card-body m-3 p-4 mt-4">
-                <form method="POST" action="{{ route('users.update', $user) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin-users.update', $user) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-3">
@@ -75,7 +75,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-warning text-black" >
                         update
                     </button>
                 </form>

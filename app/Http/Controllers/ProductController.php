@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(6);
+        $products = Product::paginate(3);
         return view('admin-dashboard.products.index', ['products' => $products]);
     }
 

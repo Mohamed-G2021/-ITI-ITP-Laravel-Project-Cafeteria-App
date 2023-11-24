@@ -12,6 +12,9 @@ use App\Http\Controllers\Auth\EditProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Auth;
+use  App\Http\Controllers\AdminOrderProductController;
+use  App\Http\Controllers\DashboardOrderController;
+
 
 //use Laravel\Socialite\Facades\Socialite;
 //use Socialite;
@@ -76,27 +79,25 @@ Route::get('/auth/callback', function () {
         return redirect('order-products');
     }
     else{
-        return redirect('admin-dashboard');
+        return redirect('admin/dashboard/admin-order-products');
     }
 
 });
 
-// Admin
-Route::prefix('admin/dashboard')->group(function () {
+
+
+//Admin
+Route::prefix('admin/dashboard')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('products', ProductController::class);
-});
-Route::prefix('admin/dashboard')->group(function () {
     Route::resource('categories', CategoryController::class);
-});
-Route::prefix('admin/dashboard')->group(function () {
-    Route::resource('orders', OrderController::class);
-});
-Route::prefix('admin/dashboard')->group(function () {
+    Route::resource('orders', DashboardOrderController::class);
     Route::resource('checks', CheckController::class);
-});
-Route::prefix('admin/dashboard')->group(function () {
     Route::resource('branches', BranchController::class);
-});
-Route::prefix('admin/dashboard')->group(function () {
     Route::resource('users', AdminController::class);
+    Route::resource('order-products', AdminOrderProductController::class);
+
+    // Route::resource('admin-orders', DashboardOrderController::class);
+    // Route::resource('admin-order-products', AdminOrderProductController::class);
+
 });
+
